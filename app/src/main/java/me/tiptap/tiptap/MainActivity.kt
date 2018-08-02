@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private fun initViewPager() {
         binding.vpMain.apply {
             adapter = MainViewPagerAdapter(this@MainActivity.supportFragmentManager, 3)
+            currentItem = 1
         }
     }
 }
