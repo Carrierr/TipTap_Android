@@ -1,4 +1,4 @@
-package me.tiptap.tiptap
+package me.tiptap.tiptap.data
 
 import android.net.Uri
 import java.util.*
