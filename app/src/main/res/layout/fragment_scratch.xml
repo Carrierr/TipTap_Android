@@ -11,7 +11,7 @@
         tools:context = ".MainActivity"
         >
 
-        <me.tiptap.tiptap.ScratchCard
+        <me.tiptap.tiptap.scratch.ScratchCard
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
@@ -26,7 +26,7 @@
             android:id="@+id/scratchView"
             android:text="Hello！">
 
-        </me.tiptap.tiptap.ScratchCard>
+        </me.tiptap.tiptap.scratch.ScratchCard>
 
 
 
