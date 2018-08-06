@@ -82,6 +82,7 @@ public class ScratchCard extends TextView {
      */
     private Paint mBitmapPaint;
 
+
     /**
      * Paint properties for erasing the scratch region.
      */
@@ -162,13 +163,11 @@ public class ScratchCard extends TextView {
 
         mErasePath = new Path();
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
-
+        mBitmapPaint.setAlpha(160);
 
         Bitmap scratchBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.orange);
         mDrawable = new BitmapDrawable(getResources(), scratchBitmap);
         mDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-
-
     }
 
     @Override
