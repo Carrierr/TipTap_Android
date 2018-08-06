@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.databinding.FragmentScratchBinding
 
+
+
 class ScratchFragment : Fragment() {
 
     private lateinit var binding : FragmentScratchBinding
@@ -17,9 +19,11 @@ class ScratchFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_scratch, container, false)
 
         return binding.root
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
     }
 }
+

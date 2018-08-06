@@ -49,6 +49,7 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$support_version"
     implementation "com.android.support:design:$support_version"
     implementation "com.android.support.constraint:constraint-layout:$constraint_version"
+    implementation "com.github.cooltechworks:ScratchView:v1.1"
 
     //rx
     implementation "io.reactivex.rxjava2:rxjava:$rx_java_version"

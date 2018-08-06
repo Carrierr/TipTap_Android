@@ -5,30 +5,38 @@
     xmlns:tools = "http://schemas.android.com/tools"
     >
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width = "match_parent"
         android:layout_height = "match_parent"
-        tools:context = ".MainActivity"
-        >
-
-        <me.tiptap.tiptap.scratch.ScratchCard
+        android:orientation = "vertical">
+        
+        <FrameLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:background="#c5123456"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="50dp"
-            android:paddingBottom="50dp"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:textColor="#ffffff"
-            android:id="@+id/scratchView"
-            android:text="Hello！">
+            android:layout_above="@+id/progress_bar">
 
-        </me.tiptap.tiptap.scratch.ScratchCard>
+            <me.tiptap.tiptap.scratch.ScratchCard
+                android:id="@+id/scratch"
+                android:layout_width="match_parent"
+                android:layout_height="599dp"
+                android:background="#c5123456"
+                android:gravity="center"
+                android:paddingBottom="50dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="50dp"
+                android:text="Hello Tiptap！"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+        </FrameLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal" />
 
 
-
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 </layout>
