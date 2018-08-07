@@ -1,5 +1,6 @@
 package me.tiptap.tiptap.diaries
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.net.Uri
@@ -10,9 +11,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import io.reactivex.disposables.CompositeDisposable
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.common.rx.RxBus
+import me.tiptap.tiptap.common.view.DatePickerDialogFragment
 import me.tiptap.tiptap.data.Diary
 import me.tiptap.tiptap.databinding.FragmentDiariesBinding
 import me.tiptap.tiptap.diarydetail.DiaryDetailActivity
@@ -25,9 +28,12 @@ class DiariesFragment : Fragment() {
     private val bus = RxBus.getInstance()
     private val disposables: CompositeDisposable = CompositeDisposable()
 
+    private lateinit var datePickerDialog : DatePickerDialogFragment
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_diaries, container, false)
+        binding.fragment = this
 
         return binding.root
     }
@@ -70,6 +76,15 @@ class DiariesFragment : Fragment() {
         }
     }
 
+    fun onDateFindButtonClick() {
+        if (!::datePickerDialog.isInitialized) {
+            datePickerDialog = DatePickerDialogFragment()
+        }
+
+        activity?.let {
+            datePickerDialog.show(it.supportFragmentManager, it.getString(R.string.app_name))
+        }
+    }
 
     override fun onPause() {
         super.onPause()
