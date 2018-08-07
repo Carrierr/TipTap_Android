@@ -1,9 +1,9 @@
 package me.tiptap.tiptap.diaries
 
 
+import android.databinding.ObservableField
 import android.support.v7.widget.RecyclerView
 import android.view.*
-import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.common.action.GeneralActionModeCallback
@@ -20,6 +20,7 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
     val checkSubject = PublishSubject.create<Diary>()
 
     var actionModeCallback: GeneralActionModeCallback? = null
+    var isCheckboxAvailable : ObservableField<Boolean> = ObservableField(false)
 
 
     fun addItem(item: Diary) = dataSet.add(item)
@@ -57,8 +58,8 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
      */
     fun onLongClickEventPublished(item: View) {
         if (actionModeCallback == null) {
-
-            changeCheckboxVisibility(true)
+            isCheckboxAvailable.set(true)
+//            changeCheckboxVisibility(true)
 
             actionModeCallback = GeneralActionModeCallback().apply {
                 startActionMode(item, R.menu.menu_action_list, item.context.getString(R.string.app_name), null)
@@ -67,7 +68,7 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
                     override fun onDestroyActionMode(mode: ActionMode) {
                         actionModeCallback = null
                         checkedDataSet.clear()
-                        changeCheckboxVisibility(false)
+                        isCheckboxAvailable.set(false)
                     }
 
                     override fun onActionItemClicked(item: MenuItem) {
@@ -79,18 +80,6 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
         }
     }
 
-    /**
-     * Change all item's checkbox visibility.
-     */
-    private fun changeCheckboxVisibility(state: Boolean) {
-        Observable.fromIterable(dataSet)
-                .filter { it.isCheckboxAvailable != state }
-                .subscribe {
-                    it.isCheckboxAvailable = state
-                    notifyDataSetChanged()
-                }
-    }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiariesViewHolder =
             DiariesViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_diary, parent, false))
@@ -100,6 +89,7 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
         holder.apply {
             getItem(position).apply {
                 binding?.diary = this
+                binding?.adapter = this@DiariesAdapter
 
                 getClickObservable(this).subscribe(clickSubject)
                 getLongClickObservable().subscribe(longClickSubject)

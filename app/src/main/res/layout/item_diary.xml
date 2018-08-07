@@ -5,6 +5,9 @@
     >
     
     <data>
+        <variable
+            name = "adapter"
+            type = "me.tiptap.tiptap.diaries.DiariesAdapter"/>
         
         <import
             alias = "View"
@@ -30,7 +33,7 @@
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:checked = "@{diary.selected}"
-            android:visibility = "@{diary.checkboxAvailable ? View.VISIBLE : View.GONE}"
+            android:visibility = "@{adapter.checkboxAvailable ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf = "parent"
             app:layout_constraintStart_toStartOf = "parent"
             app:layout_constraintTop_toTopOf = "parent"

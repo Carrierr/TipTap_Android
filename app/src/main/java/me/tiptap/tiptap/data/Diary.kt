@@ -9,6 +9,5 @@ data class Diary(
         val content: String,
         val location: String,
         val photo: Uri,
-        var isSelected: Boolean = false,
-        var isCheckboxAvailable: Boolean = false
+        var isSelected: Boolean = false
 )
