@@ -7,7 +7,7 @@ import android.view.View
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.databinding.ActivityDiaryWritingBinding
 
-class DiaryWriting : AppCompatActivity() {
+class DiaryWritingActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityDiaryWritingBinding
 

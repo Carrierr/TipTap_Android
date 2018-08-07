@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import me.tiptap.tiptap.databinding.FragmentMainBinding
-import me.tiptap.tiptap.diarywriting.DiaryWriting
+import me.tiptap.tiptap.diarywriting.DiaryWritingActivity
 
 class MainFragment : Fragment() {
 
@@ -20,7 +20,7 @@ class MainFragment : Fragment() {
 
         binding.fabMain.setOnClickListener(object:View.OnClickListener {
             override fun onClick(view:View):Unit{
-                val intent = Intent(context, DiaryWriting::class.java)
+                val intent = Intent(context, DiaryWritingActivity::class.java)
                 startActivity(intent)
             }
         })
