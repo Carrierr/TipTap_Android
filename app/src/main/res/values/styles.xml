@@ -9,4 +9,9 @@
         <item name = "colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="SuperActivityToast_Progress_ProgressBar" parent="android:Widget.Holo.ProgressBar">
+        <item name="android:layout_width">32dp</item>
+        <item name="android:layout_marginLeft">8dp</item>
+    </style>
+
 </resources>

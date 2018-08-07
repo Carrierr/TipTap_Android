@@ -1,10 +1,25 @@
+
+/**
+ *
+ * Copyright 2016 Harish Sridharan
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package me.tiptap.tiptap.scratch;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -17,40 +32,30 @@ import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.widget.TextView;
 
+import com.cooltechworks.utils.BitmapUtils;
+
 import me.tiptap.tiptap.R;
 
 /**
- * ScratchCard 刮刮卡
- * Created by Harish,extended by ditclear  on 16/6/5.
+ * Created by Harish on 25/03/16.
  */
 public class ScratchCard extends TextView {
 
 
     public interface IRevealListener {
         public void onRevealed(ScratchCard tv);
+        public void onRevealPercentChangedListener(ScratchCard stv, float percent);
     }
 
     public static final float STROKE_WIDTH = 12f;
 
     private float mX, mY;
     private static final float TOUCH_TOLERANCE = 4;
-    private Paint mPaint;
-    private int gap=12;            //间隙大小
-    private int radius=20;         //圆的半径
-    private int remain;         //遗留下的距离
-    private int circleNum;      //圆形数量
-    private int color;          //圆的颜色
-
-    private int pLeft=getPaddingLeft();
-    private int pTop=getPaddingTop();
-    private int pRight=getPaddingRight();
-    private int pBottom=getPaddingBottom();
-
-
 
     /**
      * Bitmap holding the scratch region.
@@ -77,6 +82,7 @@ public class ScratchCard extends TextView {
      */
     private Paint mBitmapPaint;
 
+
     /**
      * Paint properties for erasing the scratch region.
      */
@@ -93,9 +99,21 @@ public class ScratchCard extends TextView {
     private BitmapDrawable mDrawable;
 
 
+    /**
+     * Listener object callback reference to send back the callback when the text has been revealed.
+     */
     private IRevealListener mRevealListener;
 
-    private boolean mIsRevealed = false;
+    /**
+     * Reveal percent value.
+     */
+    private float mRevealPercent;
+
+    /**
+     * Thread Count
+     */
+    private int mThreadCount = 0;
+
 
 
     public ScratchCard(Context context) {
@@ -127,10 +145,6 @@ public class ScratchCard extends TextView {
      */
     private void init() {
 
-        mPaint=new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setColor(Color.WHITE);
-        mPaint.setDither(true);
-        mPaint.setStyle(Paint.Style.FILL);
 
         mTouchPath = new Path();
 
@@ -143,32 +157,26 @@ public class ScratchCard extends TextView {
         mErasePaint.setStrokeCap(Paint.Cap.ROUND);
         mErasePaint.setXfermode(new PorterDuffXfermode(
                 PorterDuff.Mode.CLEAR));
-        setStrokeWidth(6);
+        setStrokeWidth(20);
 
         mGradientBgPaint = new Paint();
 
         mErasePath = new Path();
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
+        mBitmapPaint.setAlpha(160);
 
-
-        Bitmap scratchBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_background);
+        Bitmap scratchBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.orange);
         mDrawable = new BitmapDrawable(getResources(), scratchBitmap);
         mDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
-
-
     }
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-
-        if (remain==0) remain=(w-gap)%(radius*2+gap);
-        circleNum=(w-gap)/(radius*2+gap);
-        mScratchBitmap = Bitmap.createBitmap(w-pLeft,
-                h-pTop, Bitmap.Config.ARGB_8888);
+        mScratchBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         mCanvas = new Canvas(mScratchBitmap);
 
-        Rect rect = new Rect(pLeft, pTop, pLeft+mScratchBitmap.getWidth(), pTop+mScratchBitmap.getHeight());
+        Rect rect = new Rect(0, 0, mScratchBitmap.getWidth(), mScratchBitmap.getHeight());
         mDrawable.setBounds(rect);
 
         int startGradientColor = ContextCompat.getColor(getContext(), R.color.scratch_start_gradient);
@@ -185,14 +193,7 @@ public class ScratchCard extends TextView {
     protected void onDraw(Canvas canvas) {
 
         super.onDraw(canvas);
-        for (int i = 0; i < circleNum; i++) {
-
-            float x=gap+radius+remain/2+i*(radius*2+gap);
-            canvas.drawCircle(x,0,radius,mPaint);
-            canvas.drawCircle(x,getHeight(),radius,mPaint);
-        }
-
-        canvas.drawBitmap(mScratchBitmap,0 , 0, mBitmapPaint);
+        canvas.drawBitmap(mScratchBitmap, 0, 0, mBitmapPaint);
         canvas.drawPath(mErasePath, mErasePaint);
 
     }
@@ -216,10 +217,7 @@ public class ScratchCard extends TextView {
 
             drawPath();
         }
-        mX = x;
-        mY = y;
 
-        drawPath();
         mTouchPath.reset();
         mTouchPath.addCircle(mX, mY, 30, Path.Direction.CW);
 
@@ -292,7 +290,7 @@ public class ScratchCard extends TextView {
     }
 
     public boolean isRevealed() {
-        return mIsRevealed;
+        return mRevealPercent == 1;
     }
 
     private void checkRevealed() {
@@ -306,30 +304,48 @@ public class ScratchCard extends TextView {
             int height = bounds[3] - top;
 
 
-            new AsyncTask<Integer,Void,Boolean>() {
+            // Do not create multiple calls to compare.
+            if(mThreadCount > 1) {
+                return;
+            }
+
+            mThreadCount++;
+
+            new AsyncTask<Integer, Void, Float>() {
 
                 @Override
-                protected Boolean doInBackground(Integer... params) {
+                protected Float doInBackground(Integer... params) {
 
-                    int left = params[0];
-                    int top = params[1];
-                    int width = params[2];
-                    int height = params[3];
+                    try {
+                        int left = params[0];
+                        int top = params[1];
+                        int width = params[2];
+                        int height = params[3];
 
-                    Bitmap croppedBitmap = Bitmap.createBitmap(mScratchBitmap, left, top, width, height );
-                    Bitmap emptyBitmap = Bitmap.createBitmap(croppedBitmap.getWidth(), croppedBitmap.getHeight(), croppedBitmap.getConfig());
+                        Bitmap croppedBitmap = Bitmap.createBitmap(mScratchBitmap, left, top, width, height);
 
-                    return(emptyBitmap.sameAs(croppedBitmap));
+                        return BitmapUtils.getTransparentPixelPercent(croppedBitmap);
+                    } finally {
+                        mThreadCount--;
+                        Log.d("Thread Count", Integer.toString(mThreadCount));
+
+                    }
                 }
 
-                public void onPostExecute(Boolean hasRevealed) {
+                public void onPostExecute(Float percentRevealed) {
 
-                    if( ! mIsRevealed) {
-                        // still not revealed.
+                    // check if not revealed before.
+                    if( ! isRevealed()) {
 
-                        mIsRevealed = hasRevealed;
+                        float oldValue = mRevealPercent;
+                        mRevealPercent = percentRevealed;
 
-                        if( mIsRevealed) {
+                        if(oldValue != percentRevealed) {
+                            mRevealListener.onRevealPercentChangedListener(ScratchCard.this, percentRevealed);
+                        }
+
+                        // if now revealed.
+                        if( isRevealed()) {
                             mRevealListener.onRevealed(ScratchCard.this);
                         }
                     }
@@ -427,5 +443,4 @@ public class ScratchCard extends TextView {
 
         return new int[] {left, top, left + width, top + height};
     }
-
 }
