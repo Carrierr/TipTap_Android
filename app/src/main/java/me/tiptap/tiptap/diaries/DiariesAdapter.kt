@@ -1,21 +1,83 @@
 package me.tiptap.tiptap.diaries
 
+
+import android.databinding.ObservableField
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.*
 import io.reactivex.subjects.PublishSubject
 import me.tiptap.tiptap.R
+import me.tiptap.tiptap.common.action.GeneralActionModeCallback
+import me.tiptap.tiptap.common.action.OnActionListener
 import me.tiptap.tiptap.data.Diary
 
 class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
 
     private val dataSet: MutableList<Diary> = mutableListOf()
-    val clickSubject: PublishSubject<Diary> = PublishSubject.create()
+    private val checkedDataSet: MutableList<Diary> = mutableListOf() //checked list
+
+    val clickSubject = PublishSubject.create<Diary>()
+    val longClickSubject = PublishSubject.create<View>()
+    val checkSubject = PublishSubject.create<Diary>()
+
+    var actionModeCallback: GeneralActionModeCallback? = null
+    var isCheckboxAvailable : ObservableField<Boolean> = ObservableField(false)
 
 
-    fun addItems(items : MutableList<Diary>) {
+    fun addItem(item: Diary) = dataSet.add(item)
+
+    fun addItems(items: MutableList<Diary>) {
         dataSet.addAll(items)
         notifyDataSetChanged()
+    }
+
+    private fun updateCheckedItems(item: Diary) {
+        if (!checkedDataSet.contains(item) && item.isSelected) {
+            checkedDataSet.add(item)
+        } else if (checkedDataSet.contains(item) && !item.isSelected) {
+            checkedDataSet.remove(item)
+        }
+    }
+
+    private fun deleteItems() {
+        if (checkedDataSet.size > 0) {
+            dataSet.removeAll(checkedDataSet)
+            notifyDataSetChanged()
+        }
+    }
+
+    /**
+     * When item Checked changed event is published.
+     */
+    fun onCheckedChangeEventPublished(item: Diary) {
+        updateCheckedItems(item)
+        actionModeCallback?.highlightSelectedCountTitle(R.color.colorAccent, checkedDataSet.size)
+    }
+
+    /**
+     * When item longClick event is published.
+     */
+    fun onLongClickEventPublished(item: View) {
+        if (actionModeCallback == null) {
+            isCheckboxAvailable.set(true)
+//            changeCheckboxVisibility(true)
+
+            actionModeCallback = GeneralActionModeCallback().apply {
+                startActionMode(item, R.menu.menu_action_list, item.context.getString(R.string.app_name), null)
+
+                onActionListener = object : OnActionListener {
+                    override fun onDestroyActionMode(mode: ActionMode) {
+                        actionModeCallback = null
+                        checkedDataSet.clear()
+                        isCheckboxAvailable.set(false)
+                    }
+
+                    override fun onActionItemClicked(item: MenuItem) {
+                        if (item.itemId == R.id.menu_action_delete)
+                            deleteItems()
+                    }
+                }
+            }
+        }
     }
 
 
@@ -25,9 +87,13 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
 
     override fun onBindViewHolder(holder: DiariesViewHolder, position: Int) {
         holder.apply {
-            dataSet[position].apply {
+            getItem(position).apply {
                 binding?.diary = this
+                binding?.adapter = this@DiariesAdapter
+
                 getClickObservable(this).subscribe(clickSubject)
+                getLongClickObservable().subscribe(longClickSubject)
+                getCheckObservable(this).subscribe(checkSubject)
             }
         }
     }
@@ -35,6 +101,6 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
     override fun getItemCount(): Int = dataSet.size
 
     //get item by position
-    fun getItem(position : Int) = dataSet[position]
+    fun getItem(position: Int) = dataSet[position]
 
 }

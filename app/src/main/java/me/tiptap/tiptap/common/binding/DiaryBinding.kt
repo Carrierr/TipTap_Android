@@ -1,4 +1,4 @@
-package me.tiptap.tiptap.binding
+package me.tiptap.tiptap.common.binding
 
 import android.databinding.BindingAdapter
 import android.widget.TextView

@@ -6,47 +6,70 @@
     
     <data>
         <variable
+            name = "adapter"
+            type = "me.tiptap.tiptap.diaries.DiariesAdapter"/>
+        
+        <import
+            alias = "View"
+            type = "android.view.View"
+            />
+        
+        <variable
             name = "diary"
-            type = "me.tiptap.tiptap.data.Diary"/>
+            type = "me.tiptap.tiptap.data.Diary"
+            />
     </data>
     
     <android.support.constraint.ConstraintLayout
         android:layout_width = "match_parent"
-        android:layout_height = "wrap_content"
+        android:layout_height = "90dp"
+        android:layout_marginBottom = "2dp"
+        android:background = "@android:color/white"
         android:padding = "14dp"
         >
         
-        <TextView
-            android:id = "@+id/text_day"
+        <CheckBox
+            android:id = "@+id/check_diary"
             android:layout_width = "wrap_content"
-            day="@{diary.date}"
-            app:layout_constraintHorizontal_weight="3"
             android:layout_height = "wrap_content"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintEnd_toStartOf="@+id/text_location"
+            android:checked = "@{diary.selected}"
+            android:visibility = "@{adapter.checkboxAvailable ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf = "parent"
             app:layout_constraintStart_toStartOf = "parent"
             app:layout_constraintTop_toTopOf = "parent"
             />
         
         <TextView
-            android:id = "@+id/text_location"
-            android:layout_width = "0dp"
-            android:maxLines="1"
-            android:text="@{diary.location}"
-            android:layout_marginStart="10dp"
+            android:id = "@+id/text_diary_day"
+            day = "@{diary.date}"
+            android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
+            app:layout_constraintEnd_toStartOf = "@+id/text_diary_location"
+            app:layout_constraintHorizontal_bias = "0"
+            app:layout_constraintHorizontal_weight = "3"
+            app:layout_constraintStart_toEndOf = "@+id/check_diary"
+            app:layout_constraintTop_toTopOf = "parent"
+            />
+        
+        <TextView
+            android:id = "@+id/text_diary_location"
+            android:layout_width = "0dp"
+            android:layout_height = "wrap_content"
+            android:layout_marginStart = "10dp"
+            android:maxLines = "1"
+            android:text = "@{diary.location}"
             app:layout_constraintEnd_toEndOf = "parent"
             app:layout_constraintTop_toTopOf = "parent"
             />
         
         <TextView
-            android:id="@+id/text_diary"
-            app:layout_constraintTop_toBottomOf="@+id/text_location"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@{diary.content}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width = "match_parent"
+            android:id = "@+id/text_diary_content"
+            android:layout_width = "0dp"
             android:layout_height = "wrap_content"
+            android:text = "@{diary.content}"
+            app:layout_constraintBottom_toBottomOf = "parent"
+            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintStart_toStartOf = "@+id/text_diary_day"
             />
     
     </android.support.constraint.ConstraintLayout>

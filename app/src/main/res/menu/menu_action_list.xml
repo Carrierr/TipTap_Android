@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    >
+
+    <item
+        android:title="@string/app_name"
+        android:id="@+id/menu_action_delete"
+        android:icon="@mipmap/ic_launcher"
+        app:showAsAction ="always"/>
+    
+</menu>

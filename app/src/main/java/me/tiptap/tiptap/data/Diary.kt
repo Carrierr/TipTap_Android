@@ -5,8 +5,9 @@ import java.util.*
 
 data class Diary(
         val id: Int,
-        val date : Date,
+        val date: Date,
         val content: String,
         val location: String,
-        val photo: Uri
+        val photo: Uri,
+        var isSelected: Boolean = false
 )
