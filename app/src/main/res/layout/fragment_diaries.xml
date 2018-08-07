@@ -2,30 +2,42 @@
 <layout
     xmlns:android = "http://schemas.android.com/apk/res/android"
     xmlns:app = "http://schemas.android.com/apk/res-auto"
-    xmlns:tools = "http://schemas.android.com/tools"
     >
+    
     
     <android.support.constraint.ConstraintLayout
         android:layout_width = "match_parent"
         android:layout_height = "match_parent"
-        tools:context = ".MainActivity"
+        android:background = "#777777"
         >
         
+        <android.support.v7.widget.Toolbar
+            android:id = "@+id/toolbar_diaries"
+            android:layout_width = "match_parent"
+            android:layout_height = "?android:attr/actionBarSize"
+            android:background = "@android:color/white"
+            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintTop_toTopOf = "parent"
+            app:title = "@string/app_name"
+            />
+        
         <Button
-            android:id="@+id/btn_diaries_find"
+            android:id = "@+id/btn_diaries_find"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
+            app:layout_constraintTop_toBottomOf = "@+id/toolbar_diaries"
             />
-      
+        
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_diaries"
-            app:layout_constraintTop_toBottomOf="@+id/btn_diaries_find"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:id = "@+id/recycler_diaries"
             android:layout_width = "0dp"
             android:layout_height = "0dp"
-        />
+            app:layout_constraintBottom_toBottomOf = "parent"
+            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintTop_toBottomOf = "@+id/btn_diaries_find"
+            />
     
     </android.support.constraint.ConstraintLayout>
 </layout>
