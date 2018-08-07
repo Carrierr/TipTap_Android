@@ -4,6 +4,11 @@
     xmlns:app = "http://schemas.android.com/apk/res-auto"
     >
     
+    <data>
+        <variable
+            name = "fragment"
+            type = "me.tiptap.tiptap.diaries.DiariesFragment"/>
+    </data>
     
     <android.support.constraint.ConstraintLayout
         android:layout_width = "match_parent"
@@ -25,6 +30,7 @@
         <Button
             android:id = "@+id/btn_diaries_find"
             android:layout_width = "wrap_content"
+            android:onClick="@{() -> fragment.onDateFindButtonClick()}"
             android:layout_height = "wrap_content"
             app:layout_constraintTop_toBottomOf = "@+id/toolbar_diaries"
             />
