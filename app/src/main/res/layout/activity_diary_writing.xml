@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    xmlns:tools = "http://schemas.android.com/tools"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text = "Route"
+            android:textStyle="bold"
+            android:layout_marginTop="13dp"
+            android:layout_centerHorizontal="true"
+            android:id = "@+id/route"/>
+        <TextView
+            android:id = "@+id/complete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "완료"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:textStyle="bold"
+            android:layout_marginTop="13dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "2018 July 28 FRI 14:20"
+            android:layout_below="@+id/route"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:id = "@+id/date"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id = "@+id/location"
+            android:layout_below = "@+id/date"
+            android:layout_centerHorizontal="true"
+            android:text = "망원동 키오스크 카페"/>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below = "@+id/location"
+            android:orientation = "vertical"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:layout_weight="1"
+                android:hint="당신의 여행 이야기를 적어주세요."
+                android:inputType="textCapSentences|textMultiLine" />s
+        </LinearLayout>
+    </RelativeLayout>
+</layout>
