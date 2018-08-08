@@ -9,8 +9,10 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.databinding.ActivityDiaryWritingBinding
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 class DiaryWritingActivity : AppCompatActivity() {
 
@@ -30,36 +32,69 @@ class DiaryWritingActivity : AppCompatActivity() {
             }
         })
 
+        binding.location.setOnClickListener(object: View.OnClickListener{
+            override fun onClick(view: View):Unit{
+               // val intent = Intent(this@DiaryWritingActivity, FindLocationActivity::class.java)
+               // startActivity(intent)
+            }
+        })
     }
 
-    @TargetApi(Build.VERSION_CODES.O)
     fun getFormattedDate() {
-        val time = LocalDateTime.now()
-        var str = ""
-        val monthFormatter = DateTimeFormatter.ofPattern("MM")
-        val monthFormatted = time.format(monthFormatter)
-        val monthEng:String = getMonth(monthFormatted.toString())
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val time = LocalDateTime.now()
+            var str = ""
+            val monthFormatter = DateTimeFormatter.ofPattern("MM")
+            val monthFormatted = time.format(monthFormatter)
+            val monthEng:String = getMonth(monthFormatted.toString())
 
-        val yearFormatter = DateTimeFormatter.ofPattern("YYYY")
-        val yearFormatted = time.format(yearFormatter)
+            val yearFormatter = DateTimeFormatter.ofPattern("YYYY")
+            val yearFormatted = time.format(yearFormatter)
 
-        str += "$yearFormatted $monthEng"
+            str += "$yearFormatted $monthEng"
 
-        val dayFormatter = DateTimeFormatter.ofPattern("dd")
-        val dayFormatted = time.format(dayFormatter)
+            val dayFormatter = DateTimeFormatter.ofPattern("dd")
+            val dayFormatted = time.format(dayFormatter)
 
-        str += " $dayFormatted " + getDay()
+            str += " $dayFormatted " + getDay()
 
-        val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
-        val timeFormatted = time.format(timeFormatter)
-        str += " $timeFormatted"
+            val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+            val timeFormatted = time.format(timeFormatter)
+            str += " $timeFormatted"
 
-        binding.date.setText("$str")
+            binding.date.setText(str)
+
+        } else {
+            //TODO("VERSION.SDK_INT < O")
+            val year = SimpleDateFormat("yyyy")
+            val yearDate = year.format(Date())
+            var str = ""
+            str += yearDate.toString()
+
+            val month = SimpleDateFormat("MM")
+            val monthDate = month.format(Date())
+            str += " " + getMonth(monthDate.toString())
+
+            val day = SimpleDateFormat("dd")
+            var dayDate = day.format(Date())
+            str += " " + dayDate.toString() + " " + getDay()
+
+            val time = SimpleDateFormat("HH:mm")
+            val timeDate = time.format(Date())
+            str += " " + timeDate.toString()
+
+            binding.date.setText(str)
+
+
+            //binding.date.setText(currentDate.toString())
+
+        }
+
     }
     fun getMonth(month:String) : String{
         when(month) {
             "01" -> return "JANUARY"
-            "02" -> return "FEBUARY"
+            "02" -> return "FEBURARY"
             "03" -> return "MARCH"
             "04" -> return "APRIL"
             "05" -> return "MAY"
