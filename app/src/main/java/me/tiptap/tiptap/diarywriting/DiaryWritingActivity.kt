@@ -7,8 +7,11 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.databinding.ActivityDiaryWritingBinding
+
+
 
 
 
@@ -16,6 +19,13 @@ class DiaryWritingActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityDiaryWritingBinding
 
+    private val PERMISSION_CODE = 100
+
+    // Int constant that's used to handle the result back when an image is selected from the
+    // device's gallery.
+    private val RESULT_LOAD_IMAGE = 1
+
+    private val mImageView: ImageView? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +58,6 @@ class DiaryWritingActivity : AppCompatActivity() {
                 alert.show()
             }
         })
+
     }
-
-
 }
