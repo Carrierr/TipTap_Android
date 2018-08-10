@@ -13,7 +13,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:text = "ROUTE"
+            android:text = "Route"
             android:textSize = "28sp"
             android:textStyle="bold"
             android:layout_marginTop="13dp"
@@ -50,39 +50,18 @@
         
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below = "@+id/location"
-            android:id = "@+id/linearLayout"
             android:orientation = "vertical"
             android:layout_marginTop="20dp">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id = "@+id/picture" />
-
             <EditText
-                android:id = "@+id/editDiary"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:layout_weight="1"
                 android:hint="당신의 여행 이야기를 적어주세요."
-                android:inputType="textCapSentences|textMultiLine"
-                android:maxLength="800"
-                android:gravity = "top"
-                android:imeOptions="actionDone"/>
+                android:inputType="textCapSentences|textMultiLine" />s
         </LinearLayout>
-        <android.support.v7.widget.Toolbar
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom"
-            android:background="#FFFFFF"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
     </RelativeLayout>
 </layout>
