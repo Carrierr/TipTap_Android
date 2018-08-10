@@ -58,10 +58,57 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:id = "@+id/diary_write"
                 android:background="@android:color/transparent"
                 android:layout_weight="1"
                 android:hint="당신의 여행 이야기를 적어주세요."
-                android:inputType="textCapSentences|textMultiLine" />s
+                android:inputType="textCapSentences|textMultiLine" />
+
         </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:background="#FFFFFF">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id = "@+id/lock"
+                    android:layout_width="30dp"
+                    android:tint = "@android:color/darker_gray"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/padlock" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id = "@+id/priv"
+                    android:text = "비공개"
+                    android:layout_toRightOf="@+id/lock"
+                    android:layout_centerVertical="true"
+                    android:textSize = "15sp"/>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:src = "@drawable/gallery"
+                    android:tint = "@android:color/darker_gray"
+                    android:clickable="true"
+                    android:layout_toRightOf="@+id/priv"
+                    android:layout_margin = "10dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight = "true"
+                    android:text = "0"
+                    android:id = "@+id/keyboard"
+                    android:layout_centerVertical="true"
+                    android:textSize = "15sp"
+                    android:layout_margin = "10dp"/>
+            </RelativeLayout>
+        </FrameLayout>
     </RelativeLayout>
+
 </layout>
