@@ -19,7 +19,7 @@
         </activity>
         <activity android:name=".diarydetail.DiaryDetailActivity"></activity>
         <activity android:name=".diarywriting.DiaryWritingActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
 
     </application>
 

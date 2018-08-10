@@ -48,29 +48,35 @@
             android:text = "위치설정"
             android:clickable="true"/>
         
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below = "@+id/location"
-            android:orientation = "vertical"
             android:layout_marginTop="20dp">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/myPicture"
+                android:adjustViewBounds="true"/>
 
             <EditText
+                android:id="@+id/diary_write"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id = "@+id/diary_write"
+                android:layout_below = "@+id/myPicture"
+                android:gravity = "top"
                 android:background="@android:color/transparent"
-                android:layout_weight="1"
                 android:hint="당신의 여행 이야기를 적어주세요."
                 android:inputType="textCapSentences|textMultiLine" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
+            android:layout_alignBottom="@+id/location"
             android:background="#FFFFFF">
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -91,6 +97,7 @@
                     android:layout_centerVertical="true"
                     android:textSize = "15sp"/>
                 <ImageView
+                    android:id = "@+id/gallery"
                     android:layout_width="30dp"
                     android:layout_height="wrap_content"
                     android:src = "@drawable/gallery"
