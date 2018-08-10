@@ -9,7 +9,8 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.view.View
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.Toast
 import me.tiptap.tiptap.R
@@ -27,36 +28,44 @@ class DiaryWritingActivity : AppCompatActivity()  {
 
         getFormattedDate(binding)
 
-        binding.complete.setOnClickListener(object: View.OnClickListener {
-            override fun onClick(view: View):Unit{
-                finish()
-            }
-        })
+        binding.complete.setOnClickListener { finish() }
 
-        binding.location.setOnClickListener(object: View.OnClickListener{
-            override fun onClick(view: View):Unit{
-                val alert = AlertDialog.Builder(this@DiaryWritingActivity)
-                alert.setTitle("위치입력")
+        binding.location.setOnClickListener {
+            val alert = AlertDialog.Builder(this@DiaryWritingActivity)
+            alert.setTitle("위치입력")
 
-                val input = EditText(this@DiaryWritingActivity)
-                alert.setView(input)
+            val input = EditText(this@DiaryWritingActivity)
+            alert.setView(input)
 
-                alert.setNegativeButton("취소", null)
-                alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialog, whichButton ->
-                    val place = input.text.toString()
-                    // Do something with value!
-                    binding.location.setText(place)
-                })
+            alert.setNegativeButton("취소", null)
+            alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialog, whichButton ->
+                val place = input.text.toString()
+                // Do something with value!
+                binding.location.setText(place)
+            })
 
-                alert.show()
-            }
-        })
+            alert.show()
+        }
         binding.gallery.setOnClickListener {
             val intent = Intent()
             intent.setType("image/*")
             intent.setAction(Intent.ACTION_GET_CONTENT)
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1)
         }
+
+        binding.diaryWrite.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                binding.keyboard.setText(String.format(Integer.toString(p0!!.length) + "/800"))
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binding.keyboard.setText("0/800")
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binding.keyboard.setText(p0)
+            }
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
