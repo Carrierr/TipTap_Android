@@ -28,9 +28,9 @@ class DiaryWritingActivity : AppCompatActivity()  {
 
         getFormattedDate(binding)
 
-        binding.complete.setOnClickListener { finish() }
+        binding.textComplete.setOnClickListener { finish() }
 
-        binding.location.setOnClickListener {
+        binding.textLocation.setOnClickListener {
             val alert = AlertDialog.Builder(this@DiaryWritingActivity)
             alert.setTitle("위치입력")
 
@@ -41,12 +41,12 @@ class DiaryWritingActivity : AppCompatActivity()  {
             alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialog, whichButton ->
                 val place = input.text.toString()
                 // Do something with value!
-                binding.location.setText(place)
+                binding.textLocation.setText(place)
             })
 
             alert.show()
         }
-        binding.gallery.setOnClickListener {
+        binding.imgGallery.setOnClickListener {
             val intent = Intent()
             intent.setType("image/*")
             intent.setAction(Intent.ACTION_GET_CONTENT)
@@ -55,15 +55,15 @@ class DiaryWritingActivity : AppCompatActivity()  {
 
         binding.diaryWrite.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-                binding.keyboard.setText(String.format(Integer.toString(p0!!.length) + "/800"))
+                binding.textKeyboard.setText(String.format(Integer.toString(p0!!.length) + "/800"))
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.keyboard.setText("0/800")
+                binding.textKeyboard.setText("0/800")
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.keyboard.setText(p0)
+                binding.textKeyboard.setText(p0)
             }
         })
     }
@@ -75,7 +75,7 @@ class DiaryWritingActivity : AppCompatActivity()  {
                 if(data !=null){
                     try{
                         val bitmap:Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, data.data )
-                        binding.myPicture.setImageBitmap(bitmap)
+                        binding.imgMyPicture.setImageBitmap(bitmap)
                     }catch (e:IOException){
                         e.printStackTrace()
                     }
