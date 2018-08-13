@@ -60,7 +60,7 @@
                 android:adjustViewBounds="true"/>
 
             <EditText
-                android:id="@+id/diary_write"
+                android:id="@+id/edit_diary_write"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below = "@+id/img_myPicture"

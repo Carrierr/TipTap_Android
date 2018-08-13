@@ -9,9 +9,17 @@
         android:layout_width = "match_parent"
         android:layout_height = "match_parent"
         android:orientation = "vertical">
-        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text = "button"/>
+        </RelativeLayout>
+
         <FrameLayout
-            android:id="@+id/container"
+            android:id="@+id/layout_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -19,13 +27,13 @@
                 android:id="@+id/scratch"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#c5123456"
+                android:background="#00000000"
                 android:gravity="center"
                 android:paddingBottom="50dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:paddingTop="50dp"
-                android:text="Hello Tiptap！"
+                android:text="@string/scratch_text"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
         </FrameLayout>
