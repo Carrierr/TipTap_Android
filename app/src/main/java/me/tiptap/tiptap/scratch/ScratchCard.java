@@ -164,7 +164,7 @@ public class ScratchCard extends TextView {
 
         mErasePath = new Path();
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
-        mBitmapPaint.setAlpha(160);
+        mBitmapPaint.setAlpha(180);
 
         scratchBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.orange);
         mDrawable = new BitmapDrawable(getResources(), scratchBitmap);

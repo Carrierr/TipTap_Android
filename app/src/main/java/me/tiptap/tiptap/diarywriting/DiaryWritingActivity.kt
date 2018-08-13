@@ -31,13 +31,13 @@ class DiaryWritingActivity : AppCompatActivity()  {
 
         binding.textLocation.setOnClickListener {
             val alert = AlertDialog.Builder(this@DiaryWritingActivity)
-            alert.setTitle("@string/location_confirm")
+            alert.setTitle(R.string.location_confirm)
 
             val input = EditText(this@DiaryWritingActivity)
             alert.setView(input)
 
-            alert.setNegativeButton("@string/cancel", null)
-            alert.setPositiveButton("@string/ok") { _, _ ->
+            alert.setNegativeButton(R.string.cancle, null)
+            alert.setPositiveButton(R.string.ok) { _, _ ->
                 val place = input.text.toString()
                 // Do something with value!
                 binding.textLocation.text = place

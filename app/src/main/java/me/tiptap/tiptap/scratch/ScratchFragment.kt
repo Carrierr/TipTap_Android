@@ -27,10 +27,12 @@ class ScratchFragment : Fragment() {
                 if(percent >= 0.7f) {
                     Log.d("ScratchPer", "Done!")
                     val anim = AlphaAnimation(1.0f, 0.0f)
-                    anim.duration = 1000
+                    anim.duration = 500
                     anim.fillAfter = true
                     binding.scratch.startAnimation(anim)
-
+                    binding.progressBar.visibility = View.INVISIBLE
+                    binding.textLittlebit.visibility = View.INVISIBLE
+                    binding.textScratch.visibility = View.INVISIBLE
                 }
             }
 
