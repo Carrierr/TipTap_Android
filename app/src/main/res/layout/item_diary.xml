@@ -5,9 +5,11 @@
     >
     
     <data>
+        
         <variable
             name = "adapter"
-            type = "me.tiptap.tiptap.diaries.DiariesAdapter"/>
+            type = "me.tiptap.tiptap.diaries.DiariesAdapter"
+            />
         
         <import
             alias = "View"
@@ -24,6 +26,7 @@
         android:layout_width = "match_parent"
         android:layout_height = "90dp"
         android:layout_marginBottom = "2dp"
+        android:layout_marginStart = "50dp"
         android:background = "@android:color/white"
         android:padding = "14dp"
         >
