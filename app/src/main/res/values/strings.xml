@@ -2,8 +2,7 @@
     <string name="app_name">TipTap</string>
     <string name="google_maps_key">AIzaSyDA2Fujc6k5qulgkxF_HcGG8n6pGEX1ZiA</string>
     <string name="scratch_text">Hello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\n
-                            Hello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\n
-                            Hello Tiptap！\nHello Tiptap！\nHello Tiptap！\n</string>
+                            Hello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\n</string>
     <string name="location_confirm">위치확인</string>
     <string name="ok">확인</string>
     <string name="cancle">취소</string>

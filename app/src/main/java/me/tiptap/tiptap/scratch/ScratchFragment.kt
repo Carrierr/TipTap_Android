@@ -24,7 +24,7 @@ class ScratchFragment : Fragment() {
         binding.scratch.setRevealListener(object : ScratchCard.IRevealListener {
             override fun onRevealPercentChangedListener(stv: ScratchCard?, percent: Float) {
                 Log.d("ScratchPer", percent.toString())
-                if(percent >= 0.7f) {
+                if(percent >= 1.0f) {
                     Log.d("ScratchPer", "Done!")
                     val anim = AlphaAnimation(1.0f, 0.0f)
                     anim.duration = 500
