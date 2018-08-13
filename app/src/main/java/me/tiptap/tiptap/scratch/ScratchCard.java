@@ -16,6 +16,7 @@
  */
 package me.tiptap.tiptap.scratch;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -56,7 +57,7 @@ public class ScratchCard extends TextView {
 
     private float mX, mY;
     private static final float TOUCH_TOLERANCE = 4;
-
+    public static Bitmap scratchBitmap;
     /**
      * Bitmap holding the scratch region.
      */
@@ -80,7 +81,7 @@ public class ScratchCard extends TextView {
     /**
      * Paint properties for drawing the scratch area.
      */
-    private Paint mBitmapPaint;
+    public static Paint mBitmapPaint;
 
 
     /**
@@ -163,11 +164,12 @@ public class ScratchCard extends TextView {
 
         mErasePath = new Path();
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
-        mBitmapPaint.setAlpha(160);
+        mBitmapPaint.setAlpha(180);
 
-        Bitmap scratchBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.orange);
+        scratchBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.orange);
         mDrawable = new BitmapDrawable(getResources(), scratchBitmap);
         mDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
+
     }
 
     @Override
@@ -290,9 +292,10 @@ public class ScratchCard extends TextView {
     }
 
     public boolean isRevealed() {
-        return mRevealPercent == 1;
+        return mRevealPercent == 0.5;
     }
 
+    @SuppressLint("StaticFieldLeak")
     private void checkRevealed() {
 
         if(! isRevealed() && mRevealListener != null) {
@@ -347,6 +350,7 @@ public class ScratchCard extends TextView {
                         // if now revealed.
                         if( isRevealed()) {
                             mRevealListener.onRevealed(ScratchCard.this);
+
                         }
                     }
                 }
@@ -443,4 +447,7 @@ public class ScratchCard extends TextView {
 
         return new int[] {left, top, left + width, top + height};
     }
+
+
+
 }

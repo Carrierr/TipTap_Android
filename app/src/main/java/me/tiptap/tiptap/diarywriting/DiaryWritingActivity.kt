@@ -1,7 +1,6 @@
 package me.tiptap.tiptap.diarywriting
 
 import android.app.Activity
-import android.content.DialogInterface
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.graphics.Bitmap
@@ -32,34 +31,34 @@ class DiaryWritingActivity : AppCompatActivity()  {
 
         binding.textLocation.setOnClickListener {
             val alert = AlertDialog.Builder(this@DiaryWritingActivity)
-            alert.setTitle("위치입력")
+            alert.setTitle(R.string.location_confirm)
 
             val input = EditText(this@DiaryWritingActivity)
             alert.setView(input)
 
-            alert.setNegativeButton("취소", null)
-            alert.setPositiveButton("확인", DialogInterface.OnClickListener { dialog, whichButton ->
+            alert.setNegativeButton(R.string.cancle, null)
+            alert.setPositiveButton(R.string.ok) { _, _ ->
                 val place = input.text.toString()
                 // Do something with value!
-                binding.textLocation.setText(place)
-            })
+                binding.textLocation.text = place
+            }
 
             alert.show()
         }
         binding.imgGallery.setOnClickListener {
             val intent = Intent()
-            intent.setType("image/*")
-            intent.setAction(Intent.ACTION_GET_CONTENT)
+            intent.type = "image/*"
+            intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1)
         }
 
-        binding.diaryWrite.addTextChangedListener(object : TextWatcher {
+        binding.editDiaryWrite.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-                binding.textKeyboard.setText(String.format(Integer.toString(p0!!.length) + "/800"))
+                binding.textKeyboard.text = p0?.length.toString() + "/800"
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.textKeyboard.setText("0/800")
+                binding.textKeyboard.text = "0/800"
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

@@ -9,9 +9,21 @@
         android:layout_width = "match_parent"
         android:layout_height = "match_parent"
         android:orientation = "vertical">
-        
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src = "@drawable/ic_launcher_foreground"/>
+            </RelativeLayout>
+        </ScrollView>
+
         <FrameLayout
-            android:id="@+id/container"
+            android:id="@+id/layout_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -19,13 +31,13 @@
                 android:id="@+id/scratch"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#c5123456"
+                android:background="#00000000"
                 android:gravity="center"
                 android:paddingBottom="50dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:paddingTop="50dp"
-                android:text="Hello Tiptap！"
+                android:text="@string/scratch_text"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
         </FrameLayout>
@@ -37,14 +49,25 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="23dp"
+            android:layout_marginLeft = "10dp"
             android:max="100"
             android:progress="50" />
         <TextView
+            android:id = "@+id/text_scratch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text = "오늘 도착한 여행일기를 읽고 싶으시면\n화면을 살살 문질러주세요!"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/progress_bar"
+            android:layout_above="@+id/text_littlebit"
+            android:layout_marginLeft = "10dp"
+            android:layout_marginBottom = "23dp"
+            android:textColor="#FFFFFF"/>
+        <TextView
+            android:id = "@+id/text_littlebit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text = "조금만 더!"
+            android:layout_above="@+id/progress_bar"
+            android:layout_marginLeft = "10dp"
             android:layout_marginBottom = "23dp"
             android:textColor="#FFFFFF"/>
 
