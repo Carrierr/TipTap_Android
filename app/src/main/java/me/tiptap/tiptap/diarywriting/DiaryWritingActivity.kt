@@ -54,7 +54,7 @@ class DiaryWritingActivity : AppCompatActivity()  {
 
         binding.editDiaryWrite.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-                binding.textKeyboard.text = String.format(Integer.toString(p0!!.length) + "/800")
+                binding.textKeyboard.text = p0?.length.toString() + "/800"
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
