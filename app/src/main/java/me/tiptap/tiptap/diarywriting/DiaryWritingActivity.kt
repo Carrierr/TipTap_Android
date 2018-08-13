@@ -36,7 +36,7 @@ class DiaryWritingActivity : AppCompatActivity()  {
             val input = EditText(this@DiaryWritingActivity)
             alert.setView(input)
 
-            alert.setNegativeButton(R.string.cancle, null)
+            alert.setNegativeButton(R.string.cancel, null)
             alert.setPositiveButton(R.string.ok) { _, _ ->
                 val place = input.text.toString()
                 // Do something with value!
