@@ -1,4 +1,4 @@
-package me.tiptap.tiptap
+package me.tiptap.tiptap.main
 
 import android.content.Intent
 import android.databinding.DataBindingUtil
@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import me.tiptap.tiptap.R
 import me.tiptap.tiptap.databinding.FragmentMainBinding
 import me.tiptap.tiptap.diarywriting.DiaryWritingActivity
 
