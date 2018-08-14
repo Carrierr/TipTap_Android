@@ -1,8 +1,9 @@
-package me.tiptap.tiptap
+package me.tiptap.tiptap.main
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import me.tiptap.tiptap.R
 import me.tiptap.tiptap.adapter.MainViewPagerAdapter
 import me.tiptap.tiptap.databinding.ActivityMainBinding
 
