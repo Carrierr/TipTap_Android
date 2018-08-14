@@ -4,7 +4,7 @@
     <item android:drawable="@android:color/holo_blue_bright" />
     
     <item>
-        <bitmap android:src="@drawable/account"
+        <bitmap android:src="@drawable/orange"
             android:gravity="center" />
     </item>
 
