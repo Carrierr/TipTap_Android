@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="me.tiptap.tiptap">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <meta-data
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
 
     <application
         android:allowBackup="true"
@@ -17,9 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".diarydetail.DiaryDetailActivity"></activity>
-        <activity android:name=".diarywriting.DiaryWritingActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+        <activity android:name=".diarydetail.DiaryDetailActivity" />
+        <activity
+            android:name=".diarywriting.DiaryWritingActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
     </application>
 

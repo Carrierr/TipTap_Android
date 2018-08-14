@@ -54,7 +54,7 @@ fun getFormattedDate(binding:ActivityDiaryWritingBinding) {
         val timeDate = time.format(Date())
         str += " " + timeDate.toString()
 
-        binding.date.setText(str)
+        binding.date.text = str
 
 
         //binding.date.setText(currentDate.toString())

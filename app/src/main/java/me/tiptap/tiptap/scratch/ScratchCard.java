@@ -36,7 +36,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
-import android.widget.TextView;
 
 import com.cooltechworks.utils.BitmapUtils;
 
@@ -45,12 +44,12 @@ import me.tiptap.tiptap.R;
 /**
  * Created by Harish on 25/03/16.
  */
-public class ScratchCard extends TextView {
+public class ScratchCard extends android.support.v7.widget.AppCompatTextView {
 
 
     public interface IRevealListener {
-        public void onRevealed(ScratchCard tv);
-        public void onRevealPercentChangedListener(ScratchCard stv, float percent);
+        void onRevealed(ScratchCard tv);
+        void onRevealPercentChangedListener(ScratchCard stv, float percent);
     }
 
     public static final float STROKE_WIDTH = 12f;
