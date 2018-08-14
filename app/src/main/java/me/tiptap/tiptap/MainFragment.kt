@@ -18,12 +18,10 @@ class MainFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
 
-        binding.fabMain.setOnClickListener(object:View.OnClickListener {
-            override fun onClick(view:View):Unit{
-                val intent = Intent(context, DiaryWritingActivity::class.java)
-                startActivity(intent)
-            }
-        })
+        binding.fabMain.setOnClickListener {
+            val intent = Intent(context, DiaryWritingActivity::class.java)
+            startActivity(intent)
+        }
 
 
         return binding.root

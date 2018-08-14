@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android = "http://schemas.android.com/apk/res/android"
-    xmlns:app = "http://schemas.android.com/apk/res-auto"
-    xmlns:tools = "http://schemas.android.com/tools"
-    >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
-        android:layout_width = "match_parent"
-        android:layout_height = "match_parent"
-        android:orientation = "vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <ImageView
+
+                <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src = "@drawable/ic_launcher_foreground"/>
+                    android:text = "Hello TipTap" />
             </RelativeLayout>
         </ScrollView>
 
@@ -49,27 +50,29 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
             android:layout_marginBottom="23dp"
-            android:layout_marginLeft = "10dp"
+            android:layout_marginLeft="10dp"
             android:max="100"
             android:progress="50" />
+
         <TextView
-            android:id = "@+id/text_scratch"
+            android:id="@+id/text_scratch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text = "오늘 도착한 여행일기를 읽고 싶으시면\n화면을 살살 문질러주세요!"
             android:layout_above="@+id/text_littlebit"
-            android:layout_marginLeft = "10dp"
-            android:layout_marginBottom = "23dp"
-            android:textColor="#FFFFFF"/>
+            android:layout_marginBottom="23dp"
+            android:layout_marginLeft="10dp"
+            android:text="오늘 도착한 여행일기를 읽고 싶으시면\n화면을 살살 문질러주세요!"
+            android:textColor="#FFFFFF" />
+
         <TextView
-            android:id = "@+id/text_littlebit"
+            android:id="@+id/text_littlebit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text = "조금만 더!"
             android:layout_above="@+id/progress_bar"
-            android:layout_marginLeft = "10dp"
-            android:layout_marginBottom = "23dp"
-            android:textColor="#FFFFFF"/>
+            android:layout_marginBottom="23dp"
+            android:layout_marginLeft="10dp"
+            android:text="조금만 더!"
+            android:textColor="#FFFFFF" />
 
     </RelativeLayout>
 </layout>
