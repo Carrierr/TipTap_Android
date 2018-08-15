@@ -37,7 +37,8 @@
         <activity android:name = ".diarydetail.DiaryDetailActivity" />
         <activity
             android:name = ".diarywriting.DiaryWritingActivity"
-            android:windowSoftInputMode = "adjustResize|stateHidden" />
+            android:theme = "@style/DiaryWritingTheme"
+            android:windowSoftInputMode = "adjustResize|stateVisible" />
     </application>
 
 </manifest>
