@@ -36,6 +36,7 @@ open class DiaryWritingActivity : AppCompatActivity()  {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_diary_writing)
 
         binding.textComplete.setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener { finish() }
 
         getFormattedDate(binding)
 
