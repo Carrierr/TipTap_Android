@@ -2,24 +2,138 @@
 <layout
     xmlns:android = "http://schemas.android.com/apk/res/android"
     xmlns:app = "http://schemas.android.com/apk/res-auto"
+    xmlns:tools = "http://schemas.android.com/tools"
     >
     
+    <data>
+        
+        <import
+            alias = "View"
+            type = "android.view.View"
+            />
+        
+        <variable
+            name = "fragment"
+            type = "me.tiptap.tiptap.main.MainFragment"
+            />
+        
+        <variable
+            name = "date"
+            type = "java.util.Date"
+            />
+    </data>
     
     <android.support.constraint.ConstraintLayout
         android:layout_width = "match_parent"
         android:layout_height = "match_parent"
+        android:background = "@color/colorDefaultBackground"
+        android:paddingBottom = "11dp"
+        android:paddingTop = "19dp"
         >
         
-        <android.support.design.widget.FloatingActionButton
-            android:id = "@+id/fab_main"
+        <include
+            android:id = "@+id/toolbar"
+            layout = "@layout/toolbar_main"
+            />
+        
+        <TextView
+            android:id = "@+id/text_main_year"
+            style = "@style/MainDateText"
+            year = "@{date}"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            app:fabSize = "normal"
+            android:layout_marginStart = "21dp"
+            android:layout_marginTop = "13dp"
+            android:fontFamily = "@font/montserrat_regular"
+            android:textSize = "14sp"
+            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintTop_toBottomOf = "@+id/toolbar"
+            tools:paddingTop = "?android:attr/actionBarSize"
+            tools:text = "18'"
+            />
+        
+        <TextView
+            android:id = "@+id/text_main_month"
+            style = "@style/MainDateText"
+            dayOfMonth = "@{date}"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_marginStart = "21dp"
+            android:layout_marginTop = "10dp"
+            android:fontFamily = "@font/montserrat_regular"
+            android:textSize = "14sp"
+            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintTop_toBottomOf = "@+id/text_main_year"
+            tools:text = "Aug\n02"
+            />
+        
+        <View
+            android:id = "@+id/view_line"
+            android:layout_width = "0.5dp"
+            android:layout_height = "178dp"
+            android:layout_marginTop = "18dp"
+            android:background = "#8B8B8B"
+            app:layout_constraintStart_toStartOf = "@+id/text_main_year"
+            app:layout_constraintTop_toBottomOf = "@+id/text_main_month"
+            />
+        
+        <TextView
+            android:id = "@+id/text_main_time"
+            style = "@style/MainDateText"
+            time = "@{date}"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_marginTop = "18dp"
+            android:rotation = "90"
+            android:textSize = "12sp"
+            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintHorizontal_bias = "0.03"
+            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintTop_toBottomOf = "@+id/view_line"
+            tools:text = "15:00"
+            />
+        
+        <TextView
+            android:id = "@+id/text_main_no_tiptap"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:fontFamily = "@font/ko_pub_dotum_pl"
+            android:lineSpacingExtra = "9sp"
+            android:text = "@string/no_tiptap"
+            android:textColor = "#9e252525"
+            android:textSize = "28sp"
+            android:visibility = "@{fragment.postSize > 0 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf = "parent"
+            app:layout_constraintBottom_toTopOf = "@+id/btn_main_add"
+            app:layout_constraintStart_toStartOf = "@+id/text_main_year"
+            app:layout_constraintTop_toBottomOf = "@+id/text_main_time"
+            />
+        
+        
+        <ImageButton
+            android:id = "@+id/btn_main_add"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_marginEnd = "21dp"
+            android:background = "@android:color/transparent"
+            android:paddingEnd = "0dp"
+            android:paddingStart = "9dp"
+            android:src = "@drawable/tiptap"
             app:layout_constraintBottom_toBottomOf = "parent"
             app:layout_constraintEnd_toEndOf = "parent"
-            app:useCompatPadding = "true"
             />
-
+        
+        <ImageView
+            android:layout_width = "0dp"
+            android:layout_height = "6dp"
+            android:layout_marginEnd = "19dp"
+            android:src = "@drawable/background_main_add"
+            app:layout_constraintBottom_toBottomOf = "parent"
+            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintStart_toStartOf = "@+id/btn_main_add"
+            app:layout_constraintTop_toTopOf = "@+id/btn_main_add"
+            app:layout_constraintVertical_bias = "0.7"
+            />
     
     </android.support.constraint.ConstraintLayout>
 </layout>

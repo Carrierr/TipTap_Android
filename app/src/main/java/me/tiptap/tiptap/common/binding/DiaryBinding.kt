@@ -16,4 +16,18 @@ fun extractHeaderFromDate(view: TextView, date: Date) {
     view.text = SimpleDateFormat("MMM", Locale.US).format(date)
 }
 
+@BindingAdapter("year")
+fun extractYearFromDate(view : TextView, date : Date) {
+    view.text = SimpleDateFormat("yy`", Locale.KOREAN).format(date)
+}
+
+@BindingAdapter("dayOfMonth")
+fun extractDayOfMonthFromDate(view : TextView, date : Date) {
+    view.text = SimpleDateFormat("MMM \ndd", Locale.US).format(date)
+}
+
+@BindingAdapter("time")
+fun extractTimeFromDate(view : TextView, date : Date) {
+    view.text = SimpleDateFormat("HH:mm", Locale.KOREAN).format(date)
+}
 
