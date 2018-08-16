@@ -27,7 +27,7 @@
                 android:layout_gravity="center"
                 android:text="TIPTAB #01"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:fontFamily="@font/gotham_black"/>
 
             <TextView
                 android:id="@+id/text_complete"
@@ -47,6 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/diary_toolbar"
             android:layout_centerHorizontal="true"
+            android:fontFamily="@font/montserrat_light"
             android:layout_marginTop="15dp" />
 
         <TextView
@@ -54,7 +55,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/date"
+            android:fontFamily="@font/montserrat_light"
             android:layout_centerHorizontal="true"
+            android:drawableLeft="@drawable/location"
+            android:drawableTint = "@android:color/darker_gray"
+            android:drawablePadding="1dp"
             android:clickable="true"
             android:text="위치설정" />
 
