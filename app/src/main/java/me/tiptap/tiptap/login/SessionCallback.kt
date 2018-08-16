@@ -1,7 +1,7 @@
 package me.tiptap.tiptap.login
 
-import android.content.Context
 import android.content.Intent
+import android.support.v7.app.AppCompatActivity
 import com.kakao.auth.ISessionCallback
 import com.kakao.network.ErrorResult
 import com.kakao.usermgmt.ApiErrorCode
@@ -11,29 +11,24 @@ import com.kakao.usermgmt.response.MeV2Response
 import com.kakao.util.exception.KakaoException
 import com.kakao.util.helper.log.Logger
 import me.tiptap.tiptap.main.MainActivity
+import me.tiptap.tiptap.util.redirectLoginActivity
 
-class SessionCallback(val context: Context) : ISessionCallback {
+class SessionCallback(val activity: AppCompatActivity) : ISessionCallback {
 
     override fun onSessionOpenFailed(exception: KakaoException?) {
         if (exception != null) Logger.e(exception)
     }
 
     override fun onSessionOpened() {
-        context.startActivity(Intent(context, MainActivity::class.java))
+        requestMe()
     }
 
     private fun requestMe() {
         UserManagement.getInstance().me(object : MeV2ResponseCallback() {
-
             override fun onSuccess(result: MeV2Response?) {
-
-                result?.let {
-                    val serialNumber = result.id
-                    val nickname = result.nickname
-
-                    val account = result.kakaoAccount
-                    val email = account.email
-                    val birth = account.birthday
+                activity.apply {
+                    startActivity(Intent(activity, MainActivity::class.java))
+                    finish()
                 }
             }
 
@@ -46,6 +41,8 @@ class SessionCallback(val context: Context) : ISessionCallback {
 
                 if (errorResult.errorCode == ApiErrorCode.CLIENT_ERROR_CODE) {
                     Logger.d("error failed.")
+                } else {
+                    activity.redirectLoginActivity()
                 }
             }
         })
