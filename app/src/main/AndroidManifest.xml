@@ -26,19 +26,21 @@
         <activity
             android:name = ".splash.SplashActivity"
             android:theme = "@style/SplashTheme">
+        </activity>
+        <activity android:name = ".main.MainActivity">
             <intent-filter>
                 <action android:name = "android.intent.action.MAIN" />
                 
                 <category android:name = "android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name = ".login.LoginActivity"/>
-        <activity android:name = ".main.MainActivity" />
         <activity android:name = ".diarydetail.DiaryDetailActivity" />
         <activity
             android:name = ".diarywriting.DiaryWritingActivity"
             android:theme = "@style/DiaryWritingTheme"
             android:windowSoftInputMode = "adjustResize|stateVisible" />
+        <activity android:name = ".setting.SettingActivity">
+        </activity>
     </application>
 
 </manifest>

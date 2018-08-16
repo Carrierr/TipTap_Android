@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    >
+    
+    <RadioGroup
+        android:layout_width = "wrap_content"
+        android:layout_height = "match_parent"
+        android:orientation = "horizontal"
+        app:layout_constraintEnd_toEndOf = "parent"
+        >
+        
+        <RadioButton
+            android:id = "@+id/rb_on"
+            style = "@style/SettingRadioButton"
+            android:checked = "true"
+            android:text = "@string/on"
+            />
+        
+        <RadioButton
+            android:id = "@+id/rb_off"
+            style = "@style/SettingRadioButton"
+            android:text = "@string/off"
+            />
+    </RadioGroup>
+</layout>
