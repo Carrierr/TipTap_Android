@@ -33,6 +33,7 @@
         
         <include
             android:id = "@+id/toolbar"
+            fragment="@{fragment}"
             layout = "@layout/toolbar_main"
             />
         

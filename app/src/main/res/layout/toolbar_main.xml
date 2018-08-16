@@ -5,6 +5,12 @@
     xmlns:tools = "http://schemas.android.com/tools"
     >
     
+    <data>
+        <variable
+            name = "fragment"
+            type = "me.tiptap.tiptap.main.MainFragment"/>
+    </data>
+    
     <android.support.v7.widget.Toolbar
         android:id = "@+id/toolbar_main"
         android:layout_width = "match_parent"
@@ -46,6 +52,7 @@
                 android:layout_height = "wrap_content"
                 android:background = "@android:color/transparent"
                 android:src = "@drawable/setting"
+                android:onClick="@{() -> fragment.onSettingButtonClick()}"
                 android:paddingStart="0dp"
                 android:paddingEnd="20dp"
                 app:layout_constraintBottom_toBottomOf = "parent"

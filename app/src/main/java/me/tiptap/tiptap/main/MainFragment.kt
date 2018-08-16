@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.databinding.FragmentMainBinding
 import me.tiptap.tiptap.diarywriting.DiaryWritingActivity
+import me.tiptap.tiptap.setting.SettingActivity
 import java.util.*
 
 class MainFragment : Fragment() {
@@ -24,6 +25,7 @@ class MainFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
         binding.apply {
+            fragment = this@MainFragment
            date = Date()
             btnMainAdd.setOnClickListener {
                 val intent = Intent(context, DiaryWritingActivity::class.java)
@@ -52,6 +54,10 @@ class MainFragment : Fragment() {
             textToolbarMainTitle.text = getString(R.string.today)
             textToolbarMainSub.text = getString(R.string.post_count, postSize.get().toString())
         }
+    }
+
+    fun onSettingButtonClick() {
+        startActivity(Intent(this@MainFragment.activity, SettingActivity::class.java))
     }
 
 }
