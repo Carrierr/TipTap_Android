@@ -7,34 +7,45 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/text_route"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="13dp"
-            android:text="Route"
-            android:textSize="28sp"
-            android:textStyle="bold" />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/diary_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent">
 
-        <TextView
-            android:id="@+id/text_complete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="13dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:clickable="true"
-            android:text="완료"
-            android:textStyle="bold" />
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@drawable/back" />
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="TIPTAB #01"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_complete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/complete" />
+
+        </android.support.v7.widget.Toolbar>
 
         <TextView
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/text_route"
+            android:layout_below="@+id/diary_toolbar"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp" />
 
@@ -51,12 +62,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/text_location"
-            android:layout_marginTop="20dp">
+            android:layout_margin="20dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray">
+
+            </View>
 
             <ImageView
                 android:id="@+id/img_myPicture"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:adjustViewBounds="true" />
 
             <EditText
@@ -71,55 +90,32 @@
 
         </RelativeLayout>
 
-        <FrameLayout
+        <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:layout_alignBottom="@+id/text_location"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:background="#FFFFFF">
+            android:background="@android:color/transparent"
+            android:layout_alignParentBottom="true">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/img_lock"
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/padlock"
-                    android:tint="@android:color/darker_gray" />
+            <ImageView
+                android:id="@+id/img_gallery"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/gallery"
+                android:tint="@android:color/darker_gray" />
 
-                <TextView
-                    android:id="@+id/text_priv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/img_lock"
-                    android:text="비공개"
-                    android:textSize="15sp" />
-
-                <ImageView
-                    android:id="@+id/img_gallery"
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:layout_toRightOf="@+id/text_priv"
-                    android:clickable="true"
-                    android:src="@drawable/gallery"
-                    android:tint="@android:color/darker_gray" />
-
-                <TextView
-                    android:id="@+id/text_keyboard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_margin="10dp"
-                    android:textSize="15sp" />
-            </RelativeLayout>
-        </FrameLayout>
+            <TextView
+                android:id="@+id/text_keyboard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:textSize="15sp" />
+        </android.support.v7.widget.Toolbar>
     </RelativeLayout>
 
 </layout>

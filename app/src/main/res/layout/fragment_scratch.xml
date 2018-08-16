@@ -39,7 +39,7 @@
                 android:paddingRight="20dp"
                 android:paddingTop="50dp"
                 android:text="@string/scratch_text"
-                android:textColor="#ffffff"
+                android:textColor="@android:color/transparent"
                 android:textSize="20sp" />
         </FrameLayout>
 

@@ -35,16 +35,12 @@ open class DiaryWritingActivity : AppCompatActivity()  {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_diary_writing)
 
-
-
         binding.textComplete.setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener { finish() }
 
         getFormattedDate(binding)
 
         binding.textLocation.setOnClickListener {
-
-
-
 
             val alert = AlertDialog.Builder(this@DiaryWritingActivity)
             alert.setTitle(R.string.location_confirm)
