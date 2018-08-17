@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.databinding.DataBindingUtil
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.location.*
 import android.os.Bundle
 import android.provider.MediaStore
@@ -15,10 +16,14 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
+import android.text.SpannableString
+import android.text.Spanned
 import android.text.TextWatcher
+import android.text.style.ImageSpan
 import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
+import gun0912.tedbottompicker.TedBottomPicker
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.databinding.ActivityDiaryWritingBinding
 import java.io.IOException
@@ -29,6 +34,7 @@ open class DiaryWritingActivity : AppCompatActivity()  {
 
     private lateinit var binding : ActivityDiaryWritingBinding
     private var locationManager : LocationManager? = null
+    private var checkLocationOnce = true
 
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +66,8 @@ open class DiaryWritingActivity : AppCompatActivity()  {
 
         val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
 
-        if(permissionCheck == PackageManager.PERMISSION_GRANTED) {
+        if(permissionCheck == PackageManager.PERMISSION_GRANTED && checkLocationOnce) {
+            checkLocationOnce = false
             Log.d("request", "no permission")
             locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
             val provider = locationManager?.getBestProvider(Criteria(), true)
@@ -84,12 +91,47 @@ open class DiaryWritingActivity : AppCompatActivity()  {
 
 
 
-        binding.imgGallery.setOnClickListener {
-            val intent = Intent()
-            intent.type = "image/*"
+        binding.imgGallery.setOnClickListener { _ ->
+            /*val intent = Intent()
             intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1)
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1) */
+            val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+            if (permissionCheck == PackageManager.PERMISSION_DENIED) {
+                val permission = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                ActivityCompat.requestPermissions(this, permission,0)
+                // 권한 없음
+            } else {
+                // 권한 있음
+                val tedBottomPicker = TedBottomPicker.Builder(this@DiaryWritingActivity)
+                        .setOnImageSelectedListener {
+                            // here is selected uri
+                            Log.d("ImageClick", "Image is chosen successfully")
+                            //binding.imgMyPicture.setImageURI(it)
+
+                            val Is = contentResolver.openInputStream(it)
+                            val myPicture:Drawable = Drawable.createFromStream(Is, it.toString())
+                            var data:String = "img\n\n"
+                            val builder:SpannableString = SpannableString(data)
+                            val start = data.indexOf("img")
+                            if(start > -1) {
+                                val end = start + "img".length
+                                myPicture.setBounds(0, 0, myPicture.intrinsicWidth, myPicture.intrinsicHeight)
+                                var span : ImageSpan = ImageSpan(myPicture)
+                                builder.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                                binding.editDiaryWrite.setText(builder)
+                            }
+                        }
+                        .create()
+
+                tedBottomPicker.show(supportFragmentManager)
+            }
         }
+
+        var data:String = "img\n"
+        val builder: SpannableString = SpannableString(data)
+
+
 
         binding.editDiaryWrite.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
@@ -138,4 +180,6 @@ open class DiaryWritingActivity : AppCompatActivity()  {
         override fun onProviderEnabled(provider: String) {}
         override fun onProviderDisabled(provider: String) {}
     }
+
+
 }
