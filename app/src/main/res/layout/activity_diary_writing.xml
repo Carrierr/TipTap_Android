@@ -63,12 +63,8 @@
                 android:layout_below="@+id/date"
                 android:layout_centerHorizontal="true"
                 android:clickable="true"
-
                 android:drawablePadding="1dp"
-                android:drawableStart="@drawable/location"
-                android:drawableTint="@android:color/darker_gray"
-                android:focusable="true"
-                android:fontFamily="@font/montserrat_light"
+                android:drawableLeft="@drawable/location2"
                 android:text="@string/setting_location" />
 
             <RelativeLayout
