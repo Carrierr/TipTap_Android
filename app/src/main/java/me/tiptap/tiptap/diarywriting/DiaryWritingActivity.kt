@@ -7,7 +7,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.databinding.DataBindingUtil
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.location.*
 import android.os.Build
 import android.os.Bundle
@@ -108,12 +107,9 @@ open class DiaryWritingActivity : AppCompatActivity()  {
                         .setOnImageSelectedListener {
                             // here is selected uri
 
-                            val inputStream  = contentResolver.openInputStream(it)
-                            var dr = Drawable.createFromStream(inputStream, it.toString())
-
                             binding.imgMyPicture.layoutParams.width = 500
                             binding.imgMyPicture.layoutParams.height = 500
-                            binding.imgMyPicture.setImageDrawable(dr)
+                            binding.imgMyPicture.setImageURI(it)
                             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
                                 window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
                             }
