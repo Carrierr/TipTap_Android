@@ -7,8 +7,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.databinding.DataBindingUtil
 import android.graphics.Bitmap
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
 import android.graphics.drawable.Drawable
 import android.location.*
 import android.os.Build
@@ -109,14 +107,10 @@ open class DiaryWritingActivity : AppCompatActivity()  {
                 val tedBottomPicker = TedBottomPicker.Builder(this@DiaryWritingActivity)
                         .setOnImageSelectedListener {
                             // here is selected uri
-                            val matrix = ColorMatrix()
-                            matrix.setSaturation(0.0F)
-                            val filter = ColorMatrixColorFilter(matrix)
 
                             val inputStream  = contentResolver.openInputStream(it)
                             var dr = Drawable.createFromStream(inputStream, it.toString())
 
-                            binding.imgMyPicture.colorFilter = filter
                             binding.imgMyPicture.layoutParams.width = 500
                             binding.imgMyPicture.layoutParams.height = 500
                             binding.imgMyPicture.setImageDrawable(dr)
