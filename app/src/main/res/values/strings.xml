@@ -12,6 +12,7 @@
     <string name="cancel">취소</string>
     <string name="complete">완료</string>
     <string name="hint">당신의 여행 이야기를 적어주세요.</string>
+    <string name="setting_location">위치설정</string>
 
     <!--main-->
     <string name="today">TODAY</string>

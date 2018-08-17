@@ -7,8 +7,11 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.databinding.DataBindingUtil
 import android.graphics.Bitmap
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.graphics.drawable.Drawable
 import android.location.*
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
@@ -16,11 +19,9 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
-import android.text.SpannableString
-import android.text.Spanned
 import android.text.TextWatcher
-import android.text.style.ImageSpan
 import android.util.Log
+import android.view.WindowManager
 import android.widget.EditText
 import android.widget.Toast
 import gun0912.tedbottompicker.TedBottomPicker
@@ -46,6 +47,7 @@ open class DiaryWritingActivity : AppCompatActivity()  {
 
         getFormattedDate(binding)
 
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_IS_FORWARD_NAVIGATION)
         binding.textLocation.setOnClickListener {
 
             val alert = AlertDialog.Builder(this@DiaryWritingActivity)
@@ -97,6 +99,7 @@ open class DiaryWritingActivity : AppCompatActivity()  {
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1) */
             val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
+
             if (permissionCheck == PackageManager.PERMISSION_DENIED) {
                 val permission = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 ActivityCompat.requestPermissions(this, permission,0)
@@ -106,21 +109,22 @@ open class DiaryWritingActivity : AppCompatActivity()  {
                 val tedBottomPicker = TedBottomPicker.Builder(this@DiaryWritingActivity)
                         .setOnImageSelectedListener {
                             // here is selected uri
-                            Log.d("ImageClick", "Image is chosen successfully")
-                            //binding.imgMyPicture.setImageURI(it)
+                            val matrix = ColorMatrix()
+                            matrix.setSaturation(0.0F)
+                            val filter = ColorMatrixColorFilter(matrix)
 
-                            val Is = contentResolver.openInputStream(it)
-                            val myPicture:Drawable = Drawable.createFromStream(Is, it.toString())
-                            var data:String = "img\n\n"
-                            val builder:SpannableString = SpannableString(data)
-                            val start = data.indexOf("img")
-                            if(start > -1) {
-                                val end = start + "img".length
-                                myPicture.setBounds(0, 0, myPicture.intrinsicWidth, myPicture.intrinsicHeight)
-                                var span : ImageSpan = ImageSpan(myPicture)
-                                builder.setSpan(span, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                                binding.editDiaryWrite.setText(builder)
+                            val inputStream  = contentResolver.openInputStream(it)
+                            var dr = Drawable.createFromStream(inputStream, it.toString())
+
+                            binding.imgMyPicture.colorFilter = filter
+                            binding.imgMyPicture.layoutParams.width = 500
+                            binding.imgMyPicture.layoutParams.height = 500
+                            binding.imgMyPicture.setImageDrawable(dr)
+                            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
+                                window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
                             }
+                            else
+                                window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
                         }
                         .create()
 
@@ -128,11 +132,8 @@ open class DiaryWritingActivity : AppCompatActivity()  {
             }
         }
 
-        var data:String = "img\n"
-        val builder: SpannableString = SpannableString(data)
 
-
-
+        binding.editDiaryWrite.inputType = android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
         binding.editDiaryWrite.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 binding.textKeyboard.text = p0?.length.toString() + "/800"
