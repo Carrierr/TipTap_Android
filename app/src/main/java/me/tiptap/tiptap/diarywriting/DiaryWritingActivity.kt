@@ -19,6 +19,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
+import gun0912.tedbottompicker.TedBottomPicker
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.databinding.ActivityDiaryWritingBinding
 import java.io.IOException
@@ -29,6 +30,7 @@ open class DiaryWritingActivity : AppCompatActivity()  {
 
     private lateinit var binding : ActivityDiaryWritingBinding
     private var locationManager : LocationManager? = null
+    private var checkLocationOnce = true
 
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +62,8 @@ open class DiaryWritingActivity : AppCompatActivity()  {
 
         val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
 
-        if(permissionCheck == PackageManager.PERMISSION_GRANTED) {
+        if(permissionCheck == PackageManager.PERMISSION_GRANTED && checkLocationOnce) {
+            checkLocationOnce = false
             Log.d("request", "no permission")
             locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
             val provider = locationManager?.getBestProvider(Criteria(), true)
@@ -84,11 +87,28 @@ open class DiaryWritingActivity : AppCompatActivity()  {
 
 
 
-        binding.imgGallery.setOnClickListener {
-            val intent = Intent()
-            intent.type = "image/*"
+        binding.imgGallery.setOnClickListener { _ ->
+            /*val intent = Intent()
             intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1)
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1) */
+            val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+
+            if (permissionCheck == PackageManager.PERMISSION_DENIED) {
+                val permission = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                ActivityCompat.requestPermissions(this, permission,0)
+                // 권한 없음
+            } else {
+                // 권한 있음
+                val tedBottomPicker = TedBottomPicker.Builder(this@DiaryWritingActivity)
+                        .setOnImageSelectedListener {
+                            // here is selected uri
+                            Log.d("ImageClick", "Image is chosen successfully")
+                            binding.imgMyPicture.setImageURI(it)
+                        }
+                        .create()
+
+                tedBottomPicker.show(supportFragmentManager)
+            }
         }
 
         binding.editDiaryWrite.addTextChangedListener(object : TextWatcher {
@@ -138,4 +158,6 @@ open class DiaryWritingActivity : AppCompatActivity()  {
         override fun onProviderEnabled(provider: String) {}
         override fun onProviderDisabled(provider: String) {}
     }
+
+
 }
