@@ -36,10 +36,8 @@
         <activity android:name=".diarydetail.DiaryDetailActivity" />
         <activity
             android:name=".diarywriting.DiaryWritingActivity"
-            android:theme="@style/DiaryWritingTheme"
-            android:windowSoftInputMode="adjustResize|stateVisible" />
+            android:theme="@style/DiaryWritingTheme"/>
         <activity android:name=".setting.SettingActivity"></activity>
-        <activity android:name=".diarywriting.ImagePickerFragment"></activity>
     </application>
 
 </manifest>

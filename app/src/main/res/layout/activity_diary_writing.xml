@@ -3,126 +3,132 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/diary_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/transparent">
-
-            <ImageButton
-                android:id="@+id/btn_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:src="@drawable/back" />
-
-            <TextView
-                android:id="@+id/toolbar_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="TIPTAB #01"
-                android:textSize="20sp"
-                android:fontFamily="@font/gotham_black"/>
-
-            <TextView
-                android:id="@+id/text_complete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_marginRight="10dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:text="@string/complete" />
-
-        </android.support.v7.widget.Toolbar>
-
-        <TextView
-            android:id="@+id/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/diary_toolbar"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="@font/montserrat_light"
-            android:layout_marginTop="15dp" />
-
-        <TextView
-            android:id="@+id/text_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/date"
-            android:fontFamily="@font/montserrat_light"
-            android:layout_centerHorizontal="true"
-            android:drawableLeft="@drawable/location"
-            android:drawableTint = "@android:color/darker_gray"
-            android:drawablePadding="1dp"
-            android:clickable="true"
-            android:text="위치설정" />
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/text_location"
-            android:layout_margin="20dp"
-            android:layout_above = "@+id/bottom_toolbar">
+            android:layout_height="wrap_content">
 
-            <View
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/diary_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray">
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/transparent">
 
-            </View>
+                <ImageButton
+                    android:id="@+id/btn_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/back" />
 
-            <ImageView
-                android:id="@+id/img_myPicture"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:adjustViewBounds="true" />
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/gotham_black"
+                    android:text="TIPTAB #01"
+                    android:textSize="20sp" />
 
-            <EditText
-                android:id="@+id/edit_diary_write"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/img_myPicture"
-                android:background="@android:color/transparent"
-                android:gravity="top"
-                android:hint="@string/hint"
-                android:inputType="textCapSentences|textMultiLine" />
+                <TextView
+                    android:id="@+id/text_complete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="@string/complete" />
 
-        </RelativeLayout>
-
-        <android.support.v7.widget.Toolbar
-            android:id = "@+id/bottom_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/transparent"
-            android:layout_alignParentBottom="true">
-
-
-            <ImageView
-                android:id="@+id/img_gallery"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:src="@drawable/gallery"
-                android:tint="@android:color/darker_gray" />
+            </android.support.v7.widget.Toolbar>
 
             <TextView
-                android:id="@+id/text_keyboard"
+                android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:layout_centerVertical="true"
-                android:layout_margin="10dp"
-                android:textSize="15sp" />
-        </android.support.v7.widget.Toolbar>
-    </RelativeLayout>
+                android:layout_below="@+id/diary_toolbar"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/montserrat_light" />
+
+            <TextView
+                android:id="@+id/text_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/date"
+                android:layout_centerHorizontal="true"
+                android:clickable="true"
+                android:drawablePadding="1dp"
+                android:drawableLeft="@drawable/location2"
+                android:text="@string/setting_location" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/bottom_toolbar"
+                android:layout_below="@+id/text_location"
+                android:layout_margin="20dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray">
+
+                </View>
+
+                <ImageView
+                    android:id="@+id/img_myPicture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"/>
+
+                <EditText
+                    android:id="@+id/edit_diary_write"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/img_myPicture"
+                    android:background="@android:color/transparent"
+                    android:gravity="top"
+                    android:hint="@string/hint" />
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/bottom_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_alignParentBottom="true"
+                android:background="@android:color/transparent">
+
+
+                <ImageView
+                    android:id="@+id/img_gallery"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/gallery"
+                    android:tint="@android:color/darker_gray" />
+
+                <TextView
+                    android:id="@+id/text_keyboard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="right"
+                    android:layout_margin="10dp"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/montserrat_light"/>
+            </android.support.v7.widget.Toolbar>
+        </RelativeLayout>
+
+    </ScrollView>
+
 
 </layout>
