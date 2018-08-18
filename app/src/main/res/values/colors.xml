@@ -8,4 +8,5 @@
     <color name="scratch_end_gradient">#cccccc</color>
     
     <color name="colorDefaultBackground">#FBFBFB</color>
+    <color name = "colorMainBlack">#242424</color>
 </resources>

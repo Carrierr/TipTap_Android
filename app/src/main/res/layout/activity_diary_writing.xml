@@ -1,135 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-
+<layout xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    xmlns:tools = "http://schemas.android.com/tools"
+    >
+    
+    <data>
+        
+        <import
+            alias = "View"
+            type = "android.view.View"
+            />
+    </data>
+    
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        android:fillViewport = "true"
+        >
+        
+        <android.support.constraint.ConstraintLayout
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:background = "@color/colorDefaultBackground"
+            >
+            
             <android.support.v7.widget.Toolbar
-                android:id="@+id/diary_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@android:color/transparent">
-
-                <ImageButton
-                    android:id="@+id/btn_back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/back" />
-
-                <TextView
-                    android:id="@+id/toolbar_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/gotham_black"
-                    android:text="TIPTAB #01"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/text_complete"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="10dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:text="@string/complete" />
-
+                android:id = "@+id/toolbar_write"
+                android:layout_width = "match_parent"
+                android:layout_height = "?attr/actionBarSize"
+                >
+                
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width = "match_parent"
+                    android:layout_height = "match_parent"
+                    >
+                    
+                    <ImageButton
+                        android:id = "@+id/btn_back"
+                        android:layout_width = "wrap_content"
+                        android:layout_height = "wrap_content"
+                        android:background = "@android:color/transparent"
+                        android:src = "@drawable/back"
+                        app:layout_constraintBottom_toBottomOf = "parent"
+                        app:layout_constraintStart_toStartOf = "parent"
+                        app:layout_constraintTop_toTopOf = "parent"
+                        />
+                    
+                    <TextView
+                        android:id = "@+id/toolbar_write_title"
+                        android:layout_width = "wrap_content"
+                        android:layout_height = "wrap_content"
+                        android:fontFamily = "@font/montserrat_regular"
+                        android:gravity = "center"
+                        android:textSize = "14sp"
+                        app:layout_constraintBottom_toBottomOf = "parent"
+                        app:layout_constraintEnd_toEndOf = "parent"
+                        app:layout_constraintStart_toStartOf = "parent"
+                        app:layout_constraintTop_toTopOf = "parent"
+                        tools:text = "#01"
+                        />
+                    
+                    <TextView
+                        android:id = "@+id/text_complete"
+                        android:layout_width = "wrap_content"
+                        android:layout_height = "wrap_content"
+                        android:alpha = "30"
+                        android:clickable = "true"
+                        android:focusable = "true"
+                        android:fontFamily = "@font/ko_pub_dotum_pl"
+                        android:gravity = "center"
+                        android:paddingEnd = "@dimen/dimen_twenty"
+                        android:paddingStart = "@dimen/dimen_null"
+                        android:text = "@string/complete"
+                        app:layout_constraintBottom_toBottomOf = "parent"
+                        app:layout_constraintEnd_toEndOf = "parent"
+                        app:layout_constraintTop_toTopOf = "parent"
+                        />
+                </android.support.constraint.ConstraintLayout>
             </android.support.v7.widget.Toolbar>
-
+            
             <TextView
-                android:id="@+id/date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/diary_toolbar"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
-                android:fontFamily="@font/montserrat_light" />
-
+                android:id = "@+id/text_write_date"
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_marginEnd = "@dimen/dimen_twenty"
+                android:layout_marginStart = "@dimen/dimen_twenty"
+                android:layout_marginTop = "15dp"
+                android:fontFamily = "@font/montserrat_regular"
+                android:gravity = "center"
+                android:textColor = "#4A4A4A"
+                android:textSize = "12sp"
+                app:layout_constraintEnd_toEndOf = "parent"
+                app:layout_constraintStart_toStartOf = "parent"
+                app:layout_constraintTop_toBottomOf = "@+id/toolbar_write"
+                tools:paddingTop = "?android:attr/actionBarSize"
+                tools:text = "2018 Aug 20 - 14:20"
+                />
+            
             <TextView
-                android:id="@+id/text_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/date"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft = "30dp"
-                android:layout_marginRight = "30dp"
-                android:clickable="true"
-                android:drawablePadding="1dp"
-                android:drawableStart="@drawable/location2"
-                android:text="@string/setting_location" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/bottom_toolbar"
-                android:layout_below="@+id/text_location"
-                android:layout_margin="20dp">
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray">
-
-                </View>
-
-                <ImageView
-                    android:id="@+id/img_myPicture"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"/>
-
-                <EditText
-                    android:id="@+id/edit_diary_write"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/img_myPicture"
-                    android:background="@android:color/transparent"
-                    android:gravity="top"
-                    android:hint="@string/hint" />
-
-            </RelativeLayout>
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/bottom_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_alignParentBottom="true"
-                android:background="@android:color/transparent">
-
-
-                <ImageView
-                    android:id="@+id/img_gallery"
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:src="@drawable/gallery"
-                    android:tint="@android:color/darker_gray" />
-
-                <TextView
-                    android:id="@+id/text_keyboard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="right"
-                    android:layout_margin="10dp"
-                    android:textSize="15sp"
-                    android:fontFamily="@font/montserrat_light"/>
-            </android.support.v7.widget.Toolbar>
-        </RelativeLayout>
-
+                android:id = "@+id/text_write_location"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_marginTop = "4dp"
+                android:alpha = "95"
+                android:clickable = "true"
+                android:drawableStart = "@drawable/location"
+                android:focusable = "true"
+                android:fontFamily = "@font/ko_pub_dotum_pl"
+                android:gravity = "center"
+                android:lineSpacingExtra = "7sp"
+                android:text = "@string/setting_location"
+                android:textColor = "#4A4A4A"
+                android:textSize = "12sp"
+                app:layout_constraintEnd_toEndOf = "@+id/text_write_date"
+                app:layout_constraintStart_toStartOf = "@+id/text_write_date"
+                app:layout_constraintTop_toBottomOf = "@+id/text_write_date"
+                tools:text = "망원동 키오스크 카페"
+                />
+            
+            
+            <View
+                android:id = "@+id/view_write_line"
+                android:layout_width = "0dp"
+                android:layout_height = "0.5dp"
+                android:layout_marginTop = "12dp"
+                android:background = "#979797"
+                app:layout_constraintEnd_toEndOf = "@+id/text_write_date"
+                app:layout_constraintStart_toStartOf = "@+id/text_write_date"
+                app:layout_constraintTop_toBottomOf = "@+id/text_write_location"
+                />
+            
+            <ImageView
+                android:id = "@+id/img_write_myPicture"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_marginTop = "@dimen/dimen_twenty"
+                android:paddingBottom = "@{imgWriteMyPicture.getDrawable() ==null ? @dimen/dimen_null : @dimen/dimen_fifteen}"
+                app:layout_constraintStart_toStartOf = "@+id/text_write_date"
+                app:layout_constraintTop_toBottomOf = "@+id/view_write_line"
+                />
+            
+            <EditText
+                android:id = "@+id/edit_write_diary"
+                android:layout_width = "0dp"
+                android:layout_height = "0dp"
+                android:background = "@android:color/transparent"
+                android:fontFamily = "@font/ko_pub_dotum_pl"
+                android:gravity = "top"
+                android:hint = "@string/hint_write"
+                android:inputType = "textImeMultiLine"
+                android:lineSpacingExtra = "8sp"
+                android:paddingBottom = "@dimen/dimen_twenty"
+                android:paddingTop = "4dp"
+                android:textColor = "@color/colorMainBlack"
+                android:textSize = "12sp"
+                app:layout_constraintBottom_toTopOf = "@+id/view_line_bottom"
+                app:layout_constraintEnd_toEndOf = "@+id/text_write_date"
+                app:layout_constraintStart_toStartOf = "@+id/text_write_date"
+                app:layout_constraintTop_toBottomOf = "@+id/img_write_myPicture"
+                />
+            
+            <View
+                android:id = "@+id/view_line_bottom"
+                android:layout_width = "match_parent"
+                android:layout_height = "0.5dp"
+                android:background = "#979797"
+                app:layout_constraintBottom_toTopOf = "@+id/img_write_gallery"
+                />
+            
+            <ImageView
+                android:id = "@+id/img_write_gallery"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:clickable = "true"
+                android:focusable = "true"
+                android:paddingBottom = "11dp"
+                android:paddingTop = "11dp"
+                android:src = "@drawable/gallery"
+                app:layout_constraintBottom_toBottomOf = "parent"
+                app:layout_constraintStart_toStartOf = "@+id/text_write_date"
+                />
+            
+            <TextView
+                android:id = "@+id/text_write_keyboard"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:alpha = "50"
+                android:fontFamily = "@font/montserrat_regular"
+                android:textColor = "#4A4A4A"
+                android:textSize = "12sp"
+                app:layout_constraintBottom_toBottomOf = "parent"
+                app:layout_constraintEnd_toEndOf = "@+id/text_write_date"
+                app:layout_constraintTop_toBottomOf = "@+id/view_line_bottom"
+                tools:text = "24 / 800"
+                />
+        
+        </android.support.constraint.ConstraintLayout>
+    
     </ScrollView>
 
 

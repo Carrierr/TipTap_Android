@@ -27,13 +27,14 @@ import gun0912.tedbottompicker.TedBottomPicker
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.databinding.ActivityDiaryWritingBinding
 import java.io.IOException
+import java.text.SimpleDateFormat
 import java.util.*
 
 
-open class DiaryWritingActivity : AppCompatActivity()  {
+open class DiaryWritingActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivityDiaryWritingBinding
-    private var locationManager : LocationManager? = null
+    private lateinit var binding: ActivityDiaryWritingBinding
+    private var locationManager: LocationManager? = null
     private var checkLocationOnce = true
 
     @SuppressLint("MissingPermission")
@@ -41,27 +42,25 @@ open class DiaryWritingActivity : AppCompatActivity()  {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_diary_writing)
 
-        binding.textComplete.setOnClickListener { finish() }
-        binding.btnBack.setOnClickListener { finish() }
-
-        getFormattedDate(binding)
-
-
-
-
+        binding.apply {
+            textComplete.setOnClickListener { finish() }
+            btnBack.setOnClickListener { finish() }
+            textWriteKeyboard.text = getString(R.string.text_length, 0.toString())
+            textWriteDate.text = SimpleDateFormat("yyyy MMM dd - hh:mm", Locale.US).format(Date())
+        }
 
 
-        binding.textLocation.setOnClickListener { _ ->
+        binding.textWriteLocation.setOnClickListener { _ ->
             PlaceSearchDialog.Builder(this@DiaryWritingActivity).apply {
                 setHintText("위치입력")
-                 setLocationNameListener {
-                     val array: List<String> = it.split(" ")
-                     var str = ""
-                     for(i in array.indices) {
-                         if(i >= array.size-4)
-                             str += array[i] + " "
-                     }
-                     binding.textLocation.text = str
+                setLocationNameListener {
+                    val array: List<String> = it.split(" ")
+                    var str = ""
+                    for (i in array.indices) {
+                        if (i >= array.size - 4)
+                            str += array[i] + " "
+                    }
+                    binding.textWriteLocation.text = str
 
                 }.build().show()
             }
@@ -69,8 +68,8 @@ open class DiaryWritingActivity : AppCompatActivity()  {
 
         val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
 
-        if(permissionCheck == PackageManager.PERMISSION_GRANTED && checkLocationOnce) {
-            if(binding.textLocation.text == "위치설정") {
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED && checkLocationOnce) {
+            if (binding.textWriteLocation.text == "위치설정") {
                 Log.d("request", "no permission")
                 locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
 
@@ -80,34 +79,32 @@ open class DiaryWritingActivity : AppCompatActivity()  {
                 } catch (ex: SecurityException) {
                     Log.d("myTag", "Security Exception, no location available");
                 }
-            }
-            else {
+            } else {
                 Log.d("permission", "Hello")
             }
 
         } else {
             Log.d("request", "permission")
             val permission = arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION)
-            ActivityCompat.requestPermissions(this, permission,0)
+            ActivityCompat.requestPermissions(this, permission, 0)
         }
 
 
 
-
-        binding.imgGallery.setOnClickListener { _ ->
+        binding.imgWriteGallery.setOnClickListener { _ ->
             val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
 
             if (permissionCheck == PackageManager.PERMISSION_DENIED) {
                 val permission = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                ActivityCompat.requestPermissions(this, permission,0)
+                ActivityCompat.requestPermissions(this, permission, 0)
                 // 권한 없음
             } else {
                 // 권한 있음
                 val tedBottomPicker = TedBottomPicker.Builder(this@DiaryWritingActivity)
                         .setOnImageSelectedListener {
                             // here is selected uri
-                            binding.imgMyPicture.apply{
+                            binding.imgWriteMyPicture.apply {
                                 layoutParams.width = 500
                                 layoutParams.height = 500
                                 setImageURI(it)
@@ -115,7 +112,6 @@ open class DiaryWritingActivity : AppCompatActivity()  {
 
                             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N)
                                 window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-
                             else
                                 window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
                         }
@@ -126,51 +122,53 @@ open class DiaryWritingActivity : AppCompatActivity()  {
         }
 
 
-        binding.editDiaryWrite.inputType = android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-        binding.editDiaryWrite.addTextChangedListener(object : TextWatcher {
+        binding.editWriteDiary.inputType = android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+        binding.editWriteDiary.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-                binding.textKeyboard.text = p0?.length.toString() + "/800"
+                binding.textWriteKeyboard.text = getString(R.string.text_length, p0?.length.toString())
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.textKeyboard.text = "0/800"
+                binding.textWriteKeyboard.text = getString(R.string.text_length, p0?.length.toString())
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.textKeyboard.text = p0
+                binding.textWriteKeyboard.text = p0
             }
         })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
-                if(data !=null){
-                    try{
-                        val bitmap:Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, data.data )
-                        binding.imgMyPicture.setImageBitmap(bitmap)
-                    }catch (e:IOException){
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                if (data != null) {
+                    try {
+                        val bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, data.data)
+                        binding.imgWriteMyPicture.setImageBitmap(bitmap)
+                    } catch (e: IOException) {
                         e.printStackTrace()
                     }
-                }else if(resultCode == Activity.RESULT_CANCELED){
+                } else if (resultCode == Activity.RESULT_CANCELED) {
                     Toast.makeText(this, "Cancelled", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
-    private val locationListener:LocationListener = object:LocationListener {
+
+    private val locationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
             val geocoder = Geocoder(applicationContext, Locale.getDefault())
-            val listAddresses  = geocoder.getFromLocation(location.latitude, location.longitude, 1)
-            if(null != listAddresses && listAddresses.size > 0) {
+            val listAddresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+            if (null != listAddresses && listAddresses.size > 0) {
                 val location = listAddresses[0].getAddressLine(0)
-                val str:String = location.toString().substring(location.toString().indexOf(" "))
+                val str: String = location.toString().substring(location.toString().indexOf(" "))
 
-                if(binding.textLocation.text == "위치설정")
-                    binding.textLocation.text = str
+                if (binding.textWriteLocation.text == "위치설정")
+                    binding.textWriteLocation.text = str
             }
         }
+
         override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
         override fun onProviderEnabled(provider: String) {}
         override fun onProviderDisabled(provider: String) {}
