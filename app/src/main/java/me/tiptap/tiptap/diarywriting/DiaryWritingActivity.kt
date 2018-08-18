@@ -7,7 +7,10 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.databinding.DataBindingUtil
 import android.graphics.Bitmap
-import android.location.*
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -48,13 +51,18 @@ open class DiaryWritingActivity : AppCompatActivity()  {
 
 
 
-        binding.textLocation.setOnClickListener { it ->
-            checkLocationOnce = false
+        binding.textLocation.setOnClickListener { _ ->
             PlaceSearchDialog.Builder(this@DiaryWritingActivity).apply {
-                setHeaderImage(R.drawable.headerimage).setHintText("위치입력")
+                setHintText("위치입력")
                  setLocationNameListener {
-                     binding.textLocation.text = it
-                     it.substring(it.toString().indexOf(" "))
+                     val array: List<String> = it.split(" ")
+                     var str = ""
+                     for(i in array.indices) {
+                         if(i >= array.size-4)
+                             str += array[i] + " "
+                     }
+                     binding.textLocation.text = str
+
                 }.build().show()
             }
         }
@@ -62,16 +70,19 @@ open class DiaryWritingActivity : AppCompatActivity()  {
         val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
 
         if(permissionCheck == PackageManager.PERMISSION_GRANTED && checkLocationOnce) {
+            if(binding.textLocation.text == "위치설정") {
+                Log.d("request", "no permission")
+                locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
 
-            Log.d("request", "no permission")
-            locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
-            val provider = locationManager?.getBestProvider(Criteria(), true)
-
-            try {
-                // Request location updates
-                locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0L, 0f, locationListener);
-            } catch(ex: SecurityException) {
-                Log.d("myTag", "Security Exception, no location available");
+                try {
+                    // Request location updates
+                    locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0L, 0f, locationListener);
+                } catch (ex: SecurityException) {
+                    Log.d("myTag", "Security Exception, no location available");
+                }
+            }
+            else {
+                Log.d("permission", "Hello")
             }
 
         } else {
@@ -156,7 +167,8 @@ open class DiaryWritingActivity : AppCompatActivity()  {
                 val location = listAddresses[0].getAddressLine(0)
                 val str:String = location.toString().substring(location.toString().indexOf(" "))
 
-                binding.textLocation.text = str
+                if(binding.textLocation.text == "위치설정")
+                    binding.textLocation.text = str
             }
         }
         override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
