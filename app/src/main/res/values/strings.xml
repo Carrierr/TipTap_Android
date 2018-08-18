@@ -3,7 +3,7 @@
 
     <!--scratch-->
     <string name="scratch_text">Hello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\n
-                            Hello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\n</string>
+                            Hello Tiptap！\n</string>
     <string name="tiptap_scratch">오늘 도착한 여행일기를 읽고 싶으시면\n화면을 살살 문질러주세요!</string>
 
     <!--diary writing-->

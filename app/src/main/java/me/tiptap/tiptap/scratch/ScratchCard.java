@@ -19,6 +19,7 @@ package me.tiptap.tiptap.scratch;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
@@ -37,6 +38,8 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 
 import com.cooltechworks.utils.BitmapUtils;
+
+import java.util.Random;
 
 import me.tiptap.tiptap.R;
 
@@ -162,9 +165,20 @@ public class ScratchCard extends android.support.v7.widget.AppCompatTextView {
 
         mErasePath = new Path();
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
-        mBitmapPaint.setAlpha(180);
 
-        //scratchBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.orange);
+        Random rand = new Random();
+        int scratchNum = (rand.nextInt(50) + 1) % 3;
+        switch(scratchNum) {
+            case 0 :
+                scratchBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.img_scratch_01);
+                break;
+            case 1:
+                scratchBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.img_scratch_02);
+                break;
+            case 2:
+                scratchBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.img_scratch_03);
+                break;
+        }
         mDrawable = new BitmapDrawable(getResources(), scratchBitmap);
         mDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 
