@@ -2,6 +2,7 @@ package me.tiptap.tiptap
 
 import android.app.Application
 import android.content.Context
+import com.facebook.stetho.Stetho
 import com.kakao.auth.KakaoSDK
 import me.tiptap.tiptap.login.KakaoSDKAdapter
 
@@ -23,6 +24,7 @@ class TipTapApplication : Application() {
         super.onCreate()
 
         instance = this
+        Stetho.initializeWithDefaults(this)
         KakaoSDK.init(KakaoSDKAdapter())
     }
 
