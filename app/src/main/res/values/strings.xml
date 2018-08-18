@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">TipTap</string>
-    <string name="google_maps_key">AIzaSyCsa095bXVFg3lczXm_zTa833y0md5wZ-I</string>
 
     <!--scratch-->
     <string name="scratch_text">Hello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\n
