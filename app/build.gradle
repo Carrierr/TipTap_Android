@@ -70,7 +70,7 @@ dependencies {
 
 
     //LBS
-    implementation "com.codemybrainsout.placesearchdialog:placesearch:1.0.1"
+    implementation 'com.codemybrainsout.placesearchdialog:placesearch:1.0.1'
 
     //kakao
     implementation group: 'com.kakao.sdk', name: 'usermgmt', version: project.KAKAO_SDK_VERSION
