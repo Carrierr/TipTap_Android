@@ -55,14 +55,15 @@ dependencies {
     implementation "com.github.cooltechworks:ScratchView:v1.1"
     implementation "gun0912.ted:tedbottompicker:1.0.4"
 
+
     //rx
     implementation "io.reactivex.rxjava2:rxjava:$rx_java_version"
     implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
     implementation "io.reactivex.rxjava2:rxkotlin:$rx_kotlin_version"
 
+
     //LBS
-    implementation "com.google.android.gms:play-services-location:15.0.1"
-    implementation "com.google.android.gms:play-services-maps:15.0.1"
+    implementation "com.codemybrainsout.placesearchdialog:placesearch:1.0.1"
 
     //kakao
     implementation group: 'com.kakao.sdk', name: 'usermgmt', version: project.KAKAO_SDK_VERSION

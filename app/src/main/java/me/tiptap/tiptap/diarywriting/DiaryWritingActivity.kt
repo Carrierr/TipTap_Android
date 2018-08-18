@@ -13,14 +13,13 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.WindowManager
-import android.widget.EditText
 import android.widget.Toast
+import com.codemybrainsout.placesearch.PlaceSearchDialog
 import gun0912.tedbottompicker.TedBottomPicker
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.databinding.ActivityDiaryWritingBinding
@@ -44,35 +43,29 @@ open class DiaryWritingActivity : AppCompatActivity()  {
 
         getFormattedDate(binding)
 
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_IS_FORWARD_NAVIGATION)
-        binding.textLocation.setOnClickListener {
 
-            val alert = AlertDialog.Builder(this@DiaryWritingActivity)
-            alert.setTitle(R.string.location_confirm)
 
-            val input = EditText(this@DiaryWritingActivity)
-            alert.setView(input)
 
-            alert.setNegativeButton(R.string.cancel, null)
-            alert.setPositiveButton(R.string.ok) { _, _ ->
-                val place = input.text.toString()
-                // Do something with value!
-                if (place != "")
-                    binding.textLocation.text = place
+
+
+        binding.textLocation.setOnClickListener { it ->
+            checkLocationOnce = false
+            PlaceSearchDialog.Builder(this@DiaryWritingActivity).apply {
+                setHeaderImage(R.drawable.headerimage).setHintText("위치입력")
+                 setLocationNameListener {
+                     binding.textLocation.text = it
+                     it.substring(it.toString().indexOf(" "))
+                }.build().show()
             }
-            alert.show()
         }
 
         val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
 
         if(permissionCheck == PackageManager.PERMISSION_GRANTED && checkLocationOnce) {
-            checkLocationOnce = false
+
             Log.d("request", "no permission")
             locationManager = getSystemService(LOCATION_SERVICE) as LocationManager?
             val provider = locationManager?.getBestProvider(Criteria(), true)
-
-            val locations = locationManager?.getLastKnownLocation(provider)
-            val providerList = locationManager?.allProviders
 
             try {
                 // Request location updates
@@ -91,9 +84,6 @@ open class DiaryWritingActivity : AppCompatActivity()  {
 
 
         binding.imgGallery.setOnClickListener { _ ->
-            /*val intent = Intent()
-            intent.action = Intent.ACTION_GET_CONTENT
-            startActivityForResult(Intent.createChooser(intent, "Select Picture"), 1) */
             val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
 
@@ -106,13 +96,15 @@ open class DiaryWritingActivity : AppCompatActivity()  {
                 val tedBottomPicker = TedBottomPicker.Builder(this@DiaryWritingActivity)
                         .setOnImageSelectedListener {
                             // here is selected uri
-
-                            binding.imgMyPicture.layoutParams.width = 500
-                            binding.imgMyPicture.layoutParams.height = 500
-                            binding.imgMyPicture.setImageURI(it)
-                            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N) {
-                                window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                            binding.imgMyPicture.apply{
+                                layoutParams.width = 500
+                                layoutParams.height = 500
+                                setImageURI(it)
                             }
+
+                            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N)
+                                window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
                             else
                                 window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
                         }
@@ -161,8 +153,8 @@ open class DiaryWritingActivity : AppCompatActivity()  {
             val geocoder = Geocoder(applicationContext, Locale.getDefault())
             val listAddresses  = geocoder.getFromLocation(location.latitude, location.longitude, 1)
             if(null != listAddresses && listAddresses.size > 0) {
-                val Location = listAddresses[0].getAddressLine(0)
-                val str:String = Location.toString().substring(Location.toString().indexOf(" "))
+                val location = listAddresses[0].getAddressLine(0)
+                val str:String = location.toString().substring(location.toString().indexOf(" "))
 
                 binding.textLocation.text = str
             }
@@ -174,3 +166,4 @@ open class DiaryWritingActivity : AppCompatActivity()  {
 
 
 }
+

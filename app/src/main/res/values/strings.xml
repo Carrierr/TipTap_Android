@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">TipTap</string>
-    <string name="google_maps_key">AIzaSyDA2Fujc6k5qulgkxF_HcGG8n6pGEX1ZiA</string>
+    <string name="google_maps_key">AIzaSyCsa095bXVFg3lczXm_zTa833y0md5wZ-I</string>
 
     <!--scratch-->
     <string name="scratch_text">Hello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\n
                             Hello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\n</string>
+    <string name="tiptap_scratch">오늘 도착한 여행일기를 읽고 싶으시면\n화면을 살살 문질러주세요!</string>
 
     <!--diary writing-->
     <string name="location_confirm">위치확인</string>
@@ -30,6 +31,7 @@
     <!--diary detail-->
     <string name="delete">삭제</string>
     <string name="ask_delete">삭제하시겠습니까?</string>
+
 
 
     <string name="fetch_address">Fetch address</string>
