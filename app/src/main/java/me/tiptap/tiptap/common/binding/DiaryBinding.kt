@@ -26,8 +26,3 @@ fun extractDayOfMonthFromDate(view : TextView, date : Date) {
     view.text = SimpleDateFormat("MMM \ndd", Locale.US).format(date)
 }
 
-@BindingAdapter("time")
-fun extractTimeFromDate(view : TextView, date : Date) {
-    view.text = SimpleDateFormat("HH:mm", Locale.KOREAN).format(date)
-}
-

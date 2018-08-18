@@ -84,20 +84,20 @@
             />
         
         <TextView
-            android:id = "@+id/text_main_time"
+            android:id = "@+id/text_main_tiptap"
             style = "@style/MainDateText"
-            time = "@{date}"
             android:layout_width = "wrap_content"
             android:layout_height = "0dp"
             android:layout_marginTop = "18dp"
             android:rotation = "90"
+            android:text = "@string/app_name"
             android:textSize = "12sp"
             app:layout_constraintEnd_toEndOf = "parent"
             app:layout_constraintHorizontal_bias = "0.03"
             app:layout_constraintStart_toStartOf = "parent"
             app:layout_constraintTop_toBottomOf = "@+id/view_line"
             app:layout_constraintVertical_weight = "1"
-            tools:text = "15:00"
+            tools:text = "tiptap"
             />
         
         <TextView
@@ -112,7 +112,7 @@
             android:visibility = "@{fragment.postSize > 0 ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toTopOf = "@+id/btn_main_add"
             app:layout_constraintStart_toStartOf = "@+id/text_main_year"
-            app:layout_constraintTop_toBottomOf = "@+id/text_main_time"
+            app:layout_constraintTop_toBottomOf = "@+id/text_main_tiptap"
             />
         
         
