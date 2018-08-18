@@ -19,7 +19,6 @@ package me.tiptap.tiptap.scratch;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
@@ -165,7 +164,7 @@ public class ScratchCard extends android.support.v7.widget.AppCompatTextView {
         mBitmapPaint = new Paint(Paint.DITHER_FLAG);
         mBitmapPaint.setAlpha(180);
 
-        scratchBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.orange);
+        //scratchBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.orange);
         mDrawable = new BitmapDrawable(getResources(), scratchBitmap);
         mDrawable.setTileModeXY(Shader.TileMode.REPEAT, Shader.TileMode.REPEAT);
 

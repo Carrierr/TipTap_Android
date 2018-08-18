@@ -62,6 +62,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/date"
                 android:layout_centerHorizontal="true"
+                android:layout_marginLeft = "30dp"
+                android:layout_marginRight = "30dp"
                 android:clickable="true"
                 android:drawablePadding="1dp"
                 android:drawableLeft="@drawable/location2"
