@@ -33,7 +33,7 @@
         
         <include
             android:id = "@+id/toolbar"
-            fragment="@{fragment}"
+            fragment = "@{fragment}"
             layout = "@layout/toolbar_main"
             />
         
@@ -42,13 +42,15 @@
             style = "@style/MainDateText"
             year = "@{date}"
             android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
+            android:layout_height = "0dp"
             android:layout_marginStart = "21dp"
             android:layout_marginTop = "13dp"
             android:fontFamily = "@font/montserrat_regular"
             android:textSize = "14sp"
             app:layout_constraintStart_toStartOf = "parent"
             app:layout_constraintTop_toBottomOf = "@+id/toolbar"
+            app:layout_constraintVertical_chainStyle = "spread"
+            app:layout_constraintVertical_weight = "1"
             tools:paddingTop = "?android:attr/actionBarSize"
             tools:text = "18'"
             />
@@ -58,24 +60,27 @@
             style = "@style/MainDateText"
             dayOfMonth = "@{date}"
             android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
+            android:layout_height = "0dp"
             android:layout_marginStart = "21dp"
             android:layout_marginTop = "10dp"
             android:fontFamily = "@font/montserrat_regular"
             android:textSize = "14sp"
             app:layout_constraintStart_toStartOf = "parent"
             app:layout_constraintTop_toBottomOf = "@+id/text_main_year"
+            app:layout_constraintVertical_weight = "1"
             tools:text = "Aug\n02"
             />
         
         <View
             android:id = "@+id/view_line"
             android:layout_width = "0.5dp"
-            android:layout_height = "178dp"
+            android:layout_height = "0dp"
             android:layout_marginTop = "18dp"
             android:background = "#8B8B8B"
+            app:layout_constraintBottom_toTopOf = "@+id/text_main_time"
             app:layout_constraintStart_toStartOf = "@+id/text_main_year"
             app:layout_constraintTop_toBottomOf = "@+id/text_main_month"
+            app:layout_constraintVertical_weight = "13"
             />
         
         <TextView
@@ -83,7 +88,7 @@
             style = "@style/MainDateText"
             time = "@{date}"
             android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
+            android:layout_height = "0dp"
             android:layout_marginTop = "18dp"
             android:rotation = "90"
             android:textSize = "12sp"
@@ -91,6 +96,7 @@
             app:layout_constraintHorizontal_bias = "0.03"
             app:layout_constraintStart_toStartOf = "parent"
             app:layout_constraintTop_toBottomOf = "@+id/view_line"
+            app:layout_constraintVertical_weight = "1"
             tools:text = "15:00"
             />
         
@@ -104,7 +110,6 @@
             android:textColor = "#9e252525"
             android:textSize = "28sp"
             android:visibility = "@{fragment.postSize > 0 ? View.GONE : View.VISIBLE}"
-            app:layout_constraintBottom_toBottomOf = "parent"
             app:layout_constraintBottom_toTopOf = "@+id/btn_main_add"
             app:layout_constraintStart_toStartOf = "@+id/text_main_year"
             app:layout_constraintTop_toBottomOf = "@+id/text_main_time"
