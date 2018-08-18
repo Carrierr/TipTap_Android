@@ -1,7 +1,6 @@
 package me.tiptap.tiptap.scratch
 
 import android.databinding.DataBindingUtil
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -13,7 +12,6 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.databinding.FragmentScratchBinding
-import java.util.*
 
 
 class ScratchFragment : Fragment() {
@@ -23,16 +21,12 @@ class ScratchFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_scratch, container, false)
 
-        takeScreenshot()
         binding.scratch.setRevealListener(object : ScratchCard.IRevealListener {
             override fun onRevealPercentChangedListener(stv: ScratchCard?, percent: Float) {
                 Log.d("ScratchPer", percent.toString())
                 if(percent == 1.0f) {
                     Log.d("ScratchPer", "Done!")
-                    fadeOutAnimation(binding.scratch, 500)
-                    binding.progressBar.visibility = View.INVISIBLE
-                    binding.textLittlebit.visibility = View.INVISIBLE
-                    binding.textScratch.visibility = View.INVISIBLE
+                    fadeOutAnimation(binding.scratch, 300)
                 }
             }
 
@@ -63,25 +57,7 @@ class ScratchFragment : Fragment() {
         view.startAnimation(fadeOut)
     }
 
-    private fun takeScreenshot() {
-        val now = Date()
-        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now)
 
-        try {
-
-            val v1 = activity?.window?.findViewById<ViewGroup>(R.id.layout)
-
-            v1?.isDrawingCacheEnabled = true
-            val bitmap = Bitmap.createBitmap(v1?.drawingCache)
-            v1?.isDrawingCacheEnabled = false
-
-            ScratchCard.scratchBitmap = bitmap
-
-        } catch (e: Throwable) {
-            // Several error may come out with file handling or DOM
-            e.printStackTrace()
-        }
-    }
 }
 
 
