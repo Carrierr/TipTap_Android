@@ -38,28 +38,35 @@ dependencies {
     def rx_java_version = "2.2.0"
     def rx_android_version = "2.0.2"
     def rx_kotlin_version = "2.2.0"
+    def rx_java_adapter_version="2.3.0"
+
+    def retrofit_version="2.4.0"
+    def okhttp_version="3.11.0"
+    def gson_version="2.4.0"
+
+    def stetho_version="1.5.0"
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     //kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     kapt "com.android.databinding:compiler:$gradle_version"
+    implementation "com.android.support.constraint:constraint-layout:$constraint_version"
 
     //support library
     implementation "com.android.support:support-v4:$support_version"
     implementation "com.android.support:support-media-compat:$support_version"
     implementation "com.android.support:appcompat-v7:$support_version"
     implementation "com.android.support:design:$support_version"
-    implementation "com.android.support.constraint:constraint-layout:$constraint_version"
     implementation "com.github.cooltechworks:ScratchView:v1.1"
-    implementation "gun0912.ted:tedbottompicker:1.0.4"
+    implementation "gun0912.ted:tedbottompicker:1.1.0"
 
 
     //rx
     implementation "io.reactivex.rxjava2:rxjava:$rx_java_version"
     implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
     implementation "io.reactivex.rxjava2:rxkotlin:$rx_kotlin_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rx_java_adapter_version"
 
 
     //LBS
@@ -67,6 +74,19 @@ dependencies {
 
     //kakao
     implementation group: 'com.kakao.sdk', name: 'usermgmt', version: project.KAKAO_SDK_VERSION
+
+    //retrofit2
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+
+    //okHttp
+   implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+
+    //gson
+    implementation "com.squareup.retrofit2:converter-gson:$gson_version"
+
+    //stetho
+    implementation "com.facebook.stetho:stetho:$stetho_version"
+    implementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
