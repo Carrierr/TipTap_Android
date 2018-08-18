@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name = "dimen_null">0dp</dimen>
+    <dimen name = "dimen_fifteen">15dp</dimen>
+    <dimen name = "dimen_twenty">20dp</dimen>
+</resources>
