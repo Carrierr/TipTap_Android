@@ -68,8 +68,7 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:$rx_java_adapter_version"
 
     //LBS
-    implementation "com.google.android.gms:play-services-location:15.0.1"
-    implementation "com.google.android.gms:play-services-maps:15.0.1"
+    implementation "com.codemybrainsout.placesearchdialog:placesearch:1.0.1"
 
     //kakao
     implementation group: 'com.kakao.sdk', name: 'usermgmt', version: project.KAKAO_SDK_VERSION
