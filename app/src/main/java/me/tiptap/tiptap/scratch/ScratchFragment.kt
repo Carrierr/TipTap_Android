@@ -21,6 +21,7 @@ class ScratchFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_scratch, container, false)
 
+        binding.layoutScratchMain?.textScratchMainNum?.text = getString(R.string.count_tiptap, 0) //temp
         binding.scratch.setRevealListener(object : ScratchCard.IRevealListener {
             override fun onRevealPercentChangedListener(stv: ScratchCard?, percent: Float) {
                 Log.d("ScratchPer", percent.toString())
