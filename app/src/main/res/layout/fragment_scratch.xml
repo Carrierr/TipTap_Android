@@ -1,49 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
+<layout xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    xmlns:tools = "http://schemas.android.com/tools"
+    >
+    
     <RelativeLayout
         android:id = "@+id/layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        >
+        
         <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text = "Hello TipTap" />
-            </RelativeLayout>
+            android:layout_width = "match_parent"
+            android:layout_height = "match_parent"
+            android:fillViewport="true"
+            >
+            
+            <!--scratch main-->
+            <include
+                android:id = "@+id/layout_scratch_main"
+                layout = "@layout/layout_scratch_main"
+                />
+        
         </ScrollView>
-
+        
         <FrameLayout
-            android:id="@+id/layout_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+            android:id = "@+id/layout_container"
+            android:layout_width = "match_parent"
+            android:layout_height = "match_parent"
+            >
+            
             <me.tiptap.tiptap.scratch.ScratchCard
-                android:id="@+id/scratch"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#00000000"
-                android:gravity="center"
-                android:paddingBottom="50dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="50dp"
-                android:text="@string/scratch_text"
-                android:textColor="@android:color/transparent"
-                android:textSize="20sp" />
-
+                android:id = "@+id/scratch"
+                android:layout_width = "match_parent"
+                android:layout_height = "match_parent"
+                android:background = "#00000000"
+                android:gravity = "center"
+                android:paddingBottom = "50dp"
+                android:paddingLeft = "20dp"
+                android:paddingRight = "20dp"
+                android:paddingTop = "50dp"
+                android:text = "@string/scratch_text"
+                android:textColor = "@android:color/transparent"
+                android:textSize = "20sp"
+                />
+        
         </FrameLayout>
-
+    
     </RelativeLayout>
 </layout>
