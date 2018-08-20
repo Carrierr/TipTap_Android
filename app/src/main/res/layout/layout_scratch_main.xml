@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    xmlns:tools = "http://schemas.android.com/tools"
+    >
+    
+    <android.support.constraint.ConstraintLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        android:background = "@color/colorDefaultBackground"
+        >
+        
+        <android.support.constraint.Guideline
+            android:id = "@+id/guide_scratch_main_side"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.15"
+            app:layout_constraintTop_toTopOf = "parent"
+            />
+        
+        <View
+            android:id = "@+id/view_scratch_main_line"
+            android:layout_width = "1dp"
+            android:layout_height = "0dp"
+            android:background = "@color/colorMainBlack"
+            app:layout_constraintBottom_toBottomOf = "@+id/guide_scratch_main_side_ho"
+            app:layout_constraintEnd_toStartOf = "@+id/guide_scratch_main_side"
+            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintTop_toTopOf = "parent"
+            />
+        
+        <android.support.constraint.Guideline
+            android:id = "@+id/guide_scratch_main_side_ho"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "horizontal"
+            app:layout_constraintGuide_percent = "0.04"
+            />
+        
+        <me.tiptap.tiptap.common.view.VerticalTextView
+            android:id = "@+id/text_scratch_main_from"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_marginTop = "@dimen/dimen_fifteen"
+            android:fontFamily = "@font/montserrat_semi_bold"
+            android:maxLines = "1"
+            android:text = "@string/from"
+            app:layout_constraintEnd_toStartOf = "@+id/guide_scratch_main_side"
+            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintTop_toBottomOf = "@+id/guide_scratch_main_side_ho"
+            />
+        
+        <me.tiptap.tiptap.common.view.VerticalTextView
+            android:id = "@+id/text_scratch_main_location"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_marginTop = "5dp"
+            android:fontFamily = "@font/ko_pub_dotum_mid"
+            android:text = "경기도 부천시 어쩌고 저쩌고 이러쿵 저러쿵 요기조기요기"
+            app:layout_constraintEnd_toStartOf = "@+id/guide_scratch_main_side"
+            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintTop_toBottomOf = "@+id/text_scratch_main_from"
+            />
+        
+        <TextView
+            android:id = "@+id/text_scratch_main_num"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:fontFamily = "@font/montserrat_regular"
+            android:gravity = "center"
+            android:text = "@string/count_tiptap"
+            android:textSize = "14sp"
+            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintTop_toTopOf = "@+id/text_scratch_main_from"
+            tools:text = "10\n TIPTAP"
+            />
+        
+        <!--scroll button-->
+        <ImageButton
+            android:id = "@+id/btn_scratch_main_scroll"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:background = "@android:color/transparent"
+            android:src = "@drawable/scroll"
+            app:layout_constraintBottom_toBottomOf = "parent"
+            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintTop_toTopOf = "parent"
+            app:layout_constraintVertical_bias = "0.97"
+            />
+    
+    
+    </android.support.constraint.ConstraintLayout>
+</layout>
