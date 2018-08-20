@@ -2,5 +2,6 @@
 <resources>
     <dimen name = "dimen_null">0dp</dimen>
     <dimen name = "dimen_fifteen">15dp</dimen>
-    <dimen name = "dimen_twenty">20dp</dimen>
+    <dimen name = "dimen_write_side">20dp</dimen>
+    <dimen name = "dimen_write_top">23dp</dimen>
 </resources>

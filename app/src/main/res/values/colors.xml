@@ -9,4 +9,6 @@
     
     <color name="colorDefaultBackground">#FBFBFB</color>
     <color name = "colorMainBlack">#242424</color>
+    <color name="colorMainGray">#A7A7A7</color>
+    <color name = "colorGrayishBrown">#4A4A4A</color>
 </resources>
