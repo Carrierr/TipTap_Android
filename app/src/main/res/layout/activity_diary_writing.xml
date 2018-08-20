@@ -6,6 +6,11 @@
     
     <data>
         
+        <variable
+            name = "activity"
+            type = "me.tiptap.tiptap.diarywriting.DiaryWritingActivity"
+            />
+        
         <import
             alias = "View"
             type = "android.view.View"
@@ -40,7 +45,7 @@
                         android:layout_width = "wrap_content"
                         android:layout_height = "wrap_content"
                         android:background = "@android:color/transparent"
-                        android:src = "@drawable/back"
+                        android:src = "@drawable/ic_back"
                         app:layout_constraintBottom_toBottomOf = "parent"
                         app:layout_constraintStart_toStartOf = "parent"
                         app:layout_constraintTop_toTopOf = "parent"
@@ -64,14 +69,14 @@
                         android:id = "@+id/text_complete"
                         android:layout_width = "wrap_content"
                         android:layout_height = "wrap_content"
-                        android:alpha = "30"
                         android:clickable = "true"
                         android:focusable = "true"
-                        android:fontFamily = "@font/ko_pub_dotum_pl"
+                        android:fontFamily = "@font/ko_pub_dotum_mid"
                         android:gravity = "center"
-                        android:paddingEnd = "@dimen/dimen_twenty"
+                        android:paddingEnd = "@dimen/dimen_write_side"
                         android:paddingStart = "@dimen/dimen_null"
                         android:text = "@string/complete"
+                        android:textSize = "14sp"
                         app:layout_constraintBottom_toBottomOf = "parent"
                         app:layout_constraintEnd_toEndOf = "parent"
                         app:layout_constraintTop_toTopOf = "parent"
@@ -83,13 +88,12 @@
                 android:id = "@+id/text_write_date"
                 android:layout_width = "0dp"
                 android:layout_height = "wrap_content"
-                android:layout_marginEnd = "@dimen/dimen_twenty"
-                android:layout_marginStart = "@dimen/dimen_twenty"
+                android:layout_marginEnd = "@dimen/dimen_write_side"
+                android:layout_marginStart = "@dimen/dimen_write_side"
                 android:layout_marginTop = "15dp"
                 android:fontFamily = "@font/montserrat_regular"
                 android:gravity = "center"
-                android:textColor = "#4A4A4A"
-                android:textSize = "12sp"
+                android:textColor = "@color/colorGrayishBrown"
                 app:layout_constraintEnd_toEndOf = "parent"
                 app:layout_constraintStart_toStartOf = "parent"
                 app:layout_constraintTop_toBottomOf = "@+id/toolbar_write"
@@ -104,13 +108,14 @@
                 android:layout_marginTop = "4dp"
                 android:alpha = "95"
                 android:clickable = "true"
-                android:drawableStart = "@drawable/location"
+                android:drawablePadding = "0dp"
+                android:drawableStart = "@drawable/ic_location"
                 android:focusable = "true"
                 android:fontFamily = "@font/ko_pub_dotum_pl"
                 android:gravity = "center"
                 android:lineSpacingExtra = "7sp"
                 android:text = "@string/setting_location"
-                android:textColor = "#4A4A4A"
+                android:textColor = "#242424"
                 android:textSize = "12sp"
                 app:layout_constraintEnd_toEndOf = "@+id/text_write_date"
                 app:layout_constraintStart_toStartOf = "@+id/text_write_date"
@@ -130,36 +135,55 @@
                 app:layout_constraintTop_toBottomOf = "@+id/text_write_location"
                 />
             
-            <ImageView
-                android:id = "@+id/img_write_myPicture"
+            <android.support.constraint.Guideline
+                android:id = "@+id/guide_write"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
-                android:layout_marginTop = "@dimen/dimen_twenty"
-                android:paddingBottom = "@{imgWriteMyPicture.getDrawable() ==null ? @dimen/dimen_null : @dimen/dimen_fifteen}"
+                android:orientation = "vertical"
+                app:layout_constraintGuide_percent = "0.41"
+                />
+            
+            <ImageView
+                android:id = "@+id/img_write_myPicture"
+                android:layout_width = "0dp"
+                android:layout_height = "0dp"
+                android:layout_marginTop = "@dimen/dimen_write_top"
+                android:adjustViewBounds = "true"
+                android:scaleType = "centerCrop"
+                android:visibility = "@{activity.isPhotoAvailable ? View.VISIBLE : View.GONE}"
+                app:layout_constraintDimensionRatio = "4:3"
+                app:layout_constraintEnd_toEndOf = "@+id/guide_write"
+                app:layout_constraintHorizontal_bias = "0"
                 app:layout_constraintStart_toStartOf = "@+id/text_write_date"
                 app:layout_constraintTop_toBottomOf = "@+id/view_write_line"
+                tools:background = "@color/colorMainBlack"
+                tools:src = "@mipmap/ic_launcher"
                 />
             
             <EditText
                 android:id = "@+id/edit_write_diary"
-                android:layout_width = "0dp"
+                android:layout_width = "match_parent"
                 android:layout_height = "0dp"
+                android:layout_marginEnd = "@dimen/dimen_write_side"
+                android:layout_marginStart = "@dimen/dimen_write_side"
                 android:background = "@android:color/transparent"
                 android:fontFamily = "@font/ko_pub_dotum_pl"
                 android:gravity = "top"
                 android:hint = "@string/hint_write"
-                android:inputType = "textImeMultiLine"
+                android:inputType = "textNoSuggestions|textMultiLine"
                 android:lineSpacingExtra = "8sp"
-                android:paddingBottom = "@dimen/dimen_twenty"
-                android:paddingTop = "4dp"
+                android:paddingBottom = "@dimen/dimen_write_side"
+                android:paddingTop = "@{activity.isPhotoAvailable ? @dimen/dimen_fifteen : @dimen/dimen_write_top}"
                 android:textColor = "@color/colorMainBlack"
+                android:textCursorDrawable = "@null"
                 android:textSize = "12sp"
                 app:layout_constraintBottom_toTopOf = "@+id/view_line_bottom"
-                app:layout_constraintEnd_toEndOf = "@+id/text_write_date"
-                app:layout_constraintStart_toStartOf = "@+id/text_write_date"
+                app:layout_constraintEnd_toEndOf = "parent"
+                app:layout_constraintStart_toStartOf = "parent"
                 app:layout_constraintTop_toBottomOf = "@+id/img_write_myPicture"
                 />
             
+            <!--bottom-->
             <View
                 android:id = "@+id/view_line_bottom"
                 android:layout_width = "match_parent"
@@ -176,7 +200,7 @@
                 android:focusable = "true"
                 android:paddingBottom = "11dp"
                 android:paddingTop = "11dp"
-                android:src = "@drawable/gallery"
+                android:src = "@drawable/ic_gallery"
                 app:layout_constraintBottom_toBottomOf = "parent"
                 app:layout_constraintStart_toStartOf = "@+id/text_write_date"
                 />
@@ -185,10 +209,8 @@
                 android:id = "@+id/text_write_keyboard"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
-                android:alpha = "50"
                 android:fontFamily = "@font/montserrat_regular"
-                android:textColor = "#4A4A4A"
-                android:textSize = "12sp"
+                android:textColor = "@color/colorMainGray"
                 app:layout_constraintBottom_toBottomOf = "parent"
                 app:layout_constraintEnd_toEndOf = "@+id/text_write_date"
                 app:layout_constraintTop_toBottomOf = "@+id/view_line_bottom"
@@ -196,8 +218,6 @@
                 />
         
         </android.support.constraint.ConstraintLayout>
-    
     </ScrollView>
-
 
 </layout>

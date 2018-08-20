@@ -14,6 +14,7 @@
     
     <style name = "TextViewStyle"  parent = "android:Widget.TextView">>
         <item name = "android:textColor">@color/colorMainBlack</item>
+        <item name = "android:textSize">12sp</item>
     </style>
     
     <style name = "SplashTheme"
