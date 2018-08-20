@@ -6,6 +6,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableField
 import android.graphics.Bitmap
 import android.location.Geocoder
 import android.location.Location
@@ -24,6 +25,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import com.codemybrainsout.placesearch.PlaceSearchDialog
 import gun0912.tedbottompicker.TedBottomPicker
+import kotlinx.android.synthetic.main.activity_diary_writing.view.*
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.databinding.ActivityDiaryWritingBinding
 import java.io.IOException
@@ -37,32 +39,36 @@ open class DiaryWritingActivity : AppCompatActivity() {
     private var locationManager: LocationManager? = null
     private var checkLocationOnce = true
 
+    val isPhotoAvailable = ObservableField<Boolean>(false)
+
+
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_diary_writing)
 
         binding.apply {
+            activity = this@DiaryWritingActivity
+
             textComplete.setOnClickListener { finish() }
             btnBack.setOnClickListener { finish() }
             textWriteKeyboard.text = getString(R.string.text_length, 0.toString())
             textWriteDate.text = SimpleDateFormat("yyyy MMM dd - hh:mm", Locale.US).format(Date())
-        }
 
+            textWriteLocation.setOnClickListener { _ ->
+                PlaceSearchDialog.Builder(this@DiaryWritingActivity).apply {
+                    setHintText("위치입력")
+                    setLocationNameListener {
+                        val array: List<String> = it.split(" ")
+                        var str = ""
+                        for (i in array.indices) {
+                            if (i >= array.size - 4)
+                                str += array[i] + " "
+                        }
+                        textWriteLocation.text = str
 
-        binding.textWriteLocation.setOnClickListener { _ ->
-            PlaceSearchDialog.Builder(this@DiaryWritingActivity).apply {
-                setHintText("위치입력")
-                setLocationNameListener {
-                    val array: List<String> = it.split(" ")
-                    var str = ""
-                    for (i in array.indices) {
-                        if (i >= array.size - 4)
-                            str += array[i] + " "
-                    }
-                    binding.textWriteLocation.text = str
-
-                }.build().show()
+                    }.build().show()
+                }
             }
         }
 
@@ -104,10 +110,9 @@ open class DiaryWritingActivity : AppCompatActivity() {
                 val tedBottomPicker = TedBottomPicker.Builder(this@DiaryWritingActivity)
                         .setOnImageSelectedListener {
                             // here is selected uri
-                            binding.imgWriteMyPicture.apply {
-                                layoutParams.width = 500
-                                layoutParams.height = 500
+                            binding.imgWriteMyPicture.run {
                                 setImageURI(it)
+                                isPhotoAvailable.set(true)
                             }
 
                             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.N)
@@ -121,19 +126,22 @@ open class DiaryWritingActivity : AppCompatActivity() {
             }
         }
 
-
-        binding.editWriteDiary.inputType = android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
         binding.editWriteDiary.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-                binding.textWriteKeyboard.text = getString(R.string.text_length, p0?.length.toString())
             }
 
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.textWriteKeyboard.text = getString(R.string.text_length, p0?.length.toString())
+            override fun beforeTextChanged(str: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                binding.textWriteKeyboard.text = p0
+            override fun onTextChanged(str: CharSequence, p1: Int, p2: Int, p3: Int) {
+                str.length.apply {
+                    if (this > 0) {
+                        binding.toolbarWrite.text_complete.setTextColor(ContextCompat.getColor(this@DiaryWritingActivity, R.color.colorMainBlack))
+                    } else {
+                        binding.toolbarWrite.text_complete.setTextColor(ContextCompat.getColor(this@DiaryWritingActivity, R.color.colorMainGray))
+                    }
+                }
+                binding.textWriteKeyboard.text = getString(R.string.text_length, str?.length.toString())
             }
         })
     }
