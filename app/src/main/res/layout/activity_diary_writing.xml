@@ -115,7 +115,7 @@
                 android:gravity = "center"
                 android:lineSpacingExtra = "7sp"
                 android:text = "@string/setting_location"
-                android:textColor = "#F24A4A4A"
+                android:textColor = "#242424"
                 android:textSize = "12sp"
                 app:layout_constraintEnd_toEndOf = "@+id/text_write_date"
                 app:layout_constraintStart_toStartOf = "@+id/text_write_date"
