@@ -1,5 +1,7 @@
 package me.tiptap.tiptap.scratch
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,6 +12,8 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
+import android.widget.BaseAdapter
+import android.widget.TextView
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.databinding.FragmentScratchBinding
 
@@ -18,10 +22,13 @@ class ScratchFragment : Fragment() {
 
     private lateinit var binding : FragmentScratchBinding
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_scratch, container, false)
 
         binding.layoutScratchMain?.textScratchMainNum?.text = getString(R.string.count_tiptap, 0) //temp
+
+
         binding.scratch.setRevealListener(object : ScratchCard.IRevealListener {
             override fun onRevealPercentChangedListener(stv: ScratchCard?, percent: Float) {
                 Log.d("ScratchPer", percent.toString())
@@ -36,10 +43,16 @@ class ScratchFragment : Fragment() {
             }
 
         })
+        binding.shareListview.apply {
+            divider = null
+            dividerHeight = 0
+            adapter = ListViewAdapter(context)
+        }
 
         return binding.root
 
     }
+
 
     fun fadeOutAnimation(view: View, animationDuration: Long) {
         val fadeOut = AlphaAnimation(1f, 0f)
@@ -59,7 +72,50 @@ class ScratchFragment : Fragment() {
     }
 
 
+
+    private class ListViewAdapter(context: Context?) : BaseAdapter() {
+        internal var sList = arrayOf("#1", "키오스크 카페", "오늘 날씨는 하루종일 맑음. 어제도 오늘도 너무 더워서 아무 생각이 들지 않는다.숙소에서 나와 가장 먼저 들른 곳!")
+
+
+        val mInflator : LayoutInflater = LayoutInflater.from(context)
+
+
+        override fun getItem(position: Int): Any {
+            return sList[position]
+        }
+
+        override fun getItemId(position: Int): Long {
+            return position.toLong()
+        }
+
+        override fun getCount(): Int {
+            return sList.size
+        }
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
+            val view: View?
+            val vh: ListRowHolder
+            if (convertView == null) {
+                view = this.mInflator.inflate(R.layout.share_list_row, parent, false)
+                vh = ListRowHolder(view)
+                view!!.tag = vh
+            } else {
+                view = convertView
+                vh = view.tag as ListRowHolder
+            }
+
+            vh.label.text = sList[position]
+            return view
+        }
+    }
+
+    private class ListRowHolder(row: View?) {
+        public val label: TextView = row?.findViewById(R.id.label) as TextView
+    }
+
 }
+
+
+
 
 
 

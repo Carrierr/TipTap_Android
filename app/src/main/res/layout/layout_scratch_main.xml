@@ -79,7 +79,7 @@
             />
         
         <!--scroll button-->
-        <ImageButton
+        <ImageView
             android:id = "@+id/btn_scratch_main_scroll"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
