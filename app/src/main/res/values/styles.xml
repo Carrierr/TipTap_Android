@@ -12,7 +12,8 @@
         <item name = "android:windowFullscreen">true</item>
     </style>
     
-    <style name = "TextViewStyle"  parent = "android:Widget.TextView">>
+    <style name = "TextViewStyle"
+        parent = "android:Widget.TextView">>
         <item name = "android:textColor">@color/colorMainBlack</item>
         <item name = "android:textSize">12sp</item>
     </style>
@@ -32,6 +33,20 @@
     <style name = "MainDateText">
         <item name = "android:fontFamily">@font/montserrat_light</item>
         <item name = "android:textColor">#252525</item>
+    </style>
+    
+    <style name = "DetailDateText">
+        <item name = "android:fontFamily">@font/montserrat_light</item>
+        <item name = "android:textSize">13sp</item>
+        <item name = "android:textColor">#66242424</item>
+        <item name = "android:lineSpacingExtra">1sp</item>
+    </style>
+    
+    <style name = "DetailLine">
+        <item name = "layout_constraintTop_toTopOf ">parent</item>
+        <item name = "android:layout_width">0.5dp</item>
+        <item name = "android:layout_height">0dp</item>
+        <item name = "android:background">#664F4F4F</item>
     </style>
     
     <style name = "SettingCardView">
