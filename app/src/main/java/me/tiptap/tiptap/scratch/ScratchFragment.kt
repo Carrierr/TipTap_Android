@@ -3,6 +3,7 @@ package me.tiptap.tiptap.scratch
 import android.annotation.SuppressLint
 import android.content.Context
 import android.databinding.DataBindingUtil
+import android.graphics.Point
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -20,19 +21,20 @@ import me.tiptap.tiptap.databinding.FragmentScratchBinding
 
 class ScratchFragment : Fragment() {
 
-    private lateinit var binding : FragmentScratchBinding
+    private lateinit var binding: FragmentScratchBinding
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_scratch, container, false)
 
-        binding.layoutScratchMain?.textScratchMainNum?.text = getString(R.string.count_tiptap, 0) //temp
+        setShareMainLayoutSize() // Change share main container's height
 
+        binding.layoutScratchMain?.textScratchMainNum?.text = getString(R.string.count_tiptap, 0) //temp
 
         binding.scratch.setRevealListener(object : ScratchCard.IRevealListener {
             override fun onRevealPercentChangedListener(stv: ScratchCard?, percent: Float) {
                 Log.d("ScratchPer", percent.toString())
-                if(percent == 1.0f) {
+                if (percent == 1.0f) {
                     Log.d("ScratchPer", "Done!")
                     fadeOutAnimation(binding.scratch, 300)
                 }
@@ -43,7 +45,7 @@ class ScratchFragment : Fragment() {
             }
 
         })
-        binding.shareListview.apply {
+        binding.listScratch.apply {
             divider = null
             dividerHeight = 0
             adapter = ListViewAdapter(context)
@@ -51,6 +53,17 @@ class ScratchFragment : Fragment() {
 
         return binding.root
 
+    }
+
+    /**
+     * Change Share main layout container's height to screen size.
+     */
+    private fun setShareMainLayoutSize() {
+        val point = Point()
+
+        activity?.windowManager?.defaultDisplay?.getSize(point)
+
+        binding.containerScratchMain.layoutParams.height = point.y //change height
     }
 
 
@@ -77,7 +90,7 @@ class ScratchFragment : Fragment() {
         internal var sList = arrayOf("#1", "키오스크 카페", "오늘 날씨는 하루종일 맑음. 어제도 오늘도 너무 더워서 아무 생각이 들지 않는다.숙소에서 나와 가장 먼저 들른 곳!")
 
 
-        val mInflator : LayoutInflater = LayoutInflater.from(context)
+        val mInflator: LayoutInflater = LayoutInflater.from(context)
 
 
         override fun getItem(position: Int): Any {
