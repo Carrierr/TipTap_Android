@@ -34,7 +34,7 @@ class ScratchFragment : Fragment() {
         binding.scratch.setRevealListener(object : ScratchCard.IRevealListener {
             override fun onRevealPercentChangedListener(stv: ScratchCard?, percent: Float) {
                 Log.d("ScratchPer", percent.toString())
-                if (percent == 1.0f) {
+                if (percent >= 0.2f) {
                     Log.d("ScratchPer", "Done!")
                     fadeOutAnimation(binding.scratch, 300)
                 }
@@ -76,7 +76,7 @@ class ScratchFragment : Fragment() {
         fadeOut.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation) {}
             override fun onAnimationEnd(animation: Animation) {
-                view.visibility = View.INVISIBLE
+                view.visibility = View.GONE
             }
 
             override fun onAnimationRepeat(animation: Animation) {}
@@ -94,11 +94,10 @@ class ScratchFragment : Fragment() {
             adapter = SharingAdapter().apply {
 
                 //Dummy data
-                for (i in 1..15) {
+                for (i in 1..10) {
                     addItem(Sharing(i, Date(), "오늘 날씨는 하루종일 맑음. 어제도 오늘도 너무 더워서 아무 생각이 들지 않는다.숙소에서 나와 가장 먼저 들른 곳!"
                             ,"키오스크 카페"))
                 }
-
             }
         }
     }
