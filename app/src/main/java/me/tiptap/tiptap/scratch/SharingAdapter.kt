@@ -14,7 +14,6 @@ class SharingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var isCheckboxAvailable: ObservableField<Boolean> = ObservableField(false)
 
-    private val HEADER = 0 //view type
     private val ITEM = 1
 
 
