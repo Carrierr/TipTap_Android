@@ -1,11 +1,13 @@
 package me.tiptap.tiptap.scratch
 
 import android.annotation.SuppressLint
-import android.content.Context
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.graphics.Point
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,15 +15,21 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.widget.BaseAdapter
-import android.widget.TextView
+import io.reactivex.disposables.CompositeDisposable
 import me.tiptap.tiptap.R
+import me.tiptap.tiptap.common.rx.RxBus
+import me.tiptap.tiptap.data.Diary
 import me.tiptap.tiptap.databinding.FragmentScratchBinding
+import me.tiptap.tiptap.diaries.DiariesAdapter
+import me.tiptap.tiptap.diarydetail.DiaryDetailActivity
+import java.util.*
 
 
 class ScratchFragment : Fragment() {
 
     private lateinit var binding: FragmentScratchBinding
+    private val bus = RxBus.getInstance()
+    private val disposables: CompositeDisposable = CompositeDisposable()
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -45,14 +53,20 @@ class ScratchFragment : Fragment() {
             }
 
         })
-        binding.listScratch.apply {
+        /*binding.listScratch.apply {
             divider = null
             dividerHeight = 0
             adapter = ListViewAdapter(context)
-        }
+        }*/
 
         return binding.root
 
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        initRecyclerView()
     }
 
     /**
@@ -85,44 +99,34 @@ class ScratchFragment : Fragment() {
     }
 
 
+    private fun initRecyclerView() {
+        binding.recyclerDiaries.apply {
+            setHasFixedSize(true)
 
-    private class ListViewAdapter(context: Context?) : BaseAdapter() {
-        internal var sList = arrayOf("#1", "키오스크 카페", "오늘 날씨는 하루종일 맑음. 어제도 오늘도 너무 더워서 아무 생각이 들지 않는다.숙소에서 나와 가장 먼저 들른 곳!")
+            layoutManager = LinearLayoutManager(this@ScratchFragment.context)
+            adapter = DiariesAdapter().apply {
 
+                //Dummy data
+                for (i in 1..15) {
+                    addItem(Diary(i, Date(), "내용 $i", "장소 $i", Uri.parse("none")))
+                }
 
-        val mInflator: LayoutInflater = LayoutInflater.from(context)
-
-
-        override fun getItem(position: Int): Any {
-            return sList[position]
-        }
-
-        override fun getItemId(position: Int): Long {
-            return position.toLong()
-        }
-
-        override fun getCount(): Int {
-            return sList.size
-        }
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
-            val view: View?
-            val vh: ListRowHolder
-            if (convertView == null) {
-                view = this.mInflator.inflate(R.layout.share_list_row, parent, false)
-                vh = ListRowHolder(view)
-                view!!.tag = vh
-            } else {
-                view = convertView
-                vh = view.tag as ListRowHolder
+                disposables.addAll(
+                        clickSubject.subscribe {
+                            //Go to detail page if actionMode is not running.
+                            if (this.actionModeCallback == null) {
+                                bus.takeBus(it)
+                                startActivity(Intent(this@ScratchFragment.activity, DiaryDetailActivity::class.java))
+                            }
+                        },
+                        longClickSubject.subscribe {
+                            onLongClickEventPublished(it)
+                        },
+                        checkSubject.subscribe {
+                            onCheckedChangeEventPublished(it)
+                        })
             }
-
-            vh.label.text = sList[position]
-            return view
         }
-    }
-
-    private class ListRowHolder(row: View?) {
-        public val label: TextView = row?.findViewById(R.id.label) as TextView
     }
 
 }
