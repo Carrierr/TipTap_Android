@@ -31,28 +31,17 @@
         android:padding = "14dp"
         >
 
-        <CheckBox
-            android:id = "@+id/check_diary"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            android:checked = "@{sharing.selected}"
-            android:visibility = "@{adapter.checkboxAvailable ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf = "parent"
-            app:layout_constraintStart_toStartOf = "parent"
-            app:layout_constraintTop_toTopOf = "parent"
-            />
 
         <TextView
-            android:id = "@+id/text_diary_day"
-            day = "@{sharing.date}"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            app:layout_constraintEnd_toStartOf = "@+id/text_diary_location"
-            app:layout_constraintHorizontal_bias = "0"
-            app:layout_constraintHorizontal_weight = "3"
-            app:layout_constraintStart_toEndOf = "@+id/check_diary"
-            app:layout_constraintTop_toTopOf = "parent"
-            />
+            android:id="@+id/text_diary_day"
+            day="@{sharing.date}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id = "@+id/text_diary_location"

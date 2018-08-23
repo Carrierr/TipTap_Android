@@ -30,7 +30,7 @@
         android:background = "@android:color/white"
         android:padding = "14dp"
         >
-        
+
         <CheckBox
             android:id = "@+id/check_diary"
             android:layout_width = "wrap_content"

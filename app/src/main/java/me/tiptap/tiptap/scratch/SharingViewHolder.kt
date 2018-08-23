@@ -27,11 +27,4 @@ class SharingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 }
             }
 
-    fun getCheckObservable(item: Sharing): Observable<Sharing> =
-            Observable.create { emitter ->
-                binding?.checkDiary?.setOnCheckedChangeListener { _, state ->
-                    item.isSelected = state
-                    emitter.onNext(item)
-                }
-            }
 }

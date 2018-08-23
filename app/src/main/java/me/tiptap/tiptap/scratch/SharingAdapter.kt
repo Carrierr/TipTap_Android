@@ -7,8 +7,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.data.Sharing
-import me.tiptap.tiptap.diaries.DiariesHeaderViewHolder
-import me.tiptap.tiptap.diaries.DiariesViewHolder
 
 class SharingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -29,19 +27,11 @@ class SharingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     //test
     override fun getItemViewType(position: Int): Int =
-            when {
-                position == dataSet.size - 1 -> ITEM
-                position == 0 -> HEADER
-                dataSet[position].content.contains("5") -> HEADER
-                else -> ITEM
-            }
+            ITEM
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-            when (viewType) {
-                HEADER -> SharingHeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.header_sharing, parent, false))
-                ITEM -> SharingViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_sharing, parent, false))
-                else -> SharingViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_sharing, parent, false))
-            }
+            SharingViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_sharing, parent, false))
+
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -51,10 +41,7 @@ class SharingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             holder.apply {
                 binding?.sharing = item
                 binding?.adapter = this@SharingAdapter
-
             }
-        } else if (holder is SharingHeaderViewHolder) {
-            holder.binding?.sharing = item
         }
     }
 
