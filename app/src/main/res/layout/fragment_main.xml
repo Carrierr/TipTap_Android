@@ -27,8 +27,7 @@
         android:layout_width = "match_parent"
         android:layout_height = "match_parent"
         android:background = "@color/colorDefaultBackground"
-        android:paddingBottom = "11dp"
-        android:paddingTop = "19dp"
+        android:paddingTop = "18dp"
         >
         
         <include
@@ -37,21 +36,24 @@
             layout = "@layout/toolbar_main"
             />
         
+        <android.support.constraint.Guideline
+            android:id = "@+id/guide_main_start"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.058"
+            />
+        
         <TextView
             android:id = "@+id/text_main_year"
             style = "@style/MainDateText"
             year = "@{date}"
-            android:layout_width = "wrap_content"
-            android:layout_height = "0dp"
-            android:layout_marginStart = "21dp"
-            android:layout_marginTop = "13dp"
-            android:fontFamily = "@font/montserrat_regular"
             android:textSize = "14sp"
-            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintBottom_toBottomOf = "parent"
+            app:layout_constraintStart_toStartOf = "@+id/guide_main_start"
             app:layout_constraintTop_toBottomOf = "@+id/toolbar"
-            app:layout_constraintVertical_chainStyle = "spread"
-            app:layout_constraintVertical_weight = "1"
-            tools:paddingTop = "?android:attr/actionBarSize"
+            app:layout_constraintTop_toTopOf = "parent"
+            app:layout_constraintVertical_bias = "0.17"
             tools:text = "18'"
             />
         
@@ -59,44 +61,51 @@
             android:id = "@+id/text_main_month"
             style = "@style/MainDateText"
             dayOfMonth = "@{date}"
-            android:layout_width = "wrap_content"
-            android:layout_height = "0dp"
-            android:layout_marginStart = "21dp"
-            android:layout_marginTop = "10dp"
-            android:fontFamily = "@font/montserrat_regular"
+            android:maxLines = "2"
             android:textSize = "14sp"
-            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintBottom_toTopOf = "@+id/guide_main_view_top"
+            app:layout_constraintStart_toStartOf = "@+id/guide_main_start"
             app:layout_constraintTop_toBottomOf = "@+id/text_main_year"
-            app:layout_constraintVertical_weight = "1"
             tools:text = "Aug\n02"
+            />
+        
+        <android.support.constraint.Guideline
+            android:id = "@+id/guide_main_view_top"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "horizontal"
+            app:layout_constraintGuide_percent = "0.29"
             />
         
         <View
             android:id = "@+id/view_line"
             android:layout_width = "0.5dp"
             android:layout_height = "0dp"
-            android:layout_marginTop = "18dp"
             android:background = "#8B8B8B"
-            app:layout_constraintBottom_toTopOf = "@+id/text_main_tiptap"
+            app:layout_constraintBottom_toTopOf = "@+id/guide_main_view_bot"
             app:layout_constraintStart_toStartOf = "@+id/text_main_year"
-            app:layout_constraintTop_toBottomOf = "@+id/text_main_month"
+            app:layout_constraintTop_toBottomOf = "@+id/guide_main_view_top"
             app:layout_constraintVertical_weight = "13"
             />
         
-        <TextView
+        <android.support.constraint.Guideline
+            android:id = "@+id/guide_main_view_bot"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "horizontal"
+            app:layout_constraintGuide_percent = "0.57"
+            />
+        
+        <me.tiptap.tiptap.common.view.VerticalTextView
             android:id = "@+id/text_main_tiptap"
             style = "@style/MainDateText"
-            android:layout_width = "wrap_content"
-            android:layout_height = "0dp"
-            android:layout_marginTop = "18dp"
-            android:rotation = "90"
+            android:layout_marginTop = "10dp"
             android:text = "@string/app_name"
             android:textSize = "12sp"
-            app:layout_constraintEnd_toEndOf = "parent"
-            app:layout_constraintHorizontal_bias = "0.03"
-            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf = "@+id/view_line"
-            app:layout_constraintVertical_weight = "1"
             tools:text = "tiptap"
             />
         
@@ -115,30 +124,45 @@
             app:layout_constraintTop_toBottomOf = "@+id/text_main_tiptap"
             />
         
-        
         <ImageButton
             android:id = "@+id/btn_main_add"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:layout_marginEnd = "21dp"
             android:background = "@android:color/transparent"
-            android:paddingEnd = "0dp"
+            android:paddingEnd = "3dp"
             android:paddingStart = "9dp"
             android:src = "@drawable/tiptap"
-            app:layout_constraintBottom_toBottomOf = "parent"
+            app:layout_constraintBottom_toBottomOf = "@+id/guide_main_bot"
             app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintHorizontal_bias = "0.935"
+            app:layout_constraintStart_toStartOf = "parent"
+            />
+        
+        <android.support.constraint.Guideline
+            android:id = "@+id/guide_main_end"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.947"
             />
         
         <ImageView
             android:layout_width = "0dp"
             android:layout_height = "6dp"
-            android:layout_marginEnd = "19dp"
             android:src = "@drawable/background_main_add"
-            app:layout_constraintBottom_toBottomOf = "parent"
-            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintBottom_toTopOf = "@+id/guide_main_bot"
+            app:layout_constraintEnd_toStartOf = "@+id/guide_main_end"
             app:layout_constraintStart_toStartOf = "@+id/btn_main_add"
             app:layout_constraintTop_toTopOf = "@+id/btn_main_add"
             app:layout_constraintVertical_bias = "0.7"
+            />
+        
+        <android.support.constraint.Guideline
+            android:id = "@+id/guide_main_bot"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "horizontal"
+            app:layout_constraintGuide_percent = "0.982"
             />
     
     </android.support.constraint.ConstraintLayout>
