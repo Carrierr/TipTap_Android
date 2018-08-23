@@ -1,10 +1,8 @@
 package me.tiptap.tiptap.scratch
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.graphics.Point
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -15,21 +13,15 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import io.reactivex.disposables.CompositeDisposable
 import me.tiptap.tiptap.R
-import me.tiptap.tiptap.common.rx.RxBus
-import me.tiptap.tiptap.data.Diary
+import me.tiptap.tiptap.data.Sharing
 import me.tiptap.tiptap.databinding.FragmentScratchBinding
-import me.tiptap.tiptap.diaries.DiariesAdapter
-import me.tiptap.tiptap.diarydetail.DiaryDetailActivity
 import java.util.*
 
 
 class ScratchFragment : Fragment() {
 
     private lateinit var binding: FragmentScratchBinding
-    private val bus = RxBus.getInstance()
-    private val disposables: CompositeDisposable = CompositeDisposable()
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -53,11 +45,6 @@ class ScratchFragment : Fragment() {
             }
 
         })
-        /*binding.listScratch.apply {
-            divider = null
-            dividerHeight = 0
-            adapter = ListViewAdapter(context)
-        }*/
 
         return binding.root
 
@@ -100,39 +87,19 @@ class ScratchFragment : Fragment() {
 
 
     private fun initRecyclerView() {
-        binding.recyclerDiaries.apply {
+        binding.recyclerSharing.apply {
             setHasFixedSize(true)
 
             layoutManager = LinearLayoutManager(this@ScratchFragment.context)
-            adapter = DiariesAdapter().apply {
+            adapter = SharingAdapter().apply {
 
                 //Dummy data
                 for (i in 1..15) {
-                    addItem(Diary(i, Date(), "내용 $i", "장소 $i", Uri.parse("none")))
+                    addItem(Sharing(i, Date(), "오늘 날씨는 하루종일 맑음. 어제도 오늘도 너무 더워서 아무 생각이 들지 않는다.숙소에서 나와 가장 먼저 들른 곳!"
+                            ,"키오스크 카페"))
                 }
 
-                disposables.addAll(
-                        clickSubject.subscribe {
-                            //Go to detail page if actionMode is not running.
-                            if (this.actionModeCallback == null) {
-                                bus.takeBus(it)
-                                startActivity(Intent(this@ScratchFragment.activity, DiaryDetailActivity::class.java))
-                            }
-                        },
-                        longClickSubject.subscribe {
-                            onLongClickEventPublished(it)
-                        },
-                        checkSubject.subscribe {
-                            onCheckedChangeEventPublished(it)
-                        })
             }
         }
     }
-
 }
-
-
-
-
-
-
