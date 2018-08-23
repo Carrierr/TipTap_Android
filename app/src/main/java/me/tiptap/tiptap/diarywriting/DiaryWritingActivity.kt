@@ -60,12 +60,27 @@ open class DiaryWritingActivity : AppCompatActivity() {
                     setHintText("위치입력")
                     setLocationNameListener {
                         val array: List<String> = it.split(" ")
-                        var str = ""
+                        var strKor = ""
+                        var strEng = ""
+                        var checkLang = false
+                        for(i in array[0])
+                            checkLang = (i in 'A'..'Z') || (i in 'a'..'z')
+
                         for (i in array.indices) {
-                            if (i >= array.size - 4)
-                                str += array[i] + " "
+
+                            if (!checkLang && i >= array.size - 4)
+                                strKor += array[i] + " "
+                            else if(checkLang) {
+                                val arrayEng: List<String> = it.split(",")
+                                strEng += arrayEng[0] + ", " + array[array.size - 2] + " " + array[array.size-1]
+                                break
+                            }
                         }
-                        textWriteLocation.text = str
+
+                        if(strKor != "")
+                            binding.textWriteLocation.text = strKor
+                        else if(strEng != "")
+                            binding.textWriteLocation.text = strEng
 
                     }.build().show()
                 }
@@ -170,10 +185,11 @@ open class DiaryWritingActivity : AppCompatActivity() {
             val listAddresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
             if (null != listAddresses && listAddresses.size > 0) {
                 val location = listAddresses[0].getAddressLine(0)
-                val str: String = location.toString().substring(location.toString().indexOf(" "))
+                val strKor: String = location.toString().substring(location.toString().indexOf(" "))
 
-                if (binding.textWriteLocation.text == "위치설정")
-                    binding.textWriteLocation.text = str
+                if(binding.textWriteLocation.text == "위치설정")
+                    binding.textWriteLocation.text = strKor
+
             }
         }
 
