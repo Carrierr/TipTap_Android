@@ -1,11 +1,11 @@
 package me.tiptap.tiptap.scratch
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.databinding.DataBindingUtil
 import android.graphics.Point
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,10 +13,10 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.widget.BaseAdapter
-import android.widget.TextView
 import me.tiptap.tiptap.R
+import me.tiptap.tiptap.data.Sharing
 import me.tiptap.tiptap.databinding.FragmentScratchBinding
+import java.util.*
 
 
 class ScratchFragment : Fragment() {
@@ -34,7 +34,7 @@ class ScratchFragment : Fragment() {
         binding.scratch.setRevealListener(object : ScratchCard.IRevealListener {
             override fun onRevealPercentChangedListener(stv: ScratchCard?, percent: Float) {
                 Log.d("ScratchPer", percent.toString())
-                if (percent == 1.0f) {
+                if (percent >= 0.2f) {
                     Log.d("ScratchPer", "Done!")
                     fadeOutAnimation(binding.scratch, 300)
                 }
@@ -45,14 +45,15 @@ class ScratchFragment : Fragment() {
             }
 
         })
-        binding.listScratch.apply {
-            divider = null
-            dividerHeight = 0
-            adapter = ListViewAdapter(context)
-        }
 
         return binding.root
 
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        initRecyclerView()
     }
 
     /**
@@ -75,7 +76,7 @@ class ScratchFragment : Fragment() {
         fadeOut.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation) {}
             override fun onAnimationEnd(animation: Animation) {
-                view.visibility = View.INVISIBLE
+                view.visibility = View.GONE
             }
 
             override fun onAnimationRepeat(animation: Animation) {}
@@ -85,50 +86,19 @@ class ScratchFragment : Fragment() {
     }
 
 
+    private fun initRecyclerView() {
+        binding.recyclerSharing.apply {
+            setHasFixedSize(true)
 
-    private class ListViewAdapter(context: Context?) : BaseAdapter() {
-        internal var sList = arrayOf("#1", "키오스크 카페", "오늘 날씨는 하루종일 맑음. 어제도 오늘도 너무 더워서 아무 생각이 들지 않는다.숙소에서 나와 가장 먼저 들른 곳!")
+            layoutManager = LinearLayoutManager(this@ScratchFragment.context)
+            adapter = SharingAdapter().apply {
 
-
-        val mInflator: LayoutInflater = LayoutInflater.from(context)
-
-
-        override fun getItem(position: Int): Any {
-            return sList[position]
-        }
-
-        override fun getItemId(position: Int): Long {
-            return position.toLong()
-        }
-
-        override fun getCount(): Int {
-            return sList.size
-        }
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
-            val view: View?
-            val vh: ListRowHolder
-            if (convertView == null) {
-                view = this.mInflator.inflate(R.layout.share_list_row, parent, false)
-                vh = ListRowHolder(view)
-                view!!.tag = vh
-            } else {
-                view = convertView
-                vh = view.tag as ListRowHolder
+                //Dummy data
+                addItem(Sharing(1, Date(), "#1", "오늘 날씨는 하루종일 맑음. 어제도 오늘도 너무 더워서 아무 생각이 들지 않는다.숙소에서 나와 가장 먼저 들른 곳!"
+                            ,"키오스크 카페"))
+                addItem(Sharing(2, Date(), "#2", "오늘 날씨는 하루종일 맑음. 어제도 오늘도 너무 더워서 아무 생각이 들지 않는다. 숙소에서 나와 가장 먼저 들른 곳! 오늘 날씨는 하루종일 맑음. " +
+                        "어제도 오늘도 너무 더워서 아무 생각이 들지 않는다. 숙소에서 나와 가장 먼저 들른 곳! 오늘 날씨는 하루종일 맑음. 어제도 오늘도 너무 더워서 아무 생각이 들지 않는다. 숙소에서 나와 가장 먼저 들른 곳! 오늘 날씨는 하루종일 맑음. 어제도 오늘도 너무 더워서 아무 생각이 들지 않는다. 숙소에서 나와 가장 먼저 들른 곳! 오늘 날씨는 하루종일 맑음. ", "STARBUCKS GANGNAM"))
             }
-
-            vh.label.text = sList[position]
-            return view
         }
     }
-
-    private class ListRowHolder(row: View?) {
-        public val label: TextView = row?.findViewById(R.id.label) as TextView
-    }
-
 }
-
-
-
-
-
-

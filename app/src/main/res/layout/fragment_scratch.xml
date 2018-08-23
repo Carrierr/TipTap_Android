@@ -34,12 +34,11 @@
                         layout = "@layout/layout_scratch_main"
                         />
                 </android.support.constraint.ConstraintLayout>
-                
-                <me.tiptap.tiptap.scratch.NestedListView
-                    android:id = "@+id/list_scratch"
+
+                <android.support.v7.widget.RecyclerView
+                    android:id = "@+id/recycler_sharing"
                     android:layout_width = "match_parent"
                     android:layout_height = "wrap_content"
-                    android:layout_marginBottom = "2dp"
                     />
             
             </LinearLayout>
