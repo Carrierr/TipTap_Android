@@ -46,7 +46,7 @@ class SharingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int = dataSet.size
     //get item by position
-    fun getItem(position: Int) = dataSet[position]
+    private fun getItem(position: Int) = dataSet[position]
 
 
 }
