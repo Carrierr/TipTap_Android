@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     
-    <item android:drawable="@android:color/holo_blue_bright" />
+    <item android:drawable="@color/colorDefaultBackground" />
     
     <item>
-        <bitmap android:src="@drawable/orange"
+        <bitmap android:src="@drawable/img"
             android:gravity="center" />
     </item>
 
