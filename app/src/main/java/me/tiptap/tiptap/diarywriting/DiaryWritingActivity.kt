@@ -45,7 +45,7 @@ open class DiaryWritingActivity : AppCompatActivity() {
     val isPhotoAvailable = ObservableField<Boolean>(false)
 
     private val rxBus = RxBus.getInstance()
-    private val disposables : CompositeDisposable = CompositeDisposable()
+    private val disposables: CompositeDisposable = CompositeDisposable()
 
 
     @SuppressLint("MissingPermission")
@@ -71,23 +71,23 @@ open class DiaryWritingActivity : AppCompatActivity() {
                         var strKor = ""
                         var strEng = ""
                         var checkLang = false
-                        for(i in array[0])
+                        for (i in array[0])
                             checkLang = (i in 'A'..'Z') || (i in 'a'..'z')
 
                         for (i in array.indices) {
 
                             if (!checkLang && i >= array.size - 4)
                                 strKor += array[i] + " "
-                            else if(checkLang) {
+                            else if (checkLang) {
                                 val arrayEng: List<String> = it.split(",")
-                                strEng += arrayEng[0] + ", " + array[array.size - 2] + " " + array[array.size-1]
+                                strEng += arrayEng[0] + ", " + array[array.size - 2] + " " + array[array.size - 1]
                                 break
                             }
                         }
 
-                        if(strKor != "")
+                        if (strKor != "")
                             binding.textWriteLocation.text = strKor
-                        else if(strEng != "")
+                        else if (strEng != "")
                             binding.textWriteLocation.text = strEng
 
                     }.build().show()
@@ -195,7 +195,7 @@ open class DiaryWritingActivity : AppCompatActivity() {
                 val location = listAddresses[0].getAddressLine(0)
                 val strKor: String = location.toString().substring(location.toString().indexOf(" "))
 
-                if(binding.textWriteLocation.text == "위치설정")
+                if (binding.textWriteLocation.text == "위치설정")
                     binding.textWriteLocation.text = strKor
 
             }
@@ -208,7 +208,7 @@ open class DiaryWritingActivity : AppCompatActivity() {
 
     //Check its edited or not
     private fun checkBus() {
-        rxBus.toObservable().subscribe {
+        disposables.add(rxBus.toObservable().subscribe {
             if (it is Diary) {
                 binding.run {
                     diary = it
@@ -217,16 +217,16 @@ open class DiaryWritingActivity : AppCompatActivity() {
 
                     isPhotoAvailable.set(true)
                 }
+            } else if (it is String) {
+                binding.count = it
             }
-        }
+        })
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
-        if(!disposables.isDisposed) {
-            disposables.dispose()
-        }
+        disposables.dispose()
     }
 }
 

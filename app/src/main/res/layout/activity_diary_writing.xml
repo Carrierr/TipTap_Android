@@ -13,7 +13,13 @@
         
         <variable
             name = "diary"
-            type = "me.tiptap.tiptap.data.Diary"/>
+            type = "me.tiptap.tiptap.data.Diary"
+            />
+        
+        <variable
+            name = "count"
+            type = "String"
+            />
         
         <import
             alias = "View"
@@ -61,7 +67,7 @@
                         android:layout_height = "wrap_content"
                         android:fontFamily = "@font/montserrat_regular"
                         android:gravity = "center"
-                        android:text="@{diary !=null ? String.format(@string/post_count, diary.id) : ``}"
+                        android:text = "@{diary !=null ? String.format(@string/post_count, diary.id) : String.format(@string/post_count, count)}"
                         android:textSize = "14sp"
                         app:layout_constraintBottom_toBottomOf = "parent"
                         app:layout_constraintEnd_toEndOf = "parent"
@@ -169,7 +175,6 @@
                 android:id = "@+id/edit_write_diary"
                 android:layout_width = "match_parent"
                 android:layout_height = "0dp"
-                android:text="@{diary !=null ? diary.content : ``}"
                 android:layout_marginEnd = "@dimen/dimen_write_side"
                 android:layout_marginStart = "@dimen/dimen_write_side"
                 android:background = "@android:color/transparent"
@@ -180,6 +185,7 @@
                 android:lineSpacingExtra = "8sp"
                 android:paddingBottom = "@dimen/dimen_write_side"
                 android:paddingTop = "@{activity.isPhotoAvailable ? @dimen/dimen_fifteen : @dimen/dimen_write_top}"
+                android:text = "@{diary !=null ? diary.content : ``}"
                 android:textColor = "@color/colorMainBlack"
                 android:textCursorDrawable = "@null"
                 android:textSize = "12sp"
