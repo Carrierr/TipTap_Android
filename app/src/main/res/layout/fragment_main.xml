@@ -30,6 +30,37 @@
         android:paddingTop = "18dp"
         >
         
+        <android.support.constraint.Guideline
+            android:id = "@+id/guide_main_post_start"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.236"
+            />
+        
+        <!--temp btn-->
+        <TextView
+            android:fontFamily="@font/montserrat_semi_bold"
+            android:text="@string/one"
+            app:layout_constraintStart_toStartOf="@+id/guide_main_post_start"
+            app:layout_constraintTop_toTopOf="@+id/text_main_year"
+            android:id="@+id/text_main_a"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            />
+    
+        <ImageView
+            android:id = "@+id/img_main_post_a"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:onClick = "@{fragment::onPostClick}"
+            android:src = "@drawable/h"
+            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintHorizontal_bias = "0.183"
+            app:layout_constraintStart_toEndOf = "@+id/text_main_year"
+            app:layout_constraintTop_toTopOf = "@+id/text_main_year"
+            />
+        
         <include
             android:id = "@+id/toolbar"
             fragment = "@{fragment}"
@@ -102,9 +133,9 @@
             android:layout_marginTop = "10dp"
             android:text = "@string/app_name"
             android:textSize = "12sp"
-            app:layout_constraintHorizontal_bias="0.05"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintHorizontal_bias = "0.05"
+            app:layout_constraintStart_toStartOf = "parent"
             app:layout_constraintTop_toBottomOf = "@+id/view_line"
             tools:text = "tiptap"
             />
