@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    xmlns:tools = "http://schemas.android.com/tools"
+    >
+    
+    <data>
+        
+        <variable
+            name = "diary"
+            type = "me.tiptap.tiptap.data.Diary"
+            />
+    </data>
+    
+    <android.support.constraint.ConstraintLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        android:background = "@color/colorMainBlack"
+        android:focusable = "false"
+        android:focusableInTouchMode = "false"
+        >
+        
+        <android.support.v7.widget.Toolbar
+            android:id = "@+id/toolbar_preview"
+            android:layout_width = "match_parent"
+            android:layout_height = "?android:attr/actionBarSize"
+            android:background = "@android:color/transparent"
+            />
+        
+        <android.support.constraint.Guideline
+            android:id = "@+id/guide_preview_start"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.06"
+            />
+        
+        <android.support.constraint.Guideline
+            android:id = "@+id/guide_preview_end"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.938"
+            />
+        
+        <android.support.constraint.Guideline
+            android:id = "@+id/guide_preview_top"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "horizontal"
+            app:layout_constraintGuide_percent = "0.272"
+            />
+        
+        <android.support.constraint.Guideline
+            android:id = "@+id/guide_preview_bot"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "horizontal"
+            app:layout_constraintGuide_percent = "0.674"
+            />
+        
+        <!--Container-->
+        <android.support.constraint.ConstraintLayout
+            android:layout_width = "0dp"
+            android:layout_height = "0dp"
+            android:background = "@android:color/white"
+            app:layout_constraintBottom_toBottomOf = "@+id/guide_preview_bot"
+            app:layout_constraintEnd_toEndOf = "@+id/guide_preview_end"
+            app:layout_constraintStart_toStartOf = "@+id/guide_preview_start"
+            app:layout_constraintTop_toTopOf = "@+id/guide_preview_top"
+            >
+            
+            <TextView
+                android:id = "@+id/text_preview_year"
+                style = "@style/PreviewDateText"
+                year = "@{diary.date}"
+                android:textSize = "13sp"
+                app:layout_constraintBottom_toBottomOf = "parent"
+                app:layout_constraintEnd_toEndOf = "parent"
+                app:layout_constraintHorizontal_bias = "0.06"
+                app:layout_constraintStart_toStartOf = "parent"
+                app:layout_constraintTop_toTopOf = "parent"
+                app:layout_constraintVertical_bias = "0.077"
+                tools:text = "18'"
+                />
+            
+            <android.support.constraint.Guideline
+                android:id = "@+id/guide_preview_con_end"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:orientation = "vertical"
+                app:layout_constraintGuide_percent = "0.937"
+                />
+            
+            <android.support.constraint.Guideline
+                android:id = "@+id/guide_preview_img_start"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:orientation = "vertical"
+                app:layout_constraintGuide_percent = "0.246"
+                />
+            
+            <ScrollView
+                android:id = "@+id/scroll_preview"
+                android:layout_width = "0dp"
+                android:layout_height = "0dp"
+                android:fillViewport = "true"
+                app:layout_constraintDimensionRatio = "4:3"
+                app:layout_constraintEnd_toEndOf = "@+id/guide_preview_con_end"
+                app:layout_constraintStart_toStartOf = "@+id/guide_preview_img_start"
+                app:layout_constraintTop_toTopOf = "@+id/text_preview_year"
+                >
+                
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:orientation = "vertical"
+                    >
+                    
+                    <ImageView
+                        android:id = "@+id/img_preview"
+                        android:layout_width = "0dp"
+                        android:layout_height = "0dp"
+                        android:scaleType = "centerCrop"
+                        android:src = "@drawable/headerimage"
+                        app:layout_constraintDimensionRatio = "4:3"
+                        app:layout_constraintEnd_toEndOf = "parent"
+                        app:layout_constraintStart_toStartOf = "parent"
+                        app:layout_constraintTop_toTopOf = "parent"
+                        tools:src = "@drawable/headerimage"
+                        />
+                    
+                    <TextView
+                        android:id = "@+id/text_preview"
+                        android:layout_width = "0dp"
+                        android:layout_height = "0dp"
+                        android:fontFamily = "@font/ko_pub_dotum_pl"
+                        android:gravity = "center"
+                        android:lineSpacingExtra = "10sp"
+                        android:maxLength = "800"
+                        android:text = "@{diary.content}"
+                        android:textSize = "12sp"
+                        app:layout_constraintDimensionRatio = "4:3"
+                        app:layout_constraintEnd_toEndOf = "parent"
+                        app:layout_constraintStart_toStartOf = "parent"
+                        app:layout_constraintTop_toBottomOf = "@+id/img_preview"
+                        />
+                
+                </android.support.constraint.ConstraintLayout>
+            </ScrollView>
+            
+            <android.support.constraint.Guideline
+                android:id = "@+id/guide_preview_img_bot"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:orientation = "horizontal"
+                app:layout_constraintGuide_percent = "0.71"
+                />
+            
+            <TextView
+                android:id = "@+id/text_preview_month"
+                style = "@style/PreviewDateText"
+                dayOfMonth = "@{diary.date}"
+                android:paddingTop = "2dp"
+                android:textSize = "13sp"
+                app:layout_constraintStart_toStartOf = "@+id/text_preview_year"
+                app:layout_constraintTop_toBottomOf = "@+id/text_preview_year"
+                tools:text = "Aug\n02"
+                />
+            
+            <android.support.constraint.Guideline
+                android:id = "@+id/guide_preview_view_top"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:orientation = "horizontal"
+                app:layout_constraintGuide_percent = "0.31"
+                />
+            
+            <android.support.constraint.Guideline
+                android:id = "@+id/guide_preview_view_bot"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:orientation = "horizontal"
+                app:layout_constraintGuide_percent = "0.7587"
+                />
+            
+            <View
+                android:id = "@+id/view_preview_line"
+                style = "@style/DefaultLine"
+                app:layout_constraintBottom_toTopOf = "@+id/guide_preview_view_bot"
+                app:layout_constraintStart_toStartOf = "@+id/text_preview_year"
+                app:layout_constraintTop_toBottomOf = "@+id/guide_preview_view_top"
+                />
+            
+            <android.support.constraint.Guideline
+                android:id = "@+id/guide_preview_con_bot"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:orientation = "horizontal"
+                app:layout_constraintGuide_percent = "0.922"
+                />
+            
+            
+            <me.tiptap.tiptap.common.view.VerticalTextView
+                android:id = "@+id/text_preview_time"
+                style = "@style/PreviewDateText"
+                time = "@{diary.date}"
+                android:textSize = "12sp"
+                app:layout_constraintBottom_toTopOf = "@+id/guide_preview_con_bot"
+                app:layout_constraintEnd_toEndOf = "@+id/view_preview_line"
+                app:layout_constraintStart_toStartOf = "@+id/view_preview_line"
+                app:layout_constraintTop_toBottomOf = "@+id/guide_preview_view_bot"
+                tools:text = "15:00"
+                />
+            
+            <TextView
+                android:id = "@+id/text_preview_count"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:fontFamily = "@font/montserrat_regular"
+                android:textColor = "@color/colorMainBlack"
+                android:textStyle = "bold"
+                app:layout_constraintEnd_toEndOf = "@+id/guide_preview_con_end"
+                app:layout_constraintTop_toTopOf = "@+id/text_preview_time"
+                tools:text = "MY DIARY #7"
+                />
+            
+            <TextView
+                android:id = "@+id/text_preview_location"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:fontFamily = "@font/ko_pub_dotum_pl"
+                android:text = "@{diary.location}"
+                android:textSize = "12sp"
+                app:layout_constraintBottom_toTopOf = "@+id/guide_preview_con_bot"
+                app:layout_constraintEnd_toEndOf = "@+id/guide_preview_con_end"
+                app:layout_constraintTop_toBottomOf = "@+id/text_preview_count"
+                app:layout_constraintVertical_bias = "0.77"
+                tools:text = "키오스크 망원동 카페"
+                />
+        
+        
+        </android.support.constraint.ConstraintLayout>
+    
+    </android.support.constraint.ConstraintLayout>
+</layout>
