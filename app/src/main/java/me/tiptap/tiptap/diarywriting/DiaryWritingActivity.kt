@@ -25,8 +25,11 @@ import android.view.WindowManager
 import android.widget.Toast
 import com.codemybrainsout.placesearch.PlaceSearchDialog
 import gun0912.tedbottompicker.TedBottomPicker
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_diary_writing.view.*
 import me.tiptap.tiptap.R
+import me.tiptap.tiptap.common.rx.RxBus
+import me.tiptap.tiptap.data.Diary
 import me.tiptap.tiptap.databinding.ActivityDiaryWritingBinding
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -41,11 +44,16 @@ open class DiaryWritingActivity : AppCompatActivity() {
 
     val isPhotoAvailable = ObservableField<Boolean>(false)
 
+    private val rxBus = RxBus.getInstance()
+    private val disposables : CompositeDisposable = CompositeDisposable()
+
 
     @SuppressLint("MissingPermission")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_diary_writing)
+
+        checkBus()
 
         binding.apply {
             activity = this@DiaryWritingActivity
@@ -198,6 +206,27 @@ open class DiaryWritingActivity : AppCompatActivity() {
         override fun onProviderDisabled(provider: String) {}
     }
 
+    //Check its edited or not
+    private fun checkBus() {
+        rxBus.toObservable().subscribe {
+            if (it is Diary) {
+                binding.run {
+                    diary = it
+                    imgWriteMyPicture.setImageDrawable(
+                            ContextCompat.getDrawable(this@DiaryWritingActivity, R.drawable.headerimage))
 
+                    isPhotoAvailable.set(true)
+                }
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        if(!disposables.isDisposed) {
+            disposables.dispose()
+        }
+    }
 }
 

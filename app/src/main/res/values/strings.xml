@@ -20,6 +20,12 @@
     <string name = "today">TODAY</string>
     <string name = "no_tiptap">당신의\n첫번째 TIPTAP을\n작성해주세요.</string>
     <string name = "post_count">#%s</string>
+    <string name = "one">1</string>
+    
+    <!--preview-->
+    <string name = "preview_count">MY DIARY #%d</string>
+    <string name = "menu_edit">수정하기</string>
+    <string name = "menu_delete">삭제하기</string>
     
     <!--setting-->
     <string name = "setting">SETTING</string>

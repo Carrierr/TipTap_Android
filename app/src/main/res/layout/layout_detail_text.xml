@@ -40,9 +40,10 @@
             
             <View
                 android:id = "@+id/view_detail_line"
-                style = "@style/DetailLine"
+                style = "@style/DefaultLine"
                 app:layout_constraintBottom_toTopOf = "@+id/guide_detail_text_view"
                 app:layout_constraintStart_toStartOf = "@+id/guide_detail_text_start"
+                app:layout_constraintTop_toTopOf = "parent"
                 />
             
             <android.support.constraint.Guideline
