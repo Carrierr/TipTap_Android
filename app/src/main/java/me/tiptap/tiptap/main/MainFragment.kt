@@ -32,11 +32,15 @@ class MainFragment : Fragment() {
         binding.apply {
             fragment = this@MainFragment
             date = Date()
+
             btnMainAdd.setOnClickListener {
+                rxBus.takeBus(postSize.get()?.plus(1).toString()) //Send current diary count
                 val intent = Intent(context, DiaryWritingActivity::class.java)
                 startActivity(intent)
             }
         }
+
+        postSize.set(1)
 
         return binding.root
     }
