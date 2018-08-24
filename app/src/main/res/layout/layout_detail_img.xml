@@ -40,7 +40,8 @@
             
             <View
                 android:id = "@+id/view_detail_line"
-                style="@style/DetailLine"
+                style="@style/DefaultLine"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf = "@+id/guide_detail_img_view"
                 app:layout_constraintStart_toStartOf = "@+id/guide_detail_img_start"
                 />
