@@ -29,7 +29,6 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_diary_writing.view.*
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.common.rx.RxBus
-import me.tiptap.tiptap.data.Diary
 import me.tiptap.tiptap.databinding.ActivityDiaryWritingBinding
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -58,7 +57,6 @@ open class DiaryWritingActivity : AppCompatActivity() {
         binding.apply {
             activity = this@DiaryWritingActivity
 
-            textComplete.setOnClickListener { finish() }
             btnBack.setOnClickListener { finish() }
             textWriteKeyboard.text = getString(R.string.text_length, 0.toString())
             textWriteDate.text = SimpleDateFormat("yyyy MMM dd - hh:mm", Locale.US).format(Date())
@@ -209,15 +207,7 @@ open class DiaryWritingActivity : AppCompatActivity() {
     //Check its edited or not
     private fun checkBus() {
         disposables.add(rxBus.toObservable().subscribe {
-            if (it is Diary) {
-                binding.run {
-                    diary = it
-                    imgWriteMyPicture.setImageDrawable(
-                            ContextCompat.getDrawable(this@DiaryWritingActivity, R.drawable.headerimage))
-
-                    isPhotoAvailable.set(true)
-                }
-            } else if (it is String) {
+            if (it is String) {
                 binding.count = it
             }
         })
@@ -227,6 +217,13 @@ open class DiaryWritingActivity : AppCompatActivity() {
         super.onDestroy()
 
         disposables.dispose()
+    }
+
+    /**
+     * When user click Complete button.
+     */
+    fun onCompleteButtonClick() {
+        finish()
     }
 }
 
