@@ -27,6 +27,7 @@ class SettingActivity : AppCompatActivity() {
     private fun initToolbar() {
         setupActionBar(R.id.toolbar_setting) {
             setDisplayShowTitleEnabled(false)
+            setDisplayHomeAsUpEnabled(true)
         }
     }
 

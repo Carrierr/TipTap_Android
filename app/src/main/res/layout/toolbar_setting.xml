@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    >
+    
+    <android.support.v7.widget.Toolbar
+        android:id = "@+id/toolbar_setting"
+        android:layout_width = "match_parent"
+        android:layout_height = "?android:attr/actionBarSize"
+        app:contentInsetStartWithNavigation = "0dp"
+        >
+        
+        <TextView
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:layout_marginEnd = "?android:attr/actionBarSize"
+            android:fontFamily = "@font/ko_pub_dotum_pl"
+            android:gravity = "center"
+            android:text = "@string/setting"
+            android:textColor = "@color/colorMainBlack"
+            android:textSize = "14sp"
+            />
+    
+    </android.support.v7.widget.Toolbar>
+
+
+</layout>

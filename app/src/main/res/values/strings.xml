@@ -28,7 +28,7 @@
     <string name = "menu_delete">삭제하기</string>
     
     <!--setting-->
-    <string name = "setting">SETTING</string>
+    <string name = "setting">설정</string>
     <string name = "setting_share">일기 공유하기</string>
     <string name = "setting_push">푸시알림</string>
     <string name = "logout">로그아웃</string>
