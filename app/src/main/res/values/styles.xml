@@ -19,6 +19,11 @@
         <item name = "android:tint">@android:color/white</item>
     </style>
     
+    <style name = "PreviewDialogAnimation">
+        <item name = "android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name = "android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+    
     <style name = "ItemTextStyle">
         <item name = "android:textSize">12sp</item>
         <item name = "android:textColor">@color/colorMainBlack</item>

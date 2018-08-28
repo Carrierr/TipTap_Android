@@ -50,7 +50,7 @@ class PreviewDialogFragment : DialogFragment() {
             layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         }
 
-        return Dialog(activity).apply {
+        return Dialog(activity, R.style.PreviewDialogAnimation).apply {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
             setContentView(root)
 
@@ -104,7 +104,7 @@ class PreviewDialogFragment : DialogFragment() {
                     true
                 }
                 R.id.menu_preview_delete -> {
-                    activity?.onBackPressed()
+                    this.dialog.dismiss()
                     true
                 }
                 else -> false
