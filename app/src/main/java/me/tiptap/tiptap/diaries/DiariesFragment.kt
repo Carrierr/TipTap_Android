@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -39,7 +40,19 @@ class DiariesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        initToolbar()
         initRecyclerView()
+    }
+
+
+    private fun initToolbar() {
+        (activity as AppCompatActivity).apply {
+            setSupportActionBar(binding.toolbarDiaries?.toolbarDiaries)
+
+            supportActionBar?.apply {
+                setDisplayShowTitleEnabled(false)
+            }
+        }
     }
 
 
@@ -52,8 +65,9 @@ class DiariesFragment : Fragment() {
 
                 //Dummy data
                 for (i in 1..15) {
-                    addItem(Diary(i, Date(), "내용 $i", "장소 $i", Uri.parse("none")))
+                    addItem(Diary(i, Date(), "내용 $i", "서울대입구 $i 번 출구 앞", Uri.parse("none")))
                 }
+              binding.date = getItem(0).date
 
                 disposables.addAll(
                         clickSubject.subscribe {
