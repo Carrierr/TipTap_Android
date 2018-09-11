@@ -2,47 +2,101 @@
 <layout
     xmlns:android = "http://schemas.android.com/apk/res/android"
     xmlns:app = "http://schemas.android.com/apk/res-auto"
+    xmlns:tools = "http://schemas.android.com/tools"
     >
     
     <data>
+        
         <variable
             name = "fragment"
-            type = "me.tiptap.tiptap.diaries.DiariesFragment"/>
+            type = "me.tiptap.tiptap.diaries.DiariesFragment"
+            />
+        
+        <variable
+            name = "date"
+            type = "java.util.Date"
+            />
     </data>
     
     <android.support.constraint.ConstraintLayout
         android:layout_width = "match_parent"
         android:layout_height = "match_parent"
-        android:background = "#777777"
+        android:background = "@color/colorDefaultBackground"
         >
         
-        <android.support.v7.widget.Toolbar
-            android:id = "@+id/toolbar_diaries"
-            android:layout_width = "match_parent"
-            android:layout_height = "?android:attr/actionBarSize"
-            android:background = "@android:color/white"
-            app:layout_constraintEnd_toEndOf = "parent"
-            app:layout_constraintStart_toStartOf = "parent"
-            app:layout_constraintTop_toTopOf = "parent"
-            app:title = "@string/app_name"
+        <android.support.constraint.Guideline
+            android:id = "@+id/guide_diaries_top"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "horizontal"
+            app:layout_constraintGuide_percent = "0.046"
             />
         
-        <Button
-            android:id = "@+id/btn_diaries_find"
-            android:layout_width = "wrap_content"
-            android:onClick="@{() -> fragment.onDateFindButtonClick()}"
+        <!--toolbar-->
+        <include
+            android:id = "@+id/toolbar_diaries"
+            layout = "@layout/toolbar_diaries"
+            android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
-            app:layout_constraintTop_toBottomOf = "@+id/toolbar_diaries"
+            app:recentDiaryDate = "@{date}"
+            app:layout_constraintTop_toBottomOf = "@+id/guide_diaries_top"
+            />
+        
+        <TextView
+            android:id = "@+id/text_diaries_find"
+            header = "@{date}"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:fontFamily = "@font/montserrat_mid"
+            android:onClick = "@{() -> fragment.onDateFindButtonClick()}"
+            android:paddingEnd = "1dp"
+            android:paddingStart = "1dp"
+            android:textColor = "#303030"
+            android:textSize = "18sp"
+            app:layout_constraintEnd_toStartOf = "@+id/guide_diaries_recycler_start"
+            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintTop_toTopOf = "@+id/guide_diaries_recycler_top"
+            tools:text = "Aug"
+            />
+        
+        <ImageView
+            android:layout_width = "0dp"
+            android:layout_height = "6dp"
+            android:src = "@drawable/background_diaries_month"
+            app:layout_constraintBottom_toBottomOf = "@+id/text_diaries_find"
+            app:layout_constraintEnd_toEndOf = "@+id/text_diaries_find"
+            app:layout_constraintStart_toStartOf = "@+id/text_diaries_find"
+            app:layout_constraintTop_toTopOf = "@+id/guide_diaries_recycler_top"
+            app:layout_constraintVertical_bias = "1"
+            />
+        
+        <android.support.constraint.Guideline
+            android:id = "@+id/guide_diaries_recycler_top"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "horizontal"
+            app:layout_constraintGuide_percent = "0.172"
+            />
+        
+        <android.support.constraint.Guideline
+            android:id = "@+id/guide_diaries_recycler_start"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.35"
             />
         
         <android.support.v7.widget.RecyclerView
             android:id = "@+id/recycler_diaries"
             android:layout_width = "0dp"
             android:layout_height = "0dp"
+            android:paddingEnd = "40dp"
+            android:paddingStart = "0dp"
             app:layout_constraintBottom_toBottomOf = "parent"
             app:layout_constraintEnd_toEndOf = "parent"
-            app:layout_constraintStart_toStartOf = "parent"
-            app:layout_constraintTop_toBottomOf = "@+id/btn_diaries_find"
+            app:layout_constraintStart_toStartOf = "@+id/guide_diaries_recycler_start"
+            app:layout_constraintTop_toTopOf = "@+id/guide_diaries_recycler_top"
+            tools:items = "@layout/item_diary"
             />
     
     </android.support.constraint.ConstraintLayout>
