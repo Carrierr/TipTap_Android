@@ -57,7 +57,7 @@
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:layout_marginTop = "5dp"
-            android:fontFamily = "@font/ko_pub_dotum_mid"
+            android:fontFamily = "@font/ko_pub_dotum_pm"
             android:text = "경기도 부천시 어쩌고 저쩌고 이러쿵 저러쿵 요기조기요기"
             app:layout_constraintEnd_toStartOf = "@+id/guide_scratch_main_side"
             app:layout_constraintStart_toStartOf = "parent"
