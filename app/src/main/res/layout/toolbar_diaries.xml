@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    >
+    
+    <data>
+        
+        <variable
+            name = "recentDiaryDate"
+            type = "java.util.Date"
+            />
+    </data>
+    
+    <android.support.v7.widget.Toolbar
+        android:id = "@+id/toolbar_diaries"
+        android:layout_width = "match_parent"
+        android:layout_height = "?android:attr/actionBarSize"
+        android:background = "@color/colorDefaultBackground"
+        >
+        
+        <android.support.constraint.ConstraintLayout
+            android:layout_width = "match_parent"
+            android:layout_height = "match_parent"
+            >
+            
+            <TextView
+                android:id = "@+id/text_toolbar_diaries_title"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:fontFamily = "@font/montserrat_regular"
+                android:text = "@string/my_diary"
+                android:textSize = "14sp"
+                android:textStyle = "bold"
+                app:layout_constraintBottom_toBottomOf = "parent"
+                app:layout_constraintEnd_toEndOf = "parent"
+                app:layout_constraintStart_toStartOf = "parent"
+                app:layout_constraintTop_toTopOf = "parent"
+                app:layout_constraintVertical_bias = "0.2"
+                />
+            
+            <TextView
+                android:id = "@+id/text_toolbar_diaries_sub"
+                year = "@{recentDiaryDate}"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:fontFamily = "@font/montserrat_mid"
+                android:textColor = "#303030"
+                android:textSize = "12sp"
+                app:layout_constraintEnd_toEndOf = "parent"
+                app:layout_constraintStart_toStartOf = "parent"
+                app:layout_constraintTop_toBottomOf = "@+id/text_toolbar_diaries_title"
+                />
+            
+            <ImageButton
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:background = "@android:color/transparent"
+                android:paddingEnd = "22dp"
+                android:paddingStart = "0dp"
+                android:src = "@drawable/ic_delete"
+                app:layout_constraintBottom_toBottomOf = "parent"
+                app:layout_constraintEnd_toEndOf = "parent"
+                app:layout_constraintTop_toTopOf = "parent"
+                />
+        
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.Toolbar>
+</layout>

@@ -4,9 +4,9 @@
     >
 
     <item
-        android:title="@string/app_name"
+        android:title="@string/delete"
         android:id="@+id/menu_action_delete"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_delete"
         app:showAsAction ="always"/>
     
 </menu>
