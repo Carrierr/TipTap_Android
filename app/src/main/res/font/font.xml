@@ -22,6 +22,15 @@
         />
     
     <font
+        android:font = "@font/montserrat_mid"
+        android:fontStyle = "normal"
+        />
+    <font
+        app:font = "@font/montserrat_mid"
+        app:fontStyle = "normal"
+        />
+    
+    <font
         android:font = "@font/montserrat_semi_bold"
         android:fontStyle = "normal"
         />
@@ -40,11 +49,11 @@
         />
     
     <font
-        android:font = "@font/ko_pub_dotum_mid"
+        android:font = "@font/ko_pub_dotum_pm"
         android:fontStyle = "normal"
         />
     <font
-        app:font = "@font/ko_pub_dotum_mid"
+        app:font = "@font/ko_pub_dotum_pm"
         app:fontStyle = "normal"
         />
     

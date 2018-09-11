@@ -10,7 +10,7 @@ import me.tiptap.tiptap.common.action.GeneralActionModeCallback
 import me.tiptap.tiptap.common.action.OnActionListener
 import me.tiptap.tiptap.data.Diary
 
-class DiariesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
 
     private val dataSet: MutableList<Diary> = mutableListOf()
     private val checkedDataSet: MutableList<Diary> = mutableListOf() //checked list
@@ -21,9 +21,6 @@ class DiariesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var actionModeCallback: GeneralActionModeCallback? = null
     var isCheckboxAvailable: ObservableField<Boolean> = ObservableField(false)
-
-    private val HEADER = 0 //view type
-    private val ITEM = 1
 
 
     fun addItem(item: Diary) = dataSet.add(item)
@@ -82,27 +79,14 @@ class DiariesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    //test
-    override fun getItemViewType(position: Int): Int =
-            when {
-                position == dataSet.size - 1 -> ITEM
-                position == 0 -> HEADER
-                dataSet[position].content.contains("5") -> HEADER
-                else -> ITEM
-            }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
-            when (viewType) {
-                HEADER -> DiariesHeaderViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.header_diary, parent, false))
-                ITEM -> DiariesViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_diary, parent, false))
-                else -> DiariesViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_diary, parent, false))
-            }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DiariesViewHolder =
+            DiariesViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_diary, parent, false))
 
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: DiariesViewHolder, position: Int) {
         val item = getItem(position)
 
-        if (holder is DiariesViewHolder) {
             holder.apply {
                 binding?.diary = item
                 binding?.adapter = this@DiariesAdapter
@@ -110,9 +94,6 @@ class DiariesAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 getClickObservable(item).subscribe(clickSubject)
                 getLongClickObservable().subscribe(longClickSubject)
                 getCheckObservable(item).subscribe(checkSubject)
-            }
-        } else if (holder is DiariesHeaderViewHolder) {
-            holder.binding?.diary = item
         }
     }
 

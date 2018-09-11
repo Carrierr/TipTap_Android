@@ -2,13 +2,13 @@
 <resources>
     <color name = "colorPrimary">#FBFBFB</color>
     <color name = "colorPrimaryDark">#303F9F</color>
-    <color name = "colorAccent">#FF4081</color>
-
-    <color name="scratch_start_gradient">#e5e5e5</color>
-    <color name="scratch_end_gradient">#cccccc</color>
+    <color name = "colorAccent">#7AC8BC</color>
     
-    <color name="colorDefaultBackground">#FBFBFB</color>
+    <color name = "scratch_start_gradient">#e5e5e5</color>
+    <color name = "scratch_end_gradient">#cccccc</color>
+    
+    <color name = "colorDefaultBackground">#FBFBFB</color>
     <color name = "colorMainBlack">#242424</color>
-    <color name="colorMainGray">#A7A7A7</color>
+    <color name = "colorMainGray">#A7A7A7</color>
     <color name = "colorGrayishBrown">#4A4A4A</color>
 </resources>
