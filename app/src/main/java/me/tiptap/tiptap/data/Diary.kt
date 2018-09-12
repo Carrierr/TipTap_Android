@@ -11,3 +11,5 @@ data class Diary(
         val photo: Uri,
         var isSelected: Boolean = false
 )
+
+
