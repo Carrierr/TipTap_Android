@@ -50,7 +50,7 @@ dependencies {
 
     //kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    kapt "com.android.databinding:compiler:$gradle_version"
+    kapt "com.android.databinding:compiler:$plugin_version"
     implementation "com.android.support.constraint:constraint-layout:$constraint_version"
 
     //support library
