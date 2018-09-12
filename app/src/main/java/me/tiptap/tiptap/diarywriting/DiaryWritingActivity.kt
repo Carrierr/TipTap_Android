@@ -23,13 +23,16 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
-import com.codemybrainsout.placesearch.PlaceSearchDialog
+import com.google.android.gms.location.places.Place
+import com.taskail.googleplacessearchdialog.SimplePlacesSearchDialog
+import com.taskail.googleplacessearchdialog.SimplePlacesSearchDialogBuilder
 import gun0912.tedbottompicker.TedBottomPicker
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_diary_writing.view.*
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.common.rx.RxBus
 import me.tiptap.tiptap.databinding.ActivityDiaryWritingBinding
+import org.jetbrains.annotations.NotNull
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -62,34 +65,12 @@ open class DiaryWritingActivity : AppCompatActivity() {
             textWriteDate.text = SimpleDateFormat("yyyy MMM dd - hh:mm", Locale.US).format(Date())
 
             textWriteLocation.setOnClickListener { _ ->
-                PlaceSearchDialog.Builder(this@DiaryWritingActivity).apply {
-                    setHintText("위치입력")
-                    setLocationNameListener {
-                        val array: List<String> = it.split(" ")
-                        var strKor = ""
-                        var strEng = ""
-                        var checkLang = false
-                        for (i in array[0])
-                            checkLang = (i in 'A'..'Z') || (i in 'a'..'z')
-
-                        for (i in array.indices) {
-
-                            if (!checkLang && i >= array.size - 4)
-                                strKor += array[i] + " "
-                            else if (checkLang) {
-                                val arrayEng: List<String> = it.split(",")
-                                strEng += arrayEng[0] + ", " + array[array.size - 2] + " " + array[array.size - 1]
-                                break
+                SimplePlacesSearchDialogBuilder(this@DiaryWritingActivity)
+                        .setLocationListener(object: SimplePlacesSearchDialog.PlaceSelectedCallback {
+                            override fun onPlaceSelected(@NotNull place: Place) {
+                                binding.textWriteLocation.text = place.name
                             }
-                        }
-
-                        if (strKor != "")
-                            binding.textWriteLocation.text = strKor
-                        else if (strEng != "")
-                            binding.textWriteLocation.text = strEng
-
-                    }.build().show()
-                }
+                        }).build().show()
             }
         }
 
@@ -226,4 +207,6 @@ open class DiaryWritingActivity : AppCompatActivity() {
         finish()
     }
 }
+
+
 

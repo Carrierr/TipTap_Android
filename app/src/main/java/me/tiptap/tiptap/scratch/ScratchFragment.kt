@@ -46,6 +46,7 @@ class ScratchFragment : Fragment() {
 
         })
 
+
         return binding.root
 
     }
