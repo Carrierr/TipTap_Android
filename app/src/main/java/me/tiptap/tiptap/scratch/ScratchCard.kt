@@ -151,7 +151,6 @@ class ScratchCard : android.support.v7.widget.AppCompatTextView {
         val rand = Random()
         val scratchNum = (rand.nextInt(50) + 1) % 3
         when (scratchNum) {
-
             0 -> scratchBitmap = BitmapFactory.decodeResource(resources, R.drawable.img_scratch_01)
             1 -> scratchBitmap = BitmapFactory.decodeResource(resources, R.drawable.img_scratch_02)
             2 -> scratchBitmap = BitmapFactory.decodeResource(resources, R.drawable.img_scratch_03)
