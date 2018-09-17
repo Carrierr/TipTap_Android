@@ -32,7 +32,7 @@ class ScratchFragment : Fragment() {
         binding.layoutScratchMain?.textScratchMainNum?.text = getString(R.string.count_tiptap, 0) //temp
 
         binding.scratch.setRevealListener(object : ScratchCard.IRevealListener {
-            override fun onRevealPercentChangedListener(stv: ScratchCard?, percent: Float) {
+            override fun onRevealPercentChangedListener(stv: ScratchCard, percent: Float) {
                 Log.d("ScratchPer", percent.toString())
                 if (percent >= 0.2f) {
                     Log.d("ScratchPer", "Done!")
@@ -41,7 +41,7 @@ class ScratchFragment : Fragment() {
             }
 
             override fun onRevealed(tv: ScratchCard) {
-                Log.d("ScratchPer", "Hello SCratch")
+                Log.d("ScratchPer", "Hello Scratch")
             }
 
         })
