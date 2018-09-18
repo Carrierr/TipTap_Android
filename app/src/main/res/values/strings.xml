@@ -1,6 +1,12 @@
 <resources>
     <string name = "app_name">TipTap</string>
     
+    <!--login-->
+    <string name = "type_kakao">kakao</string>
+    <string name = "data">data</string>
+    <string name = "auth">auth</string>
+    <string name = "token">token</string>
+    
     <!--scratch-->
     <string name = "scratch_text">Hello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\n
                             Hello Tiptap！\n</string>
