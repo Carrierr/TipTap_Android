@@ -1,11 +1,18 @@
 package me.tiptap.tiptap.common.network
 
+import com.google.gson.JsonObject
 import io.reactivex.Observable
 import me.tiptap.tiptap.data.Diary
+import me.tiptap.tiptap.data.User
 import okhttp3.MultipartBody
 import retrofit2.http.*
 
-interface DiaryApiInterface {
+interface DiaryApi {
+
+    //Login, return token.
+    @POST("auth/login")
+    fun login(@Body user : User): Observable<JsonObject>
+
 
     //Get DiaryList
     @GET("diary/list")
@@ -19,11 +26,11 @@ interface DiaryApiInterface {
     @POST("diary/write")
     fun writeDiary(
             @Header("tiptap-token") token: String,
-            @Part("content") content : String,
-            @Part("location") location : String,
-            @Part("latitude") latitude : String,
-            @Part("longitude") longitude : String,
-            @Part diaryFile : MultipartBody.Part )
+            @Part("content") content: String,
+            @Part("location") location: String,
+            @Part("latitude") latitude: String,
+            @Part("longitude") longitude: String,
+            @Part diaryFile: MultipartBody.Part)
 
 
     //delete Diary
@@ -38,10 +45,10 @@ interface DiaryApiInterface {
     @POST("diary/update")
     fun updateDiary(
             @Header("tiptap-token") token: String,
-            @Part("content") content : String,
-            @Part("location") location : String,
-            @Part("latitude") latitude : String,
-            @Part("longitude") longitude : String,
-            @Part("id") id : String,
-            @Part diaryFile : MultipartBody.Part )
+            @Part("content") content: String,
+            @Part("location") location: String,
+            @Part("latitude") latitude: String,
+            @Part("longitude") longitude: String,
+            @Part("id") id: String,
+            @Part diaryFile: MultipartBody.Part)
 }
