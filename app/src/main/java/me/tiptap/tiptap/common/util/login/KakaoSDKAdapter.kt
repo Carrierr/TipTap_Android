@@ -1,4 +1,4 @@
-package me.tiptap.tiptap.login
+package me.tiptap.tiptap.common.util.login
 
 import com.kakao.auth.*
 import me.tiptap.tiptap.TipTapApplication
