@@ -10,7 +10,7 @@ class ServerGenerator {
 
     companion object {
 
-        private const val BASE_URL = "" //temp
+        private const val BASE_URL = "http://13.209.117.190:8080/" //temp
 
 
         private fun getClient(): OkHttpClient =
