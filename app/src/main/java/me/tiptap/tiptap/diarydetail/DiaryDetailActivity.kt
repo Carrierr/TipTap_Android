@@ -6,7 +6,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.databinding.ActivityDiaryDetailBinding
-import me.tiptap.tiptap.util.setupActionBar
+import me.tiptap.tiptap.common.util.setupActionBar
 import java.util.*
 
 class DiaryDetailActivity : AppCompatActivity() {

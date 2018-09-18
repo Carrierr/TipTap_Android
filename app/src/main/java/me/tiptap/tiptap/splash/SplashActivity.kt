@@ -9,7 +9,7 @@ import com.kakao.auth.Session
 import com.kakao.util.exception.KakaoException
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.main.MainActivity
-import me.tiptap.tiptap.util.redirectLoginActivity
+import me.tiptap.tiptap.common.util.redirectLoginActivity
 
 class SplashActivity : AppCompatActivity() {
 

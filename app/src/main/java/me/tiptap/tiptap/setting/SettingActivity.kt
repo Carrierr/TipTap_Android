@@ -9,8 +9,8 @@ import com.kakao.usermgmt.callback.UnLinkResponseCallback
 import com.kakao.util.helper.log.Logger
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.databinding.ActivitySettingBinding
-import me.tiptap.tiptap.util.redirectLoginActivity
-import me.tiptap.tiptap.util.setupActionBar
+import me.tiptap.tiptap.common.util.redirectLoginActivity
+import me.tiptap.tiptap.common.util.setupActionBar
 
 class SettingActivity : AppCompatActivity() {
 

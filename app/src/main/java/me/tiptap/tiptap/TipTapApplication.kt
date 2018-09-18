@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.facebook.stetho.Stetho
 import com.kakao.auth.KakaoSDK
-import me.tiptap.tiptap.login.KakaoSDKAdapter
+import me.tiptap.tiptap.common.util.login.KakaoSDKAdapter
 
 class TipTapApplication : Application() {
 

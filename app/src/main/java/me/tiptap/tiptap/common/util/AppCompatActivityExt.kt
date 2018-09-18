@@ -1,4 +1,4 @@
-package me.tiptap.tiptap.util
+package me.tiptap.tiptap.common.util
 
 import android.content.Intent
 import android.support.annotation.IdRes
