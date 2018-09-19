@@ -12,6 +12,7 @@ import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -24,21 +25,32 @@ import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import com.google.android.gms.location.places.Place
+import com.google.gson.JsonObject
 import com.taskail.googleplacessearchdialog.SimplePlacesSearchDialog
 import com.taskail.googleplacessearchdialog.SimplePlacesSearchDialogBuilder
 import gun0912.tedbottompicker.TedBottomPicker
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableObserver
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_diary_writing.view.*
 import me.tiptap.tiptap.R
+import me.tiptap.tiptap.common.network.DiaryApi
+import me.tiptap.tiptap.common.network.ServerGenerator
 import me.tiptap.tiptap.common.rx.RxBus
+import me.tiptap.tiptap.data.Diary
 import me.tiptap.tiptap.databinding.ActivityDiaryWritingBinding
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.jetbrains.annotations.NotNull
+import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-open class DiaryWritingActivity : AppCompatActivity() {
+class DiaryWritingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDiaryWritingBinding
     private var locationManager: LocationManager? = null
@@ -46,6 +58,10 @@ open class DiaryWritingActivity : AppCompatActivity() {
 
     val isPhotoAvailable = ObservableField<Boolean>(false)
 
+    private var imgUri: Uri? = null //image uri
+    private var diary = Diary() //diary to send
+
+    private val service: DiaryApi = ServerGenerator.createService(DiaryApi::class.java) //service
     private val rxBus = RxBus.getInstance()
     private val disposables: CompositeDisposable = CompositeDisposable()
 
@@ -55,7 +71,7 @@ open class DiaryWritingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_diary_writing)
 
-        checkBus()
+        checkBus() //넘겨진 데이터가 있는지 확인
 
         binding.apply {
             activity = this@DiaryWritingActivity
@@ -66,7 +82,7 @@ open class DiaryWritingActivity : AppCompatActivity() {
 
             textWriteLocation.setOnClickListener { _ ->
                 SimplePlacesSearchDialogBuilder(this@DiaryWritingActivity)
-                        .setLocationListener(object: SimplePlacesSearchDialog.PlaceSelectedCallback {
+                        .setLocationListener(object : SimplePlacesSearchDialog.PlaceSelectedCallback {
                             override fun onPlaceSelected(@NotNull place: Place) {
                                 binding.textWriteLocation.text = place.name
                             }
@@ -111,6 +127,7 @@ open class DiaryWritingActivity : AppCompatActivity() {
                 // 권한 있음
                 val tedBottomPicker = TedBottomPicker.Builder(this@DiaryWritingActivity)
                         .setOnImageSelectedListener {
+                            imgUri = it //set img uri
                             // here is selected uri
                             binding.imgWriteMyPicture.run {
                                 setImageURI(it)
@@ -168,14 +185,23 @@ open class DiaryWritingActivity : AppCompatActivity() {
 
     private val locationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
+            //set latitude, longitude
+            diary.run {
+                latitude = location.latitude.toString()
+                longitude = location.longitude.toString()
+            }
+
             val geocoder = Geocoder(applicationContext, Locale.getDefault())
             val listAddresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
             if (null != listAddresses && listAddresses.size > 0) {
                 val location = listAddresses[0].getAddressLine(0)
                 val strKor: String = location.toString().substring(location.toString().indexOf(" "))
 
-                if (binding.textWriteLocation.text == "위치설정")
+                if (binding.textWriteLocation.text == "위치설정") {
                     binding.textWriteLocation.text = strKor
+
+                    diary.location = strKor //set location
+                }
 
             }
         }
@@ -194,17 +220,82 @@ open class DiaryWritingActivity : AppCompatActivity() {
         })
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-
-        disposables.dispose()
-    }
 
     /**
      * When user click Complete button.
      */
     fun onCompleteButtonClick() {
-        finish()
+        writeDiary()
+    }
+
+
+    /**
+     * Get User access token.
+     */
+    private fun getAccessToken(): String {
+        val sharedPref = getSharedPreferences(getString(R.string.auth), Activity.MODE_PRIVATE)
+                ?: return ""
+        val token = sharedPref.getString(getString(R.string.token), "")
+
+        if (token.isBlank()) throw IllegalStateException("Invalid token form.") else return token
+    }
+
+    /**
+     * convert object to RequestBody
+     */
+    private fun toRequestBody(content: String): RequestBody =
+            RequestBody.create(MediaType.parse("text/plain"), content)
+
+
+    /**
+     * convert image file to MultipartBody.Part
+     */
+    private fun toMultipartBody(uri: Uri?): MultipartBody.Part? {
+        uri?.let {
+            val file = File(it.path)
+            val requestFile = RequestBody.create(MediaType.parse("image/*"), file)
+
+            return MultipartBody.Part.createFormData(diary::diaryFile.name, file.name, requestFile)
+        }
+        return null
+    }
+
+
+    /**
+     * Call write diary api.
+     */
+    private fun writeDiary() {
+        disposables.add(service.writeDiary(
+                getAccessToken(),
+                toRequestBody(diary.content),
+                toRequestBody(diary.location),
+                toRequestBody(diary.latitude),
+                toRequestBody(diary.longitude),
+                toMultipartBody(imgUri))
+
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribeWith(object : DisposableObserver<JsonObject>() {
+                    override fun onNext(t: JsonObject) {
+                        //do something
+                    }
+
+                    override fun onComplete() {
+                        //call startActivity is allocated a lot of memories.
+                        finish()
+                    }
+
+                    override fun onError(e: Throwable) {
+                        e.printStackTrace()
+                    }
+                }))
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        disposables.dispose()
     }
 }
 
