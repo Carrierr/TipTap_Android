@@ -68,7 +68,7 @@ class LoginActivity : AppCompatActivity(), LoginNavigator {
                     }
 
                     override fun onNext(task: JsonObject) {
-                        saveToken(task.getAsJsonObject(getString(R.string.data)).get(getString(R.string.token)).toString())
+                        saveToken(task.getAsJsonObject(getString(R.string.data)).get(getString(R.string.token)).asString)
                     }
 
                     override fun onError(e: Throwable) {
