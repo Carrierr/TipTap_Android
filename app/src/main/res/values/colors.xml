@@ -8,7 +8,9 @@
     <color name = "scratch_end_gradient">#cccccc</color>
     
     <color name = "colorDefaultBackground">#FBFBFB</color>
+    <color name = "colorListBackground">#F6F6F6</color>
     <color name = "colorMainBlack">#242424</color>
     <color name = "colorMainGray">#A7A7A7</color>
+    <color name = "colorMainGrayDark">#979797</color>
     <color name = "colorGrayishBrown">#4A4A4A</color>
 </resources>

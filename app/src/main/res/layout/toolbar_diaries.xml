@@ -10,13 +10,18 @@
             name = "recentDiaryDate"
             type = "java.util.Date"
             />
+        
+        <variable
+            name = "fragment"
+            type = "me.tiptap.tiptap.diaries.DiariesFragment"
+            />
     </data>
     
     <android.support.v7.widget.Toolbar
         android:id = "@+id/toolbar_diaries"
         android:layout_width = "match_parent"
         android:layout_height = "?android:attr/actionBarSize"
-        android:background = "@color/colorDefaultBackground"
+        android:background = "@android:color/transparent"
         >
         
         <android.support.constraint.ConstraintLayout
@@ -30,7 +35,7 @@
                 android:layout_height = "wrap_content"
                 android:fontFamily = "@font/montserrat_regular"
                 android:text = "@string/my_diary"
-                android:textSize = "14sp"
+                android:textSize = "16sp"
                 android:textStyle = "bold"
                 app:layout_constraintBottom_toBottomOf = "parent"
                 app:layout_constraintEnd_toEndOf = "parent"
@@ -41,10 +46,11 @@
             
             <TextView
                 android:id = "@+id/text_toolbar_diaries_sub"
-                year = "@{recentDiaryDate}"
+                yearAndMonth = "@{recentDiaryDate}"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:fontFamily = "@font/montserrat_mid"
+                android:onClick = "@{() -> fragment.onDateFindButtonClick()}"
                 android:textColor = "#303030"
                 android:textSize = "12sp"
                 app:layout_constraintEnd_toEndOf = "parent"
@@ -52,12 +58,26 @@
                 app:layout_constraintTop_toBottomOf = "@+id/text_toolbar_diaries_title"
                 />
             
+            <ImageView
+                android:layout_width = "0dp"
+                android:layout_height = "6dp"
+                android:src = "@drawable/background_diaries_month"
+                app:layout_constraintBottom_toBottomOf = "@+id/text_toolbar_diaries_sub"
+                app:layout_constraintEnd_toEndOf = "@+id/text_toolbar_diaries_sub"
+                app:layout_constraintStart_toStartOf = "@+id/text_toolbar_diaries_sub"
+                app:layout_constraintTop_toTopOf = "@+id/text_toolbar_diaries_sub"
+                app:layout_constraintVertical_bias = "1"
+                />
+            
             <ImageButton
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:background = "@android:color/transparent"
                 android:paddingEnd = "22dp"
-                android:paddingStart = "0dp"
+                android:onClick="@{() -> fragment.onDeleteMenuItemClick()}"
+                android:paddingStart = "5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:src = "@drawable/ic_delete"
                 app:layout_constraintBottom_toBottomOf = "parent"
                 app:layout_constraintEnd_toEndOf = "parent"
