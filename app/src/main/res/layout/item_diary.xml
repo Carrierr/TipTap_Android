@@ -25,20 +25,51 @@
     
     <android.support.constraint.ConstraintLayout
         android:layout_width = "match_parent"
-        android:layout_height = "135dp"
-        android:layout_marginEnd = "40dp"
-        android:background = "@color/colorDefaultBackground"
+        android:layout_height = "132dp"
+        android:layout_marginBottom = "7dp"
+        android:background = "@color/colorListBackground"
         >
         
+        <android.support.constraint.Guideline
+            android:id = "@+id/gl_diary_start_view"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.125"
+            />
+        
+        
         <View
-            android:layout_width = "0.5dp"
-            android:layout_height = "0dp"
-            android:background = "#80979797"
-            app:layout_constraintBottom_toBottomOf = "parent"
-            app:layout_constraintEnd_toEndOf = "@+id/text_diary_day"
-            app:layout_constraintStart_toStartOf = "@+id/text_diary_day"
+            android:id = "@+id/view_diary_line"
+            android:layout_width = "0dp"
+            android:layout_height = "1dp"
+            android:background = "@color/colorMainBlack"
+            android:visibility = "@{(adapter.checkboxAvailable || adapter.isDifferentMonth() == false) ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf = "@+id/text_diary_month"
+            app:layout_constraintEnd_toStartOf = "@+id/gl_diary_start_view"
+            app:layout_constraintStart_toStartOf = "parent"
             app:layout_constraintTop_toTopOf = "parent"
             />
+        
+        
+        <me.tiptap.tiptap.common.view.VerticalTextView
+            android:id = "@+id/text_diary_month"
+            header = "@{diary.date}"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_marginTop = "7dp"
+            android:fontFamily = "@font/montserrat_light"
+            android:gravity = "center"
+            android:rotation = "180"
+            android:textSize = "14sp"
+            android:visibility = "@{(adapter.checkboxAvailable || adapter.isDifferentMonth() == false) ? View.GONE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf = "@+id/check_diary"
+            app:layout_constraintHorizontal_bias = "0.8"
+            app:layout_constraintStart_toEndOf = "@+id/view_diary_line"
+            app:layout_constraintTop_toTopOf = "parent"
+            tools:text = "Aug"
+            />
+        
         
         <CheckBox
             android:id = "@+id/check_diary"
@@ -47,82 +78,122 @@
             android:checked = "@{diary.selected}"
             android:visibility = "@{adapter.checkboxAvailable ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf = "parent"
-            app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintEnd_toStartOf = "@+id/gl_diary_ticket_start"
+            app:layout_constraintHorizontal_bias = "1"
+            app:layout_constraintStart_toEndOf = "@+id/view_diary_line"
             app:layout_constraintTop_toTopOf = "parent"
             />
         
         <android.support.constraint.Guideline
-            android:id = "@+id/guide_diary_top"
+            android:id = "@+id/gl_diary_ticket_start"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:orientation = "horizontal"
-            app:layout_constraintGuide_percent = "0.15"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.25"
             />
         
-        <me.tiptap.tiptap.common.view.VerticalTextView
-            android:id = "@+id/text_diary_day"
-            day = "@{diary.date}"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            android:fontFamily = "@font/montserrat_regular"
-            android:textColor = "@color/colorAccent"
-            android:textSize = "20sp"
-            android:textStyle = "bold"
+        <!--Ticket-->
+        <android.support.constraint.ConstraintLayout
+            android:layout_width = "0dp"
+            android:layout_height = "match_parent"
+            android:background = "@drawable/list_card"
+            android:paddingEnd = "18dp"
+            android:paddingStart = "0dp"
+            app:layout_constraintEnd_toEndOf = "parent"
             app:layout_constraintStart_toEndOf = "@+id/check_diary"
-            app:layout_constraintTop_toTopOf = "@+id/guide_diary_top"
-            />
+            >
+            
+            <android.support.constraint.Guideline
+                android:id = "@+id/gl_diary_top"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:orientation = "horizontal"
+                app:layout_constraintGuide_percent = "0.15"
+                />
+            
+            <android.support.constraint.Guideline
+                android:id = "@+id/gl_diary_card_start"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:orientation = "vertical"
+                app:layout_constraintGuide_percent = "0.12"
+                />
+            
+            <TextView
+                android:id = "@+id/text_diary_day"
+                day = "@{diary.date}"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:fontFamily = "@font/montserrat_regular"
+                android:textColor = "@color/colorAccent"
+                android:textSize = "24sp"
+                android:textStyle = "bold"
+                app:layout_constraintStart_toStartOf = "@+id/gl_diary_card_start"
+                app:layout_constraintTop_toTopOf = "@+id/gl_diary_top"
+                tools:text = "23"
+                />
+            
+            
+            <android.support.constraint.Guideline
+                android:id = "@+id/gl_diary_card_content_start"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:orientation = "vertical"
+                app:layout_constraintGuide_percent = "0.42"
+                />
+            
+            <TextView
+                android:id = "@+id/text_diary_tiptap_count"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:fontFamily = "@font/montserrat_light"
+                android:text = "@{String.format(@string/count_diary_tiptap, 3)}"
+                android:textColor = "@color/colorMainGrayDark"
+                android:textSize = "12sp"
+                app:layout_constraintStart_toEndOf = "@+id/gl_diary_card_content_start"
+                app:layout_constraintTop_toTopOf = "@+id/gl_diary_top"
+                tools:text = "10 TIPTAP"
+                />
+            
+            <TextView
+                android:id = "@+id/text_diary_location_begin"
+                style = "@style/DiaryItemTextStyle"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "@{diary.location}"
+                app:layout_constraintStart_toStartOf = "@+id/text_diary_tiptap_count"
+                app:layout_constraintTop_toBottomOf = "@+id/text_diary_tiptap_count"
+                tools:text = "서울 특별시 망원동 키오스크카페"
+                />
+            
+            <!--ellipse-->
+            <me.tiptap.tiptap.common.view.VerticalTextView
+                android:id = "@+id/text_diary_ellipse"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_marginStart = "2dp"
+                android:fontFamily = "@font/ko_pub_dotum_pl"
+                android:gravity = "center"
+                android:paddingEnd = "5dp"
+                android:paddingStart = "5dp"
+                android:text = "@string/ellipsize"
+                android:textSize = "9sp"
+                app:layout_constraintStart_toStartOf = "@+id/text_diary_tiptap_count"
+                app:layout_constraintTop_toBottomOf = "@+id/text_diary_location_begin"
+                />
+            
+            <TextView
+                android:id = "@+id/text_diary_location_last"
+                style = "@style/DiaryItemTextStyle"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:text = "@{diary.location}"
+                app:layout_constraintStart_toStartOf = "@+id/text_diary_tiptap_count"
+                app:layout_constraintTop_toBottomOf = "@+id/text_diary_ellipse"
+                tools:text = "서울대 입구역"
+                />
         
-        <TextView
-            android:id = "@+id/text_diary_tiptap_count"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            android:layout_marginStart = "@dimen/dimen_write_top"
-            android:fontFamily = "@font/montserrat_light"
-            android:text = "@{String.format(@string/count_diary_tiptap, 3)}"
-            android:textColor = "#979797"
-            android:textSize = "12sp"
-            app:layout_constraintStart_toEndOf = "@+id/text_diary_day"
-            app:layout_constraintTop_toTopOf = "@+id/guide_diary_top"
-            tools:text = "10 TIPTAP"
-            />
-        
-        <TextView
-            android:id = "@+id/text_diary_location_begin"
-            style = "@style/DiaryItemTextStyle"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            android:text = "@{diary.location}"
-            app:layout_constraintStart_toStartOf = "@+id/text_diary_tiptap_count"
-            app:layout_constraintTop_toBottomOf = "@+id/text_diary_tiptap_count"
-            tools:text = "서울 특별시 망원동 키오스크카페"
-            />
-        
-        <!--ellipse-->
-        <me.tiptap.tiptap.common.view.VerticalTextView
-            android:id = "@+id/text_diary_ellipse"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            android:layout_marginStart = "2dp"
-            android:fontFamily = "@font/ko_pub_dotum_pl"
-            android:gravity = "center"
-            android:paddingEnd = "5dp"
-            android:paddingStart = "5dp"
-            android:text = "@string/ellipsize"
-            android:textSize = "9sp"
-            app:layout_constraintStart_toStartOf = "@+id/text_diary_tiptap_count"
-            app:layout_constraintTop_toBottomOf = "@+id/text_diary_location_begin"
-            />
-        
-        <TextView
-            android:id = "@+id/text_diary_location_last"
-            style = "@style/DiaryItemTextStyle"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            android:text = "@{diary.location}"
-            app:layout_constraintStart_toStartOf = "@+id/text_diary_tiptap_count"
-            app:layout_constraintTop_toBottomOf = "@+id/text_diary_ellipse"
-            tools:text = "서울대 입구역"
-            />
+        </android.support.constraint.ConstraintLayout>
     
     </android.support.constraint.ConstraintLayout>
 </layout>

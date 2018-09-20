@@ -23,6 +23,8 @@ class DiariesFragment : Fragment() {
 
     private lateinit var binding: FragmentDiariesBinding
 
+    private val adapter = DiariesAdapter()
+
     private val bus = RxBus.getInstance()
     private val disposables: CompositeDisposable = CompositeDisposable()
 
@@ -61,24 +63,21 @@ class DiariesFragment : Fragment() {
             setHasFixedSize(true)
 
             layoutManager = LinearLayoutManager(this@DiariesFragment.context)
-            adapter = DiariesAdapter().apply {
+            adapter = this@DiariesFragment.adapter.apply {
 
                 //Dummy data
                 for (i in 1..15) {
                     addItem(Diary(i, Date(), "내용 $i", "서울대입구 $i 번 출구 앞", Uri.parse("none")))
                 }
-              binding.date = getItem(0).date
+                binding.date = getItem(0).date
 
                 disposables.addAll(
                         clickSubject.subscribe {
                             //Go to detail page if actionMode is not running.
-                            if (this.actionModeCallback == null) {
+                            if (this.isCheckboxAvailable.get() == false) {
                                 bus.takeBus(it)
                                 startActivity(Intent(this@DiariesFragment.activity, DiaryDetailActivity::class.java))
                             }
-                        },
-                        longClickSubject.subscribe {
-                            onLongClickEventPublished(it)
                         },
                         checkSubject.subscribe {
                             onCheckedChangeEventPublished(it)
@@ -86,6 +85,7 @@ class DiariesFragment : Fragment() {
             }
         }
     }
+
 
     fun onDateFindButtonClick() {
         if (!::datePickerDialog.isInitialized) {
@@ -95,6 +95,39 @@ class DiariesFragment : Fragment() {
         activity?.let {
             datePickerDialog.show(it.supportFragmentManager, it.getString(R.string.app_name))
         }
+    }
+
+    /**
+     * when click delete Icon
+     */
+    fun onDeleteMenuItemClick() {
+        //checkbox mode on/off
+        adapter.isCheckboxAvailable.get()?.let {
+            setBottomDialogVisibility(!it) //change bottom dialog visibility
+            adapter.isCheckboxAvailable.set(!it)
+        }
+    }
+
+    private fun setBottomDialogVisibility(value : Boolean) {
+        if (value) binding.layoutBotDialog?.constBotDial?.visibility = View.VISIBLE
+        else binding.layoutBotDialog?.constBotDial?.visibility = View.GONE
+    }
+
+
+    /**
+     *  When click bottom dialog button
+     */
+    fun onBottomDialogButtonClick(view : View) {
+        when (view.id) {
+            R.id.text_bot_dial_cancel -> {
+                adapter.clearChecked(false)
+            }
+            R.id.text_bot_dial_delete -> {
+                adapter.deleteItems()
+            }
+        }
+        adapter.isCheckboxAvailable.set(false)
+        setBottomDialogVisibility(false)
     }
 
 
