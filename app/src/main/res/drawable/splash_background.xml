@@ -5,6 +5,17 @@
 
     <item android:drawable="@color/colorDefaultBackground" />
 
+
+    <item android:top="-2dp" android:right="-2dp" android:left="-2dp">
+        <shape>
+            <solid android:color="@android:color/transparent" />
+            <stroke
+                android:dashGap="10px"
+                android:dashWidth="10px"
+                android:width="1dp"
+                android:color="#ababb2" />
+        </shape>
+    </item>
     <item>
         <bitmap android:src="@drawable/splash1"
             android:gravity="bottom|right" />
