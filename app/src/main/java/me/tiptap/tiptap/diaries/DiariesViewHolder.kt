@@ -19,14 +19,6 @@ class DiariesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 }
             }
 
-    fun getLongClickObservable(): Observable<View> =
-            Observable.create { emitter ->
-                itemView.setOnLongClickListener {
-                    emitter.onNext(it)
-                    true
-                }
-            }
-
     fun getCheckObservable(item: Diary): Observable<Diary> =
             Observable.create { emitter ->
                 binding?.checkDiary?.setOnCheckedChangeListener { _, state ->
