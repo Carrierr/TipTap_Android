@@ -1,8 +1,5 @@
 <resources>
     <string name = "app_name">TipTap</string>
-
-    <!--Splash-->
-    <string name="trip_diary">MY TRIP DIARY</string>
     
     <!--login-->
     <string name = "type_kakao">kakao</string>
