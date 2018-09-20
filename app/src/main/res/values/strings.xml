@@ -3,7 +3,7 @@
 
     <!--Splash-->
     <string name="trip_diary">MY TRIP DIARY</string>
-    
+
     <!--login-->
     <string name = "type_kakao">kakao</string>
     <string name = "code">code</string>
