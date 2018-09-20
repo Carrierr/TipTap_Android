@@ -21,15 +21,15 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width = "match_parent"
         android:layout_height = "match_parent"
-        android:background = "@color/colorDefaultBackground"
+        android:background = "@color/colorListBackground"
         >
         
         <android.support.constraint.Guideline
-            android:id = "@+id/guide_diaries_top"
+            android:id = "@+id/gl_diaries_top"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "horizontal"
-            app:layout_constraintGuide_percent = "0.046"
+            app:layout_constraintGuide_percent = "0.04"
             />
         
         <!--toolbar-->
@@ -38,65 +38,38 @@
             layout = "@layout/toolbar_diaries"
             android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
+            app:fragment = "@{fragment}"
+            app:layout_constraintTop_toBottomOf = "@+id/gl_diaries_top"
             app:recentDiaryDate = "@{date}"
-            app:layout_constraintTop_toBottomOf = "@+id/guide_diaries_top"
             />
         
-        <TextView
-            android:id = "@+id/text_diaries_find"
-            header = "@{date}"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            android:fontFamily = "@font/montserrat_mid"
-            android:onClick = "@{() -> fragment.onDateFindButtonClick()}"
-            android:paddingEnd = "1dp"
-            android:paddingStart = "1dp"
-            android:textColor = "#303030"
-            android:textSize = "18sp"
-            app:layout_constraintEnd_toStartOf = "@+id/guide_diaries_recycler_start"
-            app:layout_constraintStart_toStartOf = "parent"
-            app:layout_constraintTop_toTopOf = "@+id/guide_diaries_recycler_top"
-            tools:text = "Aug"
-            />
-        
-        <ImageView
-            android:layout_width = "0dp"
-            android:layout_height = "6dp"
-            android:src = "@drawable/background_diaries_month"
-            app:layout_constraintBottom_toBottomOf = "@+id/text_diaries_find"
-            app:layout_constraintEnd_toEndOf = "@+id/text_diaries_find"
-            app:layout_constraintStart_toStartOf = "@+id/text_diaries_find"
-            app:layout_constraintTop_toTopOf = "@+id/guide_diaries_recycler_top"
-            app:layout_constraintVertical_bias = "1"
-            />
         
         <android.support.constraint.Guideline
-            android:id = "@+id/guide_diaries_recycler_top"
+            android:id = "@+id/gl_diaries_recycler_top"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "horizontal"
             app:layout_constraintGuide_percent = "0.172"
             />
         
-        <android.support.constraint.Guideline
-            android:id = "@+id/guide_diaries_recycler_start"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            android:orientation = "vertical"
-            app:layout_constraintGuide_percent = "0.35"
-            />
-        
         <android.support.v7.widget.RecyclerView
             android:id = "@+id/recycler_diaries"
-            android:layout_width = "0dp"
+            android:layout_width = "match_parent"
             android:layout_height = "0dp"
-            android:paddingEnd = "40dp"
-            android:paddingStart = "0dp"
+            app:layout_constraintBottom_toTopOf = "@+id/layout_bot_dialog"
             app:layout_constraintBottom_toBottomOf = "parent"
-            app:layout_constraintEnd_toEndOf = "parent"
-            app:layout_constraintStart_toStartOf = "@+id/guide_diaries_recycler_start"
-            app:layout_constraintTop_toTopOf = "@+id/guide_diaries_recycler_top"
-            tools:items = "@layout/item_diary"
+            app:layout_constraintTop_toTopOf = "@+id/gl_diaries_recycler_top"
+            />
+        
+        <!--bot dialog-->
+        <include
+            android:id = "@+id/layout_bot_dialog"
+            layout = "@layout/layout_bottom_dialog"
+            android:layout_width = "match_parent"
+            android:layout_height = "50dp"
+            android:visibility = "gone"
+            app:fragment = "@{fragment}"
+            app:layout_constraintBottom_toBottomOf = "parent"
             />
     
     </android.support.constraint.ConstraintLayout>
