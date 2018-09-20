@@ -8,12 +8,12 @@ import com.kakao.auth.ISessionCallback
 import com.kakao.auth.Session
 import com.kakao.util.exception.KakaoException
 import me.tiptap.tiptap.R
-import me.tiptap.tiptap.main.MainActivity
 import me.tiptap.tiptap.common.util.redirectLoginActivity
+import me.tiptap.tiptap.main.MainActivity
 
 class SplashActivity : AppCompatActivity() {
 
-    private val delayMill = 1200L //delay milliseconds
+    private val delayMill = 1500L //delay milliseconds
 
     private val callback = object : ISessionCallback {
         override fun onSessionOpened() { //If session is opened, go to main activity.
