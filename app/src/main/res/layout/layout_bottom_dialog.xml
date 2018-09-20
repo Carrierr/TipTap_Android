@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    >
+    
+    <data>
+        
+        <variable
+            name = "fragment"
+            type = "me.tiptap.tiptap.diaries.DiariesFragment"
+            />
+    </data>
+    
+    <android.support.constraint.ConstraintLayout
+        android:id = "@+id/const_bot_dial"
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        android:background = "@color/colorMainBlack"
+        android:paddingEnd = "5dp"
+        android:paddingStart = "0dp"
+        >
+        
+        <TextView
+            android:id = "@+id/text_bot_dial_cancel"
+            style = "@style/DiaryBottomTextStyle"
+            android:layout_width = "wrap_content"
+            android:layout_height = "0dp"
+            android:onClick = "@{fragment::onBottomDialogButtonClick}"
+            android:text = "@string/cancel"
+            android:textColor = "@color/colorMainGrayDark"
+            app:layout_constraintBottom_toBottomOf = "parent"
+            app:layout_constraintEnd_toStartOf = "@+id/text_bot_dial_delete"
+            app:layout_constraintTop_toTopOf = "parent"
+            />
+        
+        <TextView
+            android:id = "@+id/text_bot_dial_delete"
+            style = "@style/DiaryBottomTextStyle"
+            android:layout_width = "wrap_content"
+            android:layout_height = "0dp"
+            android:onClick = "@{fragment::onBottomDialogButtonClick}"
+            android:text = "@string/delete"
+            android:textColor = "@android:color/white"
+            app:layout_constraintBottom_toBottomOf = "parent"
+            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintTop_toTopOf = "parent"
+            />
+    
+    </android.support.constraint.ConstraintLayout>
+
+</layout>
