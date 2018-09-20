@@ -139,5 +139,12 @@
         <item name = "windowActionBar">false</item>
         <item name = "windowNoTitle">true</item>
     </style>
+    
+    <style name = "DiaryBottomTextStyle">
+        <item name = "android:fontFamily">@font/ko_pub_dotum_pm</item>
+        <item name = "android:padding">@dimen/dimen_fifteen</item>
+        <item name = "android:textSize">14sp</item>
+        <item name = "android:gravity">center</item>
+    </style>
 
 </resources>
