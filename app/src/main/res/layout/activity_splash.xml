@@ -4,12 +4,6 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width = "match_parent"
         android:layout_height = "match_parent">
-        <View
-            android:layout_width="3dp"
-            android:layout_height="272dp"
-            android:background="#8b8b8b"
-            android:translationX="21dp">
-        </View>
 
         <TextView
             android:layout_width="wrap_content"
@@ -21,6 +15,7 @@
             android:text="@string/trip_diary"
             android:textColor="#6d6d6d"
             android:textSize="13sp"
+            android:textStyle="bold"
             android:translationX="-25dp"
             android:translationY="332.5dp" />
     </android.support.constraint.ConstraintLayout>
