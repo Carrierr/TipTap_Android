@@ -73,6 +73,14 @@ class DiaryWritingActivity : AppCompatActivity() {
 
         checkBus() //넘겨진 데이터가 있는지 확인
 
+        setCurrentDate()    // set current date
+
+        permissionCheck()   // permission check
+
+        onTextChanged()  // if text is changed
+    }
+    
+    private fun setCurrentDate() {
         binding.apply {
             activity = this@DiaryWritingActivity
 
@@ -89,7 +97,30 @@ class DiaryWritingActivity : AppCompatActivity() {
                         }).build().show()
             }
         }
+    }
 
+    private fun onTextChanged() {
+        binding.editWriteDiary.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+            override fun beforeTextChanged(str: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(str: CharSequence, p1: Int, p2: Int, p3: Int) {
+                str.length.apply {
+                    if (this > 0) {
+                        binding.toolbarWrite.text_complete.setTextColor(ContextCompat.getColor(this@DiaryWritingActivity, R.color.colorMainBlack))
+                    } else {
+                        binding.toolbarWrite.text_complete.setTextColor(ContextCompat.getColor(this@DiaryWritingActivity, R.color.colorMainGray))
+                    }
+                }
+                binding.textWriteKeyboard.text = getString(R.string.text_length, str?.length.toString())
+            }
+        })
+    }
+
+    private fun permissionCheck() {
         val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
 
         if (permissionCheck == PackageManager.PERMISSION_GRANTED && checkLocationOnce) {
@@ -112,9 +143,6 @@ class DiaryWritingActivity : AppCompatActivity() {
             val permission = arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION)
             ActivityCompat.requestPermissions(this, permission, 0)
         }
-
-
-
         binding.imgWriteGallery.setOnClickListener { _ ->
             val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
@@ -144,25 +172,6 @@ class DiaryWritingActivity : AppCompatActivity() {
                 tedBottomPicker.show(supportFragmentManager)
             }
         }
-
-        binding.editWriteDiary.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-            }
-
-            override fun beforeTextChanged(str: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(str: CharSequence, p1: Int, p2: Int, p3: Int) {
-                str.length.apply {
-                    if (this > 0) {
-                        binding.toolbarWrite.text_complete.setTextColor(ContextCompat.getColor(this@DiaryWritingActivity, R.color.colorMainBlack))
-                    } else {
-                        binding.toolbarWrite.text_complete.setTextColor(ContextCompat.getColor(this@DiaryWritingActivity, R.color.colorMainGray))
-                    }
-                }
-                binding.textWriteKeyboard.text = getString(R.string.text_length, str?.length.toString())
-            }
-        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
