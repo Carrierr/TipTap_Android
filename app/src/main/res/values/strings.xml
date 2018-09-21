@@ -31,6 +31,18 @@
     <string name = "no_tiptap">당신의\n첫번째 TIPTAP을\n작성해주세요.</string>
     <string name = "post_count">#%s</string>
     
+    <!--post-->
+    <string name = "post_one">01</string>
+    <string name = "post_two">02</string>
+    <string name = "post_three">03</string>
+    <string name = "post_four">04</string>
+    <string name = "post_five">05</string>
+    <string name = "post_six">06</string>
+    <string name = "post_seven">07</string>
+    <string name = "post_eight">08</string>
+    <string name = "post_nine">09</string>
+    <string name = "post_ten">10</string>
+
     <!--preview-->
     <string name = "preview_count">MY DIARY #%d</string>
     <string name = "menu_edit">수정하기</string>

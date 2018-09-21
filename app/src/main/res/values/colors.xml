@@ -13,4 +13,5 @@
     <color name = "colorMainGray">#A7A7A7</color>
     <color name = "colorMainGrayDark">#979797</color>
     <color name = "colorGrayishBrown">#4A4A4A</color>
+    <color name = "colorStampNumber">#505050</color>
 </resources>
