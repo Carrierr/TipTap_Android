@@ -21,7 +21,7 @@ class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
 
     private val rxBus = RxBus.getInstance()
-    val postSize: ObservableField<Int> = ObservableField(0) //post size
+    val postSize: ObservableField<Int> = ObservableField(1) //post size
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    >
+    
+    <android.support.constraint.ConstraintLayout
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:background = "@color/colorDefaultBackground"
+        >
+        
+        <!--post1-->
+        <android.support.constraint.Guideline
+            android:id = "@+id/gl_post_01"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.144"
+            />
+        
+        <me.tiptap.tiptap.common.view.VerticalTextView
+            android:id = "@+id/text_post_01"
+            style = "@style/PostNumberTextStyle"
+            android:text = "@string/post_one"
+            app:layout_constraintStart_toStartOf = "@+id/gl_post_01"
+            />
+        
+        <ImageView
+            android:id = "@+id/img_post_01"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:src = "@drawable/g"
+            app:layout_constraintStart_toEndOf = "@+id/text_post_01"
+            />
+        
+        
+        <!--post2-->
+        <android.support.constraint.Guideline
+            android:id = "@+id/gl_post_02_start"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.48"
+            />
+        
+        <android.support.constraint.Guideline
+            android:id = "@+id/gl_post_02_top"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "horizontal"
+            app:layout_constraintGuide_percent = "0.115"
+            />
+        
+        <TextView
+            android:id = "@+id/text_post_02"
+            style = "@style/PostNumberTextStyle"
+            android:text = "@string/post_two"
+            app:layout_constraintStart_toStartOf = "@+id/gl_post_02_start"
+            app:layout_constraintTop_toTopOf = "@+id/gl_post_02_top"
+            />
+        
+        <ImageView
+            android:id = "@+id/img_post_02"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:src = "@drawable/f"
+            app:layout_constraintEnd_toEndOf = "@+id/text_post_04"
+            app:layout_constraintStart_toStartOf = "@+id/text_post_02"
+            app:layout_constraintTop_toBottomOf = "@+id/text_post_02"
+            />
+        
+        <!--post3-->
+        <android.support.constraint.Guideline
+            android:id = "@+id/gl_post_03_start"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.098"
+            />
+        
+        <TextView
+            android:id = "@+id/text_post_03"
+            style = "@style/PostNumberTextStyle"
+            android:text = "@string/post_three"
+            app:layout_constraintStart_toStartOf = "@+id/gl_post_03_start"
+            app:layout_constraintTop_toTopOf = "@+id/img_post_04"
+            />
+        
+        <ImageView
+            android:id = "@+id/img_post_03"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_marginStart = "5dp"
+            android:layout_marginTop = "15dp"
+            android:rotation = "270"
+            android:src = "@drawable/b"
+            app:layout_constraintStart_toStartOf = "@+id/gl_post_03_start"
+            app:layout_constraintTop_toTopOf = "@+id/img_post_02"
+            />
+        
+        <!--post4-->
+        <android.support.constraint.Guideline
+            android:id = "@+id/gl_post_04_start"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.378"
+            />
+        
+        <TextView
+            android:id = "@+id/text_post_04"
+            style = "@style/PostNumberTextStyle"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text = "@string/post_four"
+            app:layout_constraintStart_toEndOf = "@+id/img_post_04"
+            app:layout_constraintTop_toTopOf = "@+id/img_post_04"
+            />
+        
+        <ImageView
+            android:id = "@+id/img_post_04"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_marginTop = "5dp"
+            android:src = "@drawable/c"
+            app:layout_constraintStart_toStartOf = "@+id/gl_post_04_start"
+            app:layout_constraintTop_toBottomOf = "@+id/img_post_02"
+            />
+        
+        <!--post5-->
+        <android.support.constraint.Guideline
+            android:id = "@+id/gl_post_05_top"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "horizontal"
+            app:layout_constraintGuide_percent = "0.446"
+            />
+        
+        <me.tiptap.tiptap.common.view.VerticalTextView
+            android:id = "@+id/text_post_05"
+            style = "@style/PostNumberTextStyle"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text = "@string/post_five"
+            app:layout_constraintEnd_toStartOf = "@+id/img_post_05"
+            app:layout_constraintTop_toTopOf = "@+id/gl_post_05_top"
+            />
+        
+        <ImageView
+            android:id = "@+id/img_post_05"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:src = "@drawable/a"
+            app:layout_constraintEnd_toStartOf = "@+id/img_post_04"
+            app:layout_constraintTop_toTopOf = "@+id/gl_post_05_top"
+            />
+        
+        <!--post6-->
+        <me.tiptap.tiptap.common.view.VerticalTextView
+            style = "@style/PostNumberTextStyle"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text = "@string/post_six"
+            app:layout_constraintStart_toEndOf = "@+id/img_post_06"
+            app:layout_constraintTop_toTopOf = "@+id/gl_post_05_top"
+            />
+        
+        <ImageView
+            android:id = "@+id/img_post_06"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:src = "@drawable/d"
+            app:layout_constraintStart_toEndOf = "@+id/img_post_04"
+            app:layout_constraintTop_toTopOf = "@+id/gl_post_05_top"
+            />
+        
+        <!--post7-->
+        <android.support.constraint.Guideline
+            android:id = "@+id/gl_post_07_start"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.38"
+            />
+        
+        <TextView
+            android:id = "@+id/text_post_07"
+            style = "@style/PostNumberTextStyle"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:paddingTop = "2dp"
+            android:text = "@string/post_seven"
+            app:layout_constraintStart_toStartOf = "@+id/gl_post_07_start"
+            app:layout_constraintTop_toBottomOf = "@+id/img_post_04"
+            />
+        
+        <ImageView
+            android:id = "@+id/img_post_07"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:src = "@drawable/i"
+            app:layout_constraintStart_toStartOf = "@+id/gl_post_07_start"
+            app:layout_constraintTop_toBottomOf = "@+id/text_post_07"
+            />
+        
+        <!--post8-->
+        <android.support.constraint.Guideline
+            android:id = "@+id/gl_post_08_text_start"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.045"
+            />
+        
+        <android.support.constraint.Guideline
+            android:id = "@+id/gl_post_08_top"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "horizontal"
+            app:layout_constraintGuide_percent = "0.682"
+            />
+        
+        <TextView
+            style = "@style/PostNumberTextStyle"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text = "@string/post_eight"
+            app:layout_constraintStart_toStartOf = "@+id/gl_post_08_text_start"
+            app:layout_constraintTop_toTopOf = "@+id/text_post_09"
+            />
+        
+        <ImageView
+            android:id = "@+id/img_post_08"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_marginEnd = "12dp"
+            android:rotation = "270"
+            android:src = "@drawable/h"
+            app:layout_constraintEnd_toStartOf = "@+id/img_post_07"
+            app:layout_constraintTop_toTopOf = "@+id/gl_post_08_top"
+            />
+        
+        
+        <!--post9-->
+        <android.support.constraint.Guideline
+            android:id = "@+id/gl_post_09_start"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.66"
+            />
+        
+        <TextView
+            android:id = "@+id/text_post_09"
+            style = "@style/PostNumberTextStyle"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text = "@string/post_nine"
+            app:layout_constraintStart_toStartOf = "@+id/gl_post_09_start"
+            app:layout_constraintTop_toBottomOf = "@+id/img_post_09"
+            />
+        
+        <ImageView
+            android:id = "@+id/img_post_09"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:src = "@drawable/k"
+            app:layout_constraintStart_toStartOf = "@+id/gl_post_09_start"
+            app:layout_constraintTop_toBottomOf = "@+id/img_post_06"
+            />
+        
+        <!--post10-->
+        <me.tiptap.tiptap.common.view.VerticalTextView
+            style = "@style/PostNumberTextStyle"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:text = "@string/post_ten"
+            app:layout_constraintBottom_toBottomOf = "@+id/img_post_10"
+            app:layout_constraintEnd_toStartOf = "@+id/img_post_10"
+            />
+        
+        <ImageView
+            android:id = "@+id/img_post_10"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:src = "@drawable/e"
+            app:layout_constraintStart_toStartOf = "@+id/img_post_07"
+            app:layout_constraintTop_toBottomOf = "@+id/img_post_07"
+            />
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

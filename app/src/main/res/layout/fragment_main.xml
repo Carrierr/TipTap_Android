@@ -36,57 +36,66 @@
             layout = "@layout/toolbar_main"
             />
         
-        <!--post guide-->
+        <!--post gl-->
         <android.support.constraint.Guideline
-            android:id = "@+id/guide_main_post_top"
+            android:id = "@+id/gl_main_post_top"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "horizontal"
-            app:layout_constraintGuide_percent = "0.17"
+            app:layout_constraintGuide_percent = "0.15"
             />
         
         <android.support.constraint.Guideline
-            android:id = "@+id/guide_main_post_bot"
+            android:id = "@+id/gl_main_post_bot"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "horizontal"
-            app:layout_constraintGuide_percent = "0.902"
+            app:layout_constraintGuide_percent = "0.92"
             />
         
         <android.support.constraint.Guideline
-            android:id = "@+id/guide_main_post_start"
+            android:id = "@+id/gl_main_post_start"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "vertical"
-            app:layout_constraintGuide_percent = "0.144"
+            app:layout_constraintGuide_percent = "0.175"
             />
         
         <android.support.constraint.Guideline
-            android:id = "@+id/guide_main_post_end"
+            android:id = "@+id/gl_main_post_end"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "vertical"
-            app:layout_constraintGuide_percent = "0.91"
+            app:layout_constraintGuide_percent = "0.908"
             />
         
         <android.support.constraint.Guideline
-            android:id = "@+id/guide_main_start"
+            android:id = "@+id/gl_main_start"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "vertical"
             app:layout_constraintGuide_percent = "0.058"
             />
         
+        <!--post layout-->
+        <include
+            android:id = "@+id/layout_main_post"
+            layout = "@layout/layout_post"
+            android:layout_width = "wrap_content"
+            android:visibility="@{fragment.postSize > 0 ? View.VISIBLE : View.GONE}"
+            android:layout_height = "wrap_content"
+            app:layout_constraintEnd_toEndOf = "@+id/gl_main_post_end"
+            app:layout_constraintStart_toStartOf = "@+id/gl_main_post_start"
+            app:layout_constraintTop_toTopOf = "@+id/gl_main_post_top"
+            />
+        
         <TextView
             android:id = "@+id/text_main_year"
             style = "@style/MainDateText"
             year = "@{date}"
-            android:textSize = "14sp"
-            app:layout_constraintBottom_toBottomOf = "parent"
-            app:layout_constraintStart_toStartOf = "@+id/guide_main_start"
-            app:layout_constraintTop_toBottomOf = "@+id/toolbar"
-            app:layout_constraintTop_toTopOf = "parent"
-            app:layout_constraintVertical_bias = "0.17"
+            android:textSize = "13sp"
+            app:layout_constraintStart_toStartOf = "@+id/gl_main_start"
+            app:layout_constraintTop_toTopOf = "@+id/gl_main_post_top"
             tools:text = "18'"
             />
         
@@ -95,19 +104,19 @@
             style = "@style/MainDateText"
             dayOfMonth = "@{date}"
             android:maxLines = "2"
-            android:textSize = "14sp"
-            app:layout_constraintBottom_toTopOf = "@+id/guide_main_view_top"
-            app:layout_constraintStart_toStartOf = "@+id/guide_main_start"
+            android:textSize = "13sp"
+            app:layout_constraintBottom_toTopOf = "@+id/gl_main_view_top"
+            app:layout_constraintStart_toStartOf = "@+id/gl_main_start"
             app:layout_constraintTop_toBottomOf = "@+id/text_main_year"
             tools:text = "Aug\n02"
             />
         
         <android.support.constraint.Guideline
-            android:id = "@+id/guide_main_view_top"
+            android:id = "@+id/gl_main_view_top"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "horizontal"
-            app:layout_constraintGuide_percent = "0.29"
+            app:layout_constraintGuide_percent = "0.25"
             />
         
         <View
@@ -115,14 +124,14 @@
             android:layout_width = "0.5dp"
             android:layout_height = "0dp"
             android:background = "#8B8B8B"
-            app:layout_constraintBottom_toTopOf = "@+id/guide_main_view_bot"
+            app:layout_constraintBottom_toTopOf = "@+id/gl_main_view_bot"
             app:layout_constraintStart_toStartOf = "@+id/text_main_year"
-            app:layout_constraintTop_toBottomOf = "@+id/guide_main_view_top"
+            app:layout_constraintTop_toBottomOf = "@+id/gl_main_view_top"
             app:layout_constraintVertical_weight = "13"
             />
         
         <android.support.constraint.Guideline
-            android:id = "@+id/guide_main_view_bot"
+            android:id = "@+id/gl_main_view_bot"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "horizontal"
@@ -134,7 +143,7 @@
             style = "@style/MainDateText"
             android:layout_marginTop = "10dp"
             android:text = "@string/app_name"
-            android:textSize = "12sp"
+            android:textSize = "13sp"
             app:layout_constraintEnd_toEndOf = "parent"
             app:layout_constraintHorizontal_bias = "0.05"
             app:layout_constraintStart_toStartOf = "parent"
@@ -165,14 +174,14 @@
             android:paddingEnd = "3dp"
             android:paddingStart = "9dp"
             android:src = "@drawable/tiptap"
-            app:layout_constraintBottom_toBottomOf = "@+id/guide_main_bot"
+            app:layout_constraintBottom_toBottomOf = "@+id/gl_main_bot"
             app:layout_constraintEnd_toEndOf = "parent"
             app:layout_constraintHorizontal_bias = "0.935"
             app:layout_constraintStart_toStartOf = "parent"
             />
         
         <android.support.constraint.Guideline
-            android:id = "@+id/guide_main_end"
+            android:id = "@+id/gl_main_end"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "vertical"
@@ -183,19 +192,18 @@
             android:layout_width = "0dp"
             android:layout_height = "6dp"
             android:src = "@drawable/background_main_add"
-            app:layout_constraintBottom_toTopOf = "@+id/guide_main_bot"
-            app:layout_constraintEnd_toStartOf = "@+id/guide_main_end"
+            app:layout_constraintBottom_toTopOf = "@+id/gl_main_bot"
+            app:layout_constraintEnd_toStartOf = "@+id/gl_main_end"
             app:layout_constraintStart_toStartOf = "@+id/btn_main_add"
             app:layout_constraintTop_toTopOf = "@+id/btn_main_add"
-            app:layout_constraintVertical_bias = "0.7"
             />
         
         <android.support.constraint.Guideline
-            android:id = "@+id/guide_main_bot"
+            android:id = "@+id/gl_main_bot"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "horizontal"
-            app:layout_constraintGuide_percent = "0.982"
+            app:layout_constraintGuide_percent = "0.985"
             />
     
     </android.support.constraint.ConstraintLayout>
