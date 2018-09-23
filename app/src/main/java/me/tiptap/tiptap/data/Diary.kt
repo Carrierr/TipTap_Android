@@ -19,15 +19,24 @@ class Diary() {
     var updatedAt: String = ""
     var diaryFile: MultipartBody.Part? = null
 
-    var isNewMonth : Boolean = false
     var isSelected: Boolean = false
 
+    //tempConstructors
     constructor(id: Int, date: Date, content: String, location: String, photo: Uri) : this() {
         this.id = id
         this.date = date
         this.content = content
         this.location = location
         this.photo = photo
+    }
+
+
+    constructor(id : Int, content : String, location : String, latitude : String, longitude : String) : this() {
+        this.id = id
+        this.content =content
+        this.location = location
+        this.latitude = latitude
+        this.longitude = longitude
     }
 
 }

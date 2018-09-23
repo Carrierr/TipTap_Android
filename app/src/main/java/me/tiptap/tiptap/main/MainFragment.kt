@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.common.rx.RxBus
+import me.tiptap.tiptap.data.Diary
 import me.tiptap.tiptap.databinding.FragmentMainBinding
 import me.tiptap.tiptap.diarywriting.DiaryWritingActivity
 import me.tiptap.tiptap.setting.SettingActivity
@@ -31,9 +32,12 @@ class MainFragment : Fragment() {
             date = Date()
 
             btnMainAdd.setOnClickListener {
-                rxBus.takeBus(postSize.get()?.plus(1).toString()) //Send current diary count
-                val intent = Intent(context, DiaryWritingActivity::class.java)
-                startActivity(intent)
+                //dummy
+                rxBus.takeBus(Diary(1, "하이룽용", "우리 집 내 방", "236.8067020990290", "126.979874")) //Send current diary count
+
+                Intent(context, DiaryWritingActivity::class.java).apply {
+                    startActivity(this)
+                }
             }
         }
 
