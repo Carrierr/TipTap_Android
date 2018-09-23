@@ -48,10 +48,11 @@ interface DiaryApi {
     @POST("diary/update")
     fun updateDiary(
             @Header("tiptap-token") token: String,
-            @Part("content") content: String,
-            @Part("location") location: String,
-            @Part("latitude") latitude: String,
-            @Part("longitude") longitude: String,
-            @Part("id") id: String,
-            @Part diaryFile: MultipartBody.Part)
+            @Part("content") content: RequestBody,
+            @Part("location") location: RequestBody,
+            @Part("latitude") latitude: RequestBody,
+            @Part("id") id : RequestBody,
+            @Part("longitude") longitude: RequestBody,
+            @Part diaryFile: MultipartBody.Part?)
+            : Observable<JsonObject>
 }
