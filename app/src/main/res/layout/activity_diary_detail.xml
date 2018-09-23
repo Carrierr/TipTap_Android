@@ -6,6 +6,9 @@
     >
     
     <data>
+        <variable
+            name = "diary"
+            type = "me.tiptap.tiptap.data.Diary"/>
         
         <variable
             name = "date"
@@ -140,6 +143,7 @@
                     <include
                         android:id = "@+id/layout_detail_text"
                         date = "@{date}"
+                        app:content="@{diary.content}"
                         layout = "@layout/layout_detail_text"
                         />
                 
@@ -157,6 +161,7 @@
                 app:layout_constraintTop_toTopOf = "parent"
                 app:layout_constraintVertical_bias = "0.9633"
                 tools:text = "키오스크 망원동 카페"
+                android:text="@{diary.location}"
                 />
         
         </android.support.constraint.ConstraintLayout>

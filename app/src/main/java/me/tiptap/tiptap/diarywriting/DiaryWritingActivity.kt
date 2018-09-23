@@ -35,6 +35,7 @@ import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_diary_writing.view.*
 import me.tiptap.tiptap.R
+import me.tiptap.tiptap.TipTapApplication
 import me.tiptap.tiptap.common.network.DiaryApi
 import me.tiptap.tiptap.common.network.ServerGenerator
 import me.tiptap.tiptap.common.rx.RxBus
@@ -239,17 +240,6 @@ class DiaryWritingActivity : AppCompatActivity() {
 
 
     /**
-     * Get User access token.
-     */
-    private fun getAccessToken(): String {
-        val sharedPref = getSharedPreferences(getString(R.string.auth), Activity.MODE_PRIVATE)
-                ?: return ""
-        val token = sharedPref.getString(getString(R.string.token), "")
-
-        if (token.isBlank()) throw IllegalStateException("Invalid token form.") else return token
-    }
-
-    /**
      * convert object to RequestBody
      */
     private fun toRequestBody(content: String): RequestBody =
@@ -275,7 +265,7 @@ class DiaryWritingActivity : AppCompatActivity() {
      */
     private fun writeDiary() {
         disposables.add(service.writeDiary(
-                getAccessToken(),
+                TipTapApplication.getAccessToken(),
                 toRequestBody(diary.content),
                 toRequestBody(diary.location),
                 toRequestBody(diary.latitude),
@@ -286,7 +276,12 @@ class DiaryWritingActivity : AppCompatActivity() {
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(object : DisposableObserver<JsonObject>() {
                     override fun onNext(t: JsonObject) {
-                        //do something
+                        t.apply {
+                            if (get(getString(R.string.code)).asString != "1000") { //if not successful.
+                                Log.d(getString(R.string.desc),
+                                        getAsJsonObject(getString(R.string.data)).get(getString(R.string.desc)).asString)
+                            }
+                        }
                     }
 
                     override fun onComplete() {
