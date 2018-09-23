@@ -8,6 +8,7 @@
     <string name = "type_kakao">kakao</string>
     <string name = "code">code</string>
     <string name = "data">data</string>
+    <string name = "desc">desc</string>
     <string name = "auth">auth</string>
     <string name = "token">token</string>
     

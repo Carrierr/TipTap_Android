@@ -1,5 +1,6 @@
 package me.tiptap.tiptap
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import com.facebook.stetho.Stetho
@@ -18,6 +19,18 @@ class TipTapApplication : Application() {
 
             return instance
         }
+
+        /**
+         * Get User access token.
+         */
+        fun getAccessToken(): String {
+            val sharedPref = getTipTapApplicationContext()?.getSharedPreferences("auth", Activity.MODE_PRIVATE)
+                    ?: return ""
+            val token = sharedPref.getString("token", "")
+
+            if (token.isBlank()) throw IllegalStateException("Invalid token form.") else return token
+        }
+
     }
 
     override fun onCreate() {
