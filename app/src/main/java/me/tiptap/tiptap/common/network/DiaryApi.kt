@@ -3,6 +3,7 @@ package me.tiptap.tiptap.common.network
 import com.google.gson.JsonObject
 import io.reactivex.Observable
 import me.tiptap.tiptap.data.Diary
+import me.tiptap.tiptap.data.InvalidDiary
 import me.tiptap.tiptap.data.User
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -12,7 +13,7 @@ interface DiaryApi {
 
     //Login, return token.
     @POST("auth/login")
-    fun login(@Body user : User): Observable<JsonObject>
+    fun login(@Body user: User): Observable<JsonObject>
 
 
     //Get DiaryList
@@ -39,7 +40,7 @@ interface DiaryApi {
     @POST("diary/delete")
     fun deleteDiary(
             @Header("tiptap-token") token: String,
-            @Path("id") id: Int)
+            @Body id: InvalidDiary): Observable<JsonObject>
 
 
     //update Diary
