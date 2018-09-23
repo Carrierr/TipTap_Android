@@ -13,7 +13,7 @@ import me.tiptap.tiptap.data.Diary
 class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
 
     private val dataSet: MutableList<Diary> = mutableListOf()
-    private val checkedDataSet: MutableList<Diary> = mutableListOf() //checked list
+    val checkedDataSet: MutableList<Int> = mutableListOf() //checked list
 
     val clickSubject = PublishSubject.create<Diary>()
     val checkSubject = PublishSubject.create<Diary>()
@@ -30,21 +30,32 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
     }
 
     private fun updateCheckedItems(item: Diary) {
-        if (!checkedDataSet.contains(item) && item.isSelected) {
-            checkedDataSet.add(item)
-        } else if (checkedDataSet.contains(item) && !item.isSelected) {
-            checkedDataSet.remove(item)
+        if (!checkedDataSet.contains(item.id) && item.isSelected) {
+            checkedDataSet.add(item.id)
+        } else if (checkedDataSet.contains(item.id) && !item.isSelected) {
+            checkedDataSet.remove(item.id)
         }
     }
 
-    fun deleteItems() {
+    fun deleteCheckedItems() {
         if (checkedDataSet.size > 0) {
-            dataSet.removeAll(checkedDataSet)
-            notifyDataSetChanged()
+
+            dataSet.iterator().run {
+                while (this.hasNext()) {
+                    val data = this.next()
+
+                    if (checkedDataSet.contains(data.id)) {
+                        this.remove()
+                    }
+                }
+
+                notifyDataSetChanged()
+            }
         }
     }
 
-    fun clearChecked(state: Boolean) {
+
+    fun changeCheckboxState(state: Boolean) {
         Observable.fromIterable(dataSet)
                 .filter { data -> data.isSelected != state }
                 .doOnComplete {

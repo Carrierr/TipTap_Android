@@ -6,6 +6,9 @@
     >
     
     <data>
+        <import
+            alias="View"
+            type = "android.view.View"/>
         
         <variable
             name = "fragment"
@@ -67,7 +70,7 @@
             layout = "@layout/layout_bottom_dialog"
             android:layout_width = "match_parent"
             android:layout_height = "50dp"
-            android:visibility = "gone"
+            android:visibility = "@{fragment.isBotDialogVisible ? View.VISIBLE : View.GONE}"
             app:fragment = "@{fragment}"
             app:layout_constraintBottom_toBottomOf = "parent"
             />

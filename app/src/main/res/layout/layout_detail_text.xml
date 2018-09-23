@@ -13,9 +13,8 @@
             />
         
         <variable
-            name = "activity"
-            type = "me.tiptap.tiptap.diarydetail.DiaryDetailActivity"
-            />
+            name = "content"
+            type = "java.lang.String"/>
     </data>
     
     <android.support.constraint.ConstraintLayout
@@ -81,6 +80,7 @@
             <TextView
                 android:id = "@+id/text_detail"
                 android:layout_width = "0dp"
+                android:text="@{content}"
                 android:layout_height = "0dp"
                 android:fontFamily = "@font/ko_pub_dotum_pl"
                 android:gravity = "center"
