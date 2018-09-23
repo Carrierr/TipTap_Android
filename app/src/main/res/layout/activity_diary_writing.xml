@@ -16,11 +16,6 @@
             type = "me.tiptap.tiptap.data.Diary"
             />
         
-        <variable
-            name = "count"
-            type = "String"
-            />
-        
         <import
             alias = "View"
             type = "android.view.View"
@@ -67,7 +62,7 @@
                         android:layout_height = "wrap_content"
                         android:fontFamily = "@font/montserrat_regular"
                         android:gravity = "center"
-                        android:text = "@{diary !=null ? String.format(@string/post_count, diary.id) : String.format(@string/post_count, count)}"
+                        android:text = "@{String.format(@string/post_count, 0)}"
                         android:textSize = "14sp"
                         app:layout_constraintBottom_toBottomOf = "parent"
                         app:layout_constraintEnd_toEndOf = "parent"
@@ -80,11 +75,13 @@
                         android:id = "@+id/text_complete"
                         android:layout_width = "wrap_content"
                         android:layout_height = "wrap_content"
+                        android:background = "@android:color/transparent"
                         android:fontFamily = "@font/ko_pub_dotum_pm"
                         android:gravity = "center"
                         android:onClick = "@{() -> activity.onCompleteButtonClick()}"
+                        android:paddingBottom = "5dp"
                         android:paddingEnd = "@dimen/dimen_write_side"
-                        android:paddingStart = "@dimen/dimen_null"
+                        android:paddingStart = "10dp"
                         android:text = "@string/complete"
                         android:textSize = "14sp"
                         app:layout_constraintBottom_toBottomOf = "parent"
@@ -184,7 +181,6 @@
                 android:lineSpacingExtra = "8sp"
                 android:paddingBottom = "@dimen/dimen_write_side"
                 android:paddingTop = "@{activity.isPhotoAvailable ? @dimen/dimen_fifteen : @dimen/dimen_write_top}"
-                android:selection = "@{editWriteDiary.getText().length}"
                 android:text = "@{diary !=null ? diary.content : ``}"
                 android:textColor = "@color/colorMainBlack"
                 android:textCursorDrawable = "@null"

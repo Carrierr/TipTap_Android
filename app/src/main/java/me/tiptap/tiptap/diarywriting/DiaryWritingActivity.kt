@@ -33,7 +33,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_diary_writing.view.*
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.TipTapApplication
 import me.tiptap.tiptap.common.network.DiaryApi
@@ -80,7 +79,22 @@ class DiaryWritingActivity : AppCompatActivity() {
 
         onTextChanged()  // if text is changed
     }
-    
+
+
+    //Check its edited or not
+    private fun checkBus() {
+        disposables.add(
+                rxBus
+                        .toObservable()
+                        .subscribe {
+                            if (it is Diary) {
+                                diary = it
+                                binding.diary = it
+                            }
+                        })
+    }
+
+
     private fun setCurrentDate() {
         binding.apply {
             activity = this@DiaryWritingActivity
@@ -109,14 +123,16 @@ class DiaryWritingActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(str: CharSequence, p1: Int, p2: Int, p3: Int) {
-                str.length.apply {
-                    if (this > 0) {
-                        binding.toolbarWrite.text_complete.setTextColor(ContextCompat.getColor(this@DiaryWritingActivity, R.color.colorMainBlack))
-                    } else {
-                        binding.toolbarWrite.text_complete.setTextColor(ContextCompat.getColor(this@DiaryWritingActivity, R.color.colorMainGray))
-                    }
+
+                if (str.count() > 0) {
+                    binding.textComplete.setTextColor(
+                            ContextCompat.getColor(this@DiaryWritingActivity, R.color.colorMainBlack))
+                } else {
+                    binding.textComplete.setTextColor(
+                            ContextCompat.getColor(this@DiaryWritingActivity, R.color.colorMainGray))
                 }
-                binding.textWriteKeyboard.text = getString(R.string.text_length, str?.length.toString())
+
+                binding.textWriteKeyboard.text = getString(R.string.text_length, str.length.toString())
             }
         })
     }
@@ -221,21 +237,16 @@ class DiaryWritingActivity : AppCompatActivity() {
         override fun onProviderDisabled(provider: String) {}
     }
 
-    //Check its edited or not
-    private fun checkBus() {
-        disposables.add(rxBus.toObservable().subscribe {
-            if (it is String) {
-                binding.count = it
-            }
-        })
-    }
-
 
     /**
      * When user click Complete button.
      */
     fun onCompleteButtonClick() {
-        writeDiary()
+        if (binding.textComplete.isClickable) {
+            if (diary.id > 0) updateDiary() else writeDiary()
+        }
+
+        binding.textComplete.isClickable = false //한번만 클릭 되도록 함.
     }
 
 
@@ -264,35 +275,71 @@ class DiaryWritingActivity : AppCompatActivity() {
      * Call write diary api.
      */
     private fun writeDiary() {
-        disposables.add(service.writeDiary(
-                TipTapApplication.getAccessToken(),
-                toRequestBody(diary.content),
-                toRequestBody(diary.location),
-                toRequestBody(diary.latitude),
-                toRequestBody(diary.longitude),
-                toMultipartBody(imgUri))
+        disposables.add(
+                service.writeDiary(
+                        TipTapApplication.getAccessToken(),
+                        toRequestBody(binding.editWriteDiary.text.toString()),
+                        toRequestBody(diary.location),
+                        toRequestBody(diary.latitude),
+                        toRequestBody(diary.longitude),
+                        toMultipartBody(imgUri))
 
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribeWith(object : DisposableObserver<JsonObject>() {
-                    override fun onNext(t: JsonObject) {
-                        t.apply {
-                            if (get(getString(R.string.code)).asString != "1000") { //if not successful.
-                                Log.d(getString(R.string.desc),
-                                        getAsJsonObject(getString(R.string.data)).get(getString(R.string.desc)).asString)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribeWith(object : DisposableObserver<JsonObject>() {
+                            override fun onNext(t: JsonObject) {
+                                t.apply {
+                                    if (get(getString(R.string.code)).asString != "1000") { //if not successful.
+                                        Log.d(getString(R.string.desc),
+                                                getAsJsonObject(getString(R.string.data)).get(getString(R.string.desc)).asString)
+                                    }
+                                }
                             }
-                        }
-                    }
 
-                    override fun onComplete() {
-                        //call startActivity is allocated a lot of memories.
-                        finish()
-                    }
+                            override fun onComplete() {
+                                //call startActivity is allocated a lot of memories.
+                                finish()
+                            }
 
-                    override fun onError(e: Throwable) {
-                        e.printStackTrace()
-                    }
-                }))
+                            override fun onError(e: Throwable) {
+                                e.printStackTrace()
+                            }
+                        }))
+    }
+
+
+    private fun updateDiary() {
+        disposables.add(
+                service.updateDiary(
+                        TipTapApplication.getAccessToken(),
+                        toRequestBody(binding.editWriteDiary.text.toString()),
+                        toRequestBody(diary.location),
+                        toRequestBody(diary.latitude),
+                        toRequestBody(diary.longitude),
+                        toRequestBody(diary.id.toString()),
+                        toMultipartBody(imgUri))
+
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribeWith(object : DisposableObserver<JsonObject>() {
+                            override fun onNext(t: JsonObject) {
+                                t.apply {
+                                    if (get(getString(R.string.code)).asString != "1000") { //if not successful.
+                                        Log.d(getString(R.string.desc),
+                                                getAsJsonObject(getString(R.string.data)).get(getString(R.string.desc)).asString)
+                                    }
+                                }
+                            }
+
+                            override fun onComplete() {
+                                //call startActivity is allocated a lot of memories.
+                                finish()
+                            }
+
+                            override fun onError(e: Throwable) {
+                                e.printStackTrace()
+                            }
+                        }))
     }
 
 
