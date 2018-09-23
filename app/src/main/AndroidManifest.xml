@@ -38,7 +38,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".login.LoginActivity"
+            android:theme="@style/LoginTheme"
+            android:screenOrientation="portrait"/>
         <activity android:name=".main.MainActivity"></activity>
         <activity android:name=".diarydetail.DiaryDetailActivity" />
         <activity
