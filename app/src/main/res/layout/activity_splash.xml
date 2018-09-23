@@ -17,6 +17,6 @@
             android:textSize="13sp"
             android:textStyle="bold"
             android:translationX="-25dp"
-            android:translationY="332.5dp" />
+            android:translationY="330dp" />
     </android.support.constraint.ConstraintLayout>
 </layout>
