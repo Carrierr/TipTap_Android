@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@color/colorDefaultBackground" />
+    <item
+        android:top="0dp"
+        android:left="21dp"
+        android:right="336dp"
+        android:width = "2dp"
+        android:height="272dp"
+        android:drawable="@drawable/vertical_line">
+
+    </item>
+    <item>
+        <bitmap android:src="@drawable/splash2"
+            android:gravity="top|right" />
+    </item>
+    <item
+        android:top="135dp"
+        android:left="0dp"
+        android:drawable="@drawable/splash3"
+        android:width="94dp"
+        android:height="107dp">
+    </item>
+    <item
+        android:top="277dp"
+        android:left="192dp"
+        android:drawable="@drawable/splash4"
+        android:width="109dp"
+        android:height="117dp">
+    </item>
+    <item
+        android:top="430dp"
+        android:bottom="165dp"
+        android:left="20dp"
+        android:drawable="@drawable/logo"
+        android:width="144dp"
+        android:height="45dp">
+    </item>
+
+
+</layer-list>

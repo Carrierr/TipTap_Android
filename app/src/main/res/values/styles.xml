@@ -58,6 +58,12 @@
         <item name = "android:windowBackground">@drawable/splash_background</item>
         <item name = "android:windowFullscreen">true</item>
     </style>
+
+    <style name = "LoginTheme"
+        parent = "Theme.AppCompat.NoActionBar">
+        <item name = "android:windowBackground">@drawable/login_background</item>
+        <item name = "android:windowFullscreen">true</item>
+    </style>
     
     <style name = "ToolbarMainTextView">
         <item name = "android:gravity">center</item>
