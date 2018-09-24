@@ -3,6 +3,7 @@ package me.tiptap.tiptap
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import com.bumptech.glide.Glide
 import com.facebook.stetho.Stetho
 import com.kakao.auth.KakaoSDK
 import me.tiptap.tiptap.common.util.login.KakaoSDKAdapter
@@ -37,7 +38,9 @@ class TipTapApplication : Application() {
         super.onCreate()
 
         instance = this
+        Glide.with(this)
         Stetho.initializeWithDefaults(this)
+
         KakaoSDK.init(KakaoSDKAdapter())
     }
 
