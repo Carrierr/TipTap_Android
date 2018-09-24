@@ -7,6 +7,11 @@
     <data>
         
         <variable
+            name = "date"
+            type = "java.util.Date"
+            />
+        
+        <variable
             name = "activity"
             type = "me.tiptap.tiptap.diarywriting.DiaryWritingActivity"
             />
@@ -93,6 +98,7 @@
             
             <TextView
                 android:id = "@+id/text_write_date"
+                writeDate = "@{date}"
                 android:layout_width = "0dp"
                 android:layout_height = "wrap_content"
                 android:layout_marginEnd = "@dimen/dimen_write_side"
@@ -206,6 +212,7 @@
                 android:layout_height = "wrap_content"
                 android:clickable = "true"
                 android:focusable = "true"
+                android:onClick = "@{() -> activity.onPickImgClick()}"
                 android:paddingBottom = "11dp"
                 android:paddingTop = "11dp"
                 android:src = "@drawable/ic_gallery"
@@ -218,6 +225,7 @@
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:fontFamily = "@font/montserrat_regular"
+                android:text = "@{String.format(@string/text_length, 0)}"
                 android:textColor = "@color/colorMainGray"
                 app:layout_constraintBottom_toBottomOf = "parent"
                 app:layout_constraintEnd_toEndOf = "@+id/text_write_date"
