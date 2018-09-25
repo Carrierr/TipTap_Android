@@ -82,7 +82,7 @@ class ScratchCard : android.support.v7.widget.AppCompatTextView {
     /**
      * Reveal percent value.
      */
-    private var mRevealPercent: Float = 0.toFloat()
+    var mRevealPercent: Float = 0.toFloat()
 
     /**
      * Thread Count
@@ -273,7 +273,9 @@ class ScratchCard : android.support.v7.widget.AppCompatTextView {
             object : AsyncTask<Int, Void, Float>() {
 
                 override fun doInBackground(vararg params: Int?): Float? {
-
+                    if(mRevealPercent == 1.0f) {
+                        mRevealListener!!.onRevealed(this@ScratchCard)
+                    }
                     try {
                         val left = params[0]
                         val top = params[1]
@@ -300,12 +302,6 @@ class ScratchCard : android.support.v7.widget.AppCompatTextView {
 
                         if (oldValue != percentRevealed) {
                             mRevealListener!!.onRevealPercentChangedListener(this@ScratchCard, percentRevealed)
-                        }
-
-                        // if now revealed.
-                        if (isRevealed) {
-                            mRevealListener!!.onRevealed(this@ScratchCard)
-
                         }
                     }
                 }
