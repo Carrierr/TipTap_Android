@@ -33,6 +33,6 @@ fun extractYearAndMonthFromDate(view : TextView, date : Date) {
 
 @BindingAdapter("time")
 fun extractTimeFromDate(view : TextView, date : Date) {
-    view.text = SimpleDateFormat("HH:mm", Locale.US).format(date)
+    view.text = SimpleDateFormat("HH:mm", Locale.KOREAN).format(date)
 }
 
