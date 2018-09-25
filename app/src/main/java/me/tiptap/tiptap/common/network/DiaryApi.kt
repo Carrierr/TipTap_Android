@@ -4,6 +4,7 @@ import com.google.gson.JsonObject
 import io.reactivex.Observable
 import me.tiptap.tiptap.data.Diary
 import me.tiptap.tiptap.data.InvalidDiary
+import me.tiptap.tiptap.data.ShareResponse
 import me.tiptap.tiptap.data.User
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -51,8 +52,15 @@ interface DiaryApi {
             @Part("content") content: RequestBody,
             @Part("location") location: RequestBody,
             @Part("latitude") latitude: RequestBody,
-            @Part("id") id : RequestBody,
+            @Part("id") id: RequestBody,
             @Part("longitude") longitude: RequestBody,
             @Part diaryFile: MultipartBody.Part?)
             : Observable<JsonObject>
+
+
+    //Get share diaries
+    @GET("diary/random")
+    fun shareDiaries(
+            @Header("tiptap-token") token: String
+    ): Observable<ShareResponse>
 }
