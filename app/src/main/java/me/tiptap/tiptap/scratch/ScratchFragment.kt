@@ -30,24 +30,24 @@ class ScratchFragment : Fragment() {
         setShareMainLayoutSize() // Change share main container's height
 
         binding.layoutScratchMain?.textScratchMainNum?.text = getString(R.string.count_tiptap, 0) //temp
+    private fun initBind() {
 
         binding.scratch.setRevealListener(object : ScratchCard.IRevealListener {
             override fun onRevealPercentChangedListener(stv: ScratchCard, percent: Float) {
-                Log.d("ScratchPer", percent.toString())
-                if (percent >= 0.2f) {
-                    stv.mRevealPercent = 1.0f
+                if (percent <= 0.2f) {
+                    if (!stv.isRevealed) {
+                        stv.mRevealPercent = 1.0f
+                    }
                 }
             }
 
             override fun onRevealed(tv: ScratchCard) {
-                Log.d("ScratchPer", "Hello Scratch")
-                fadeOutAnimation(binding.scratch, 300)
+                tv.isRevealed = true
+                tv.fadeOutAnimation(binding.scratch, 300)
+
+                getShareDiary() //get Share diary if scratch is revealed.
             }
         })
-
-
-        return binding.root
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

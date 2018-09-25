@@ -25,6 +25,10 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
+import android.view.View
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import com.cooltechworks.utils.BitmapUtils
 import me.tiptap.tiptap.R
 import java.util.*
@@ -92,8 +96,7 @@ class ScratchCard : android.support.v7.widget.AppCompatTextView {
     val color: Int
         get() = mErasePaint!!.color
 
-    val isRevealed: Boolean
-        get() = mRevealPercent.toDouble() == 0.5
+    var isRevealed: Boolean = false
 
     private val textBounds: IntArray
         get() = getTextBounds(1f)
@@ -192,6 +195,24 @@ class ScratchCard : android.support.v7.widget.AppCompatTextView {
     }
 
 
+    fun fadeOutAnimation(view: View, animationDuration: Long) {
+        AlphaAnimation(1f, 0f).apply {
+            interpolator = AccelerateInterpolator()
+            startOffset = animationDuration
+            duration = animationDuration
+            setAnimationListener(object : Animation.AnimationListener {
+                override fun onAnimationStart(animation: Animation) {}
+                override fun onAnimationEnd(animation: Animation) {
+                    view.visibility = View.GONE
+                }
+
+                override fun onAnimationRepeat(animation: Animation) {}
+            })
+
+            view.startAnimation(this)
+        }
+    }
+
     private fun touch_move(x: Float, y: Float) {
 
         val dx = Math.abs(x - mX)
@@ -273,7 +294,7 @@ class ScratchCard : android.support.v7.widget.AppCompatTextView {
             object : AsyncTask<Int, Void, Float>() {
 
                 override fun doInBackground(vararg params: Int?): Float? {
-                    if(mRevealPercent == 1.0f) {
+                    if (mRevealPercent == 1.0f) {
                         mRevealListener!!.onRevealed(this@ScratchCard)
                     }
                     try {
