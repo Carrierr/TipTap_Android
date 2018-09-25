@@ -35,15 +35,14 @@ class ScratchFragment : Fragment() {
             override fun onRevealPercentChangedListener(stv: ScratchCard, percent: Float) {
                 Log.d("ScratchPer", percent.toString())
                 if (percent >= 0.2f) {
-                    Log.d("ScratchPer", "Done!")
-                    fadeOutAnimation(binding.scratch, 300)
+                    stv.mRevealPercent = 1.0f
                 }
             }
 
             override fun onRevealed(tv: ScratchCard) {
                 Log.d("ScratchPer", "Hello Scratch")
+                fadeOutAnimation(binding.scratch, 300)
             }
-
         })
 
 
