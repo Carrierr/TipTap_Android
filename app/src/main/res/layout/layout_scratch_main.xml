@@ -70,7 +70,7 @@
             android:layout_height = "wrap_content"
             android:fontFamily = "@font/montserrat_regular"
             android:gravity = "center"
-            android:text = "@string/count_tiptap"
+            android:text = "@{String.format(@string/count_tiptap, 0)}"
             android:textSize = "14sp"
             app:layout_constraintEnd_toEndOf = "parent"
             app:layout_constraintStart_toStartOf = "parent"

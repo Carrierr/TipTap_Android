@@ -10,28 +10,41 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateInterpolator
-import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableObserver
+import io.reactivex.schedulers.Schedulers
 import me.tiptap.tiptap.R
-import me.tiptap.tiptap.data.Sharing
+import me.tiptap.tiptap.TipTapApplication
+import me.tiptap.tiptap.common.network.DiaryApi
+import me.tiptap.tiptap.common.network.ServerGenerator
+import me.tiptap.tiptap.data.ShareResponse
 import me.tiptap.tiptap.databinding.FragmentScratchBinding
-import java.util.*
 
 
 class ScratchFragment : Fragment() {
 
     private lateinit var binding: FragmentScratchBinding
 
+    private val service = ServerGenerator.createService(DiaryApi::class.java)
+    private val disposables = CompositeDisposable()
+
+    private val adapter = SharingAdapter()
+
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_scratch, container, false)
 
+        initBind()
+
         setShareMainLayoutSize() // Change share main container's height
 
-        binding.layoutScratchMain?.textScratchMainNum?.text = getString(R.string.count_tiptap, 0) //temp
-    private fun initBind() {
+        return binding.root
+    }
 
+
+    private fun initBind() {
         binding.scratch.setRevealListener(object : ScratchCard.IRevealListener {
             override fun onRevealPercentChangedListener(stv: ScratchCard, percent: Float) {
                 if (percent <= 0.2f) {
@@ -68,21 +81,30 @@ class ScratchFragment : Fragment() {
     }
 
 
-    fun fadeOutAnimation(view: View, animationDuration: Long) {
-        val fadeOut = AlphaAnimation(1f, 0f)
-        fadeOut.interpolator = AccelerateInterpolator()
-        fadeOut.startOffset = animationDuration
-        fadeOut.duration = animationDuration
-        fadeOut.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation) {}
-            override fun onAnimationEnd(animation: Animation) {
-                view.visibility = View.GONE
-            }
+    private fun getShareDiary() {
+        Log.d("Share", "get Share diary")
+        disposables.add(
+                service.shareDiaries(TipTapApplication.getAccessToken())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribeWith(object : DisposableObserver<ShareResponse>() {
+                            override fun onComplete() {
+                                binding.layoutScratchMain?.textScratchMainNum?.text = getString(R.string.count_tiptap, adapter.itemCount)
+                            }
 
-            override fun onAnimationRepeat(animation: Animation) {}
-        })
+                            override fun onNext(t: ShareResponse) {
+                                if (t.code == "1000") {
+                                    t.data?.let {
+                                        adapter.addItems(it.shareDiaries)
+                                    }
+                                }
+                            }
 
-        view.startAnimation(fadeOut)
+                            override fun onError(e: Throwable) {
+                                e.printStackTrace()
+                            }
+                        })
+        )
     }
 
 
@@ -91,14 +113,14 @@ class ScratchFragment : Fragment() {
             setHasFixedSize(true)
 
             layoutManager = LinearLayoutManager(this@ScratchFragment.context)
-            adapter = SharingAdapter().apply {
-
-                //Dummy data
-                addItem(Sharing(1, Date(), "#1", "오늘 날씨는 하루종일 맑음. 어제도 오늘도 너무 더워서 아무 생각이 들지 않는다.숙소에서 나와 가장 먼저 들른 곳!"
-                            ,"키오스크 카페"))
-                addItem(Sharing(2, Date(), "#2", "오늘 날씨는 하루종일 맑음. 어제도 오늘도 너무 더워서 아무 생각이 들지 않는다. 숙소에서 나와 가장 먼저 들른 곳! 오늘 날씨는 하루종일 맑음. " +
-                        "어제도 오늘도 너무 더워서 아무 생각이 들지 않는다. 숙소에서 나와 가장 먼저 들른 곳! 오늘 날씨는 하루종일 맑음. 어제도 오늘도 너무 더워서 아무 생각이 들지 않는다. 숙소에서 나와 가장 먼저 들른 곳! 오늘 날씨는 하루종일 맑음. 어제도 오늘도 너무 더워서 아무 생각이 들지 않는다. 숙소에서 나와 가장 먼저 들른 곳! 오늘 날씨는 하루종일 맑음. ", "STARBUCKS GANGNAM"))
+            adapter = this@ScratchFragment.adapter.apply {
             }
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        disposables.dispose()
     }
 }
