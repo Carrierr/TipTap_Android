@@ -2,7 +2,7 @@ package me.tiptap.tiptap.common.network
 
 import com.google.gson.JsonObject
 import io.reactivex.Observable
-import me.tiptap.tiptap.data.Diary
+import me.tiptap.tiptap.data.DiariesResponse
 import me.tiptap.tiptap.data.InvalidDiary
 import me.tiptap.tiptap.data.ShareResponse
 import me.tiptap.tiptap.data.User
@@ -20,8 +20,10 @@ interface DiaryApi {
     //Get DiaryList
     @GET("diary/list")
     fun diaryList(
-            @Header("tiptap-token") token: String):
-            Observable<List<Diary>>
+            @Header("tiptap-token") token: String,
+            @Query("page") page: Int,
+            @Query("limit") limit: Int):
+            Observable<DiariesResponse>
 
 
     //write Diary
