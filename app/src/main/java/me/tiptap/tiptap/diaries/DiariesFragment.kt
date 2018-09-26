@@ -107,12 +107,14 @@ class DiariesFragment : Fragment() {
                         if (t.code == "1000") {
                             totalPage = t.data.total
 
-                            t.data.list?.let {
-                                if (page == 1) { //페이지가 1일 때만 날짜 바꾸기.
-                                    applyDateOnToolbar(it[0].year, it[0].month)
+                            val list = t.data.list
+
+                            if(list.isNotEmpty()) {
+                                if (page == 1) { //가장 최근 날짜로 지정하기
+                                    applyDateOnToolbar(list[0].year, list[0].month)
                                 }
 
-                                for (monthDiary in it.iterator()) {
+                                for (monthDiary in list.iterator()) {
                                     if (monthDiary.diariesOfDay != null)
                                         adapter.addItems(monthDiary.diariesOfDay) //add items
                                 }

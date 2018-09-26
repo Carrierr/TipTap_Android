@@ -78,10 +78,11 @@ class DiaryWritingActivity : AppCompatActivity() {
             if (listAddresses != null && listAddresses.size > 0) {
                 val locationText = listAddresses[0].getAddressLine(0)
 
+                //이 부분 수정 필요함.
                 locationText.substring(locationText.indexOf(" ")).apply {
                     binding.textWriteLocation.text = this
 
-                    diary.location = this //set location
+                    diary.location = this.replaceFirst(" ", "")
                 }
             }
         }
@@ -115,7 +116,10 @@ class DiaryWritingActivity : AppCompatActivity() {
                 SimplePlacesSearchDialogBuilder(this@DiaryWritingActivity)
                         .setLocationListener(object : SimplePlacesSearchDialog.PlaceSelectedCallback {
                             override fun onPlaceSelected(place: Place) {
-                                binding.textWriteLocation.text = place.name
+                                place.name.apply {
+                                    binding.textWriteLocation.text = this
+                                    this@DiaryWritingActivity.diary.location = this.toString()
+                                }
                             }
                         })
                         .build()
