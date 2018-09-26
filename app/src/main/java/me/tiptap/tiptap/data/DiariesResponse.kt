@@ -14,7 +14,7 @@ class DiariesResponse {
     class DiariesSubResponse {
 
         @SerializedName("list")
-        val list: MutableList<MonthDiaries>? = null
+        val list: MutableList<MonthDiaries> = mutableListOf()
 
         @SerializedName("total")
         val total: Int = 0
