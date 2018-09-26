@@ -135,7 +135,7 @@
         <item name = "android:fontFamily">@font/ko_pub_dotum_pm</item>
         <item name = "android:ellipsize">end</item>
         <item name = "android:maxLines">1</item>
-        <item name = "android:gravity">center</item>
+        <item name = "android:gravity">left</item>
         <item name = "android:paddingBottom">4dp</item>
         <item name = "android:paddingTop">4dp</item>
         <item name = "android:textSize">12sp</item>

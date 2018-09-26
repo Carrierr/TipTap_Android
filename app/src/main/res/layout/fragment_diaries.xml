@@ -6,19 +6,17 @@
     >
     
     <data>
+        
         <import
-            alias="View"
-            type = "android.view.View"/>
+            alias = "View"
+            type = "android.view.View"
+            />
         
         <variable
             name = "fragment"
             type = "me.tiptap.tiptap.diaries.DiariesFragment"
             />
-        
-        <variable
-            name = "date"
-            type = "java.util.Date"
-            />
+    
     </data>
     
     <android.support.constraint.ConstraintLayout
@@ -43,7 +41,6 @@
             android:layout_height = "wrap_content"
             app:fragment = "@{fragment}"
             app:layout_constraintTop_toBottomOf = "@+id/gl_diaries_top"
-            app:recentDiaryDate = "@{date}"
             />
         
         
