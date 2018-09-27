@@ -38,7 +38,9 @@ class LoginActivity : AppCompatActivity(), LoginNavigator {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
-
+        binding.btnLogin.setOnClickListener {
+            KakaoLoginControl(this@LoginActivity).call()
+        }
         Session.getCurrentSession().addCallback(callback)
     }
 
