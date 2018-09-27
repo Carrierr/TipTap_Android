@@ -82,11 +82,12 @@
             android:id = "@+id/layout_main_post"
             layout = "@layout/layout_post"
             android:layout_width = "wrap_content"
-            android:visibility="@{fragment.postSize > 0 ? View.VISIBLE : View.GONE}"
             android:layout_height = "wrap_content"
+            android:visibility = "@{fragment.postSize > 0 ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf = "@+id/gl_main_post_end"
             app:layout_constraintStart_toStartOf = "@+id/gl_main_post_start"
             app:layout_constraintTop_toTopOf = "@+id/gl_main_post_top"
+            app:postSize = "@{fragment.postSize}"
             />
         
         <TextView
@@ -171,6 +172,7 @@
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:background = "@android:color/transparent"
+            android:onClick = "@{() -> fragment.onAddButtonClick()}"
             android:paddingEnd = "3dp"
             android:paddingStart = "9dp"
             android:src = "@drawable/tiptap"

@@ -4,6 +4,19 @@
     xmlns:app = "http://schemas.android.com/apk/res-auto"
     >
     
+    <data>
+        
+        <import
+            alias = "View"
+            type = "android.view.View"
+            />
+        
+        <variable
+            name = "postSize"
+            type = "android.databinding.ObservableInt"
+            />
+    </data>
+    
     <android.support.constraint.ConstraintLayout
         android:layout_width = "wrap_content"
         android:layout_height = "wrap_content"
@@ -12,7 +25,7 @@
         
         <!--post1-->
         <android.support.constraint.Guideline
-            android:id = "@+id/gl_post_01"
+            android:id = "@+id/gl_post_1"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "vertical"
@@ -20,24 +33,25 @@
             />
         
         <me.tiptap.tiptap.common.view.VerticalTextView
-            android:id = "@+id/text_post_01"
+            android:id = "@+id/text_post_1"
             style = "@style/PostNumberTextStyle"
             android:text = "@string/post_one"
-            app:layout_constraintStart_toStartOf = "@+id/gl_post_01"
+            app:layout_constraintStart_toStartOf = "@+id/gl_post_1"
             />
         
         <ImageView
-            android:id = "@+id/img_post_01"
+            android:id = "@+id/img_post_1"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:src = "@drawable/g"
-            app:layout_constraintStart_toEndOf = "@+id/text_post_01"
+            android:src = "@drawable/stamp7"
+            app:layout_constraintEnd_toStartOf="@+id/img_post_2"
+            app:layout_constraintStart_toEndOf = "@+id/text_post_1"
             />
         
         
         <!--post2-->
         <android.support.constraint.Guideline
-            android:id = "@+id/gl_post_02_start"
+            android:id = "@+id/gl_post_2_start"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "vertical"
@@ -45,7 +59,7 @@
             />
         
         <android.support.constraint.Guideline
-            android:id = "@+id/gl_post_02_top"
+            android:id = "@+id/gl_post_2_top"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "horizontal"
@@ -53,26 +67,28 @@
             />
         
         <TextView
-            android:id = "@+id/text_post_02"
+            android:id = "@+id/text_post_2"
             style = "@style/PostNumberTextStyle"
             android:text = "@string/post_two"
-            app:layout_constraintStart_toStartOf = "@+id/gl_post_02_start"
-            app:layout_constraintTop_toTopOf = "@+id/gl_post_02_top"
+            android:visibility = "@{postSize >=2 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintStart_toStartOf = "@+id/gl_post_2_start"
+            app:layout_constraintTop_toTopOf = "@+id/gl_post_2_top"
             />
         
         <ImageView
-            android:id = "@+id/img_post_02"
+            android:id = "@+id/img_post_2"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:src = "@drawable/f"
-            app:layout_constraintEnd_toEndOf = "@+id/text_post_04"
-            app:layout_constraintStart_toStartOf = "@+id/text_post_02"
-            app:layout_constraintTop_toBottomOf = "@+id/text_post_02"
+            android:src = "@drawable/stamp6"
+            android:visibility = "@{postSize >=2 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintEnd_toEndOf = "@+id/text_post_4"
+            app:layout_constraintStart_toStartOf = "@+id/text_post_2"
+            app:layout_constraintTop_toBottomOf = "@+id/text_post_2"
             />
         
         <!--post3-->
         <android.support.constraint.Guideline
-            android:id = "@+id/gl_post_03_start"
+            android:id = "@+id/gl_post_3_start"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "vertical"
@@ -80,28 +96,30 @@
             />
         
         <TextView
-            android:id = "@+id/text_post_03"
+            android:id = "@+id/text_post_3"
             style = "@style/PostNumberTextStyle"
             android:text = "@string/post_three"
-            app:layout_constraintStart_toStartOf = "@+id/gl_post_03_start"
-            app:layout_constraintTop_toTopOf = "@+id/img_post_04"
+            android:visibility = "@{postSize >=3 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintStart_toStartOf = "@+id/gl_post_3_start"
+            app:layout_constraintTop_toTopOf = "@+id/img_post_4"
             />
         
         <ImageView
-            android:id = "@+id/img_post_03"
+            android:id = "@+id/img_post_3"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:layout_marginStart = "5dp"
             android:layout_marginTop = "15dp"
             android:rotation = "270"
-            android:src = "@drawable/b"
-            app:layout_constraintStart_toStartOf = "@+id/gl_post_03_start"
-            app:layout_constraintTop_toTopOf = "@+id/img_post_02"
+            android:src = "@drawable/stamp2"
+            android:visibility = "@{postSize >=3 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintStart_toStartOf = "@+id/gl_post_3_start"
+            app:layout_constraintTop_toTopOf = "@+id/img_post_2"
             />
         
         <!--post4-->
         <android.support.constraint.Guideline
-            android:id = "@+id/gl_post_04_start"
+            android:id = "@+id/gl_post_4_start"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "vertical"
@@ -109,28 +127,30 @@
             />
         
         <TextView
-            android:id = "@+id/text_post_04"
+            android:id = "@+id/text_post_4"
             style = "@style/PostNumberTextStyle"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:text = "@string/post_four"
-            app:layout_constraintStart_toEndOf = "@+id/img_post_04"
-            app:layout_constraintTop_toTopOf = "@+id/img_post_04"
+            android:visibility = "@{postSize >=4 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintStart_toEndOf = "@+id/img_post_4"
+            app:layout_constraintTop_toTopOf = "@+id/img_post_4"
             />
         
         <ImageView
-            android:id = "@+id/img_post_04"
+            android:id = "@+id/img_post_4"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:layout_marginTop = "5dp"
-            android:src = "@drawable/c"
-            app:layout_constraintStart_toStartOf = "@+id/gl_post_04_start"
-            app:layout_constraintTop_toBottomOf = "@+id/img_post_02"
+            android:src = "@drawable/stamp3"
+            android:visibility = "@{postSize >=4 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintStart_toStartOf = "@+id/gl_post_4_start"
+            app:layout_constraintTop_toBottomOf = "@+id/img_post_2"
             />
         
         <!--post5-->
         <android.support.constraint.Guideline
-            android:id = "@+id/gl_post_05_top"
+            android:id = "@+id/gl_post_5_top"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "horizontal"
@@ -138,22 +158,24 @@
             />
         
         <me.tiptap.tiptap.common.view.VerticalTextView
-            android:id = "@+id/text_post_05"
+            android:id = "@+id/text_post_5"
             style = "@style/PostNumberTextStyle"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:text = "@string/post_five"
-            app:layout_constraintEnd_toStartOf = "@+id/img_post_05"
-            app:layout_constraintTop_toTopOf = "@+id/gl_post_05_top"
+            android:visibility = "@{postSize >=5 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintEnd_toStartOf = "@+id/img_post_5"
+            app:layout_constraintTop_toTopOf = "@+id/gl_post_5_top"
             />
         
         <ImageView
-            android:id = "@+id/img_post_05"
+            android:id = "@+id/img_post_5"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:src = "@drawable/a"
-            app:layout_constraintEnd_toStartOf = "@+id/img_post_04"
-            app:layout_constraintTop_toTopOf = "@+id/gl_post_05_top"
+            android:src = "@drawable/stamp1"
+            android:visibility = "@{postSize >=5 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintEnd_toStartOf = "@+id/img_post_4"
+            app:layout_constraintTop_toTopOf = "@+id/gl_post_5_top"
             />
         
         <!--post6-->
@@ -162,22 +184,24 @@
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:text = "@string/post_six"
-            app:layout_constraintStart_toEndOf = "@+id/img_post_06"
-            app:layout_constraintTop_toTopOf = "@+id/gl_post_05_top"
+            android:visibility = "@{postSize >=6 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintStart_toEndOf = "@+id/img_post_6"
+            app:layout_constraintTop_toTopOf = "@+id/gl_post_5_top"
             />
         
         <ImageView
-            android:id = "@+id/img_post_06"
+            android:id = "@+id/img_post_6"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:src = "@drawable/d"
-            app:layout_constraintStart_toEndOf = "@+id/img_post_04"
-            app:layout_constraintTop_toTopOf = "@+id/gl_post_05_top"
+            android:src = "@drawable/stamp4"
+            android:visibility = "@{postSize >=6 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintStart_toEndOf = "@+id/img_post_4"
+            app:layout_constraintTop_toTopOf = "@+id/gl_post_5_top"
             />
         
         <!--post7-->
         <android.support.constraint.Guideline
-            android:id = "@+id/gl_post_07_start"
+            android:id = "@+id/gl_post_7_start"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "vertical"
@@ -185,28 +209,30 @@
             />
         
         <TextView
-            android:id = "@+id/text_post_07"
+            android:id = "@+id/text_post_7"
             style = "@style/PostNumberTextStyle"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:paddingTop = "2dp"
             android:text = "@string/post_seven"
-            app:layout_constraintStart_toStartOf = "@+id/gl_post_07_start"
-            app:layout_constraintTop_toBottomOf = "@+id/img_post_04"
+            android:visibility = "@{postSize >=7 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintStart_toStartOf = "@+id/gl_post_7_start"
+            app:layout_constraintTop_toBottomOf = "@+id/img_post_4"
             />
         
         <ImageView
-            android:id = "@+id/img_post_07"
+            android:id = "@+id/img_post_7"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:src = "@drawable/i"
-            app:layout_constraintStart_toStartOf = "@+id/gl_post_07_start"
-            app:layout_constraintTop_toBottomOf = "@+id/text_post_07"
+            android:src = "@drawable/stamp9"
+            android:visibility = "@{postSize >=7 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintStart_toStartOf = "@+id/gl_post_7_start"
+            app:layout_constraintTop_toBottomOf = "@+id/text_post_7"
             />
         
         <!--post8-->
         <android.support.constraint.Guideline
-            android:id = "@+id/gl_post_08_text_start"
+            android:id = "@+id/gl_post_8_text_start"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "vertical"
@@ -214,7 +240,7 @@
             />
         
         <android.support.constraint.Guideline
-            android:id = "@+id/gl_post_08_top"
+            android:id = "@+id/gl_post_8_top"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "horizontal"
@@ -226,25 +252,27 @@
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:text = "@string/post_eight"
-            app:layout_constraintStart_toStartOf = "@+id/gl_post_08_text_start"
-            app:layout_constraintTop_toTopOf = "@+id/text_post_09"
+            android:visibility = "@{postSize >=8 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintStart_toStartOf = "@+id/gl_post_8_text_start"
+            app:layout_constraintTop_toTopOf="@+id/text_post_9"
             />
         
         <ImageView
-            android:id = "@+id/img_post_08"
+            android:id = "@+id/img_post_8"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:layout_marginEnd = "12dp"
             android:rotation = "270"
-            android:src = "@drawable/h"
-            app:layout_constraintEnd_toStartOf = "@+id/img_post_07"
-            app:layout_constraintTop_toTopOf = "@+id/gl_post_08_top"
+            android:src = "@drawable/stamp8"
+            android:visibility = "@{postSize >=8 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintEnd_toStartOf = "@+id/img_post_7"
+            app:layout_constraintTop_toTopOf = "@+id/gl_post_8_top"
             />
         
         
         <!--post9-->
         <android.support.constraint.Guideline
-            android:id = "@+id/gl_post_09_start"
+            android:id = "@+id/gl_post_9_start"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "vertical"
@@ -252,22 +280,24 @@
             />
         
         <TextView
-            android:id = "@+id/text_post_09"
+            android:id = "@+id/text_post_9"
             style = "@style/PostNumberTextStyle"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:text = "@string/post_nine"
-            app:layout_constraintStart_toStartOf = "@+id/gl_post_09_start"
-            app:layout_constraintTop_toBottomOf = "@+id/img_post_09"
+            android:visibility = "@{postSize >=9 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintStart_toStartOf = "@+id/gl_post_9_start"
+            app:layout_constraintTop_toBottomOf = "@+id/img_post_9"
             />
         
         <ImageView
-            android:id = "@+id/img_post_09"
+            android:id = "@+id/img_post_9"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:src = "@drawable/k"
-            app:layout_constraintStart_toStartOf = "@+id/gl_post_09_start"
-            app:layout_constraintTop_toBottomOf = "@+id/img_post_06"
+            android:src = "@drawable/stamp12"
+            android:visibility = "@{postSize >=9 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintStart_toStartOf = "@+id/gl_post_9_start"
+            app:layout_constraintTop_toBottomOf = "@+id/img_post_6"
             />
         
         <!--post10-->
@@ -276,6 +306,7 @@
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:text = "@string/post_ten"
+            android:visibility = "@{postSize ==10 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf = "@+id/img_post_10"
             app:layout_constraintEnd_toStartOf = "@+id/img_post_10"
             />
@@ -284,9 +315,10 @@
             android:id = "@+id/img_post_10"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:src = "@drawable/e"
-            app:layout_constraintStart_toStartOf = "@+id/img_post_07"
-            app:layout_constraintTop_toBottomOf = "@+id/img_post_07"
+            android:src = "@drawable/stamp5"
+            android:visibility = "@{postSize ==10 ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintStart_toStartOf = "@+id/img_post_7"
+            app:layout_constraintTop_toBottomOf = "@+id/img_post_7"
             />
     </android.support.constraint.ConstraintLayout>
 

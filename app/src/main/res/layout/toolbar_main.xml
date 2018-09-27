@@ -27,13 +27,13 @@
                 android:id = "@+id/text_toolbar_main_title"
                 style = "@style/ToolbarMainTextView"
                 android:layout_width = "wrap_content"
+                android:text="@string/today"
                 android:layout_height = "wrap_content"
                 app:layout_constraintVertical_bias="0.2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf = "parent"
                 app:layout_constraintStart_toStartOf = "parent"
                 app:layout_constraintTop_toTopOf = "parent"
-                tools:text = "@string/today"
                 />
             
             <TextView
@@ -41,6 +41,7 @@
                 style = "@style/ToolbarMainTextView"
                 android:layout_width = "wrap_content"
                 tools:text="#0"
+                android:text="@{@string/post_count(fragment.postSize.get())}"
                 android:layout_height = "wrap_content"
                 app:layout_constraintEnd_toEndOf = "parent"
                 app:layout_constraintStart_toStartOf = "parent"
