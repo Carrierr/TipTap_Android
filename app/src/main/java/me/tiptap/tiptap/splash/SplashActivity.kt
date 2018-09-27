@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity
 import com.kakao.auth.ISessionCallback
 import com.kakao.auth.Session
 import com.kakao.util.exception.KakaoException
-import me.tiptap.tiptap.R
 import me.tiptap.tiptap.common.util.redirectLoginActivity
 import me.tiptap.tiptap.main.MainActivity
 
@@ -29,8 +28,6 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
-
 
         Session.getCurrentSession().addCallback(callback)
 

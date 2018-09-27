@@ -37,6 +37,14 @@
         android:width="109dp"
         android:height="117dp">
     </item>
+
+    <item
+        android:top = "290dp"
+        android:bottom = "246dp"
+        android:left = "20dp"
+        android:right = "330dp"
+        android:drawable = "@drawable/text">
+    </item>
     <item
         android:top="430dp"
         android:bottom="165dp"
