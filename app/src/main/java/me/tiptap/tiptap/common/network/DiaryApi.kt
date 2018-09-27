@@ -2,10 +2,7 @@ package me.tiptap.tiptap.common.network
 
 import com.google.gson.JsonObject
 import io.reactivex.Observable
-import me.tiptap.tiptap.data.DiariesResponse
-import me.tiptap.tiptap.data.InvalidDiary
-import me.tiptap.tiptap.data.ShareResponse
-import me.tiptap.tiptap.data.User
+import me.tiptap.tiptap.data.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.*
@@ -26,6 +23,13 @@ interface DiaryApi {
             Observable<DiariesResponse>
 
 
+    //Get today diaries
+    @GET("diary/today")
+    fun getTodayDiaries(
+            @Header("tiptap-token") token: String)
+            : Observable<TodayResponse>
+
+
     //write Diary
     @Multipart
     @POST("diary/write")
@@ -44,6 +48,13 @@ interface DiaryApi {
     fun deleteDiary(
             @Header("tiptap-token") token: String,
             @Body id: InvalidDiary): Observable<JsonObject>
+
+
+    //delete Diaries
+    @POST("diary/delete/day")
+    fun deleteDiary(
+            @Header("tiptap-token") token: String,
+            @Body id: InvalidDiaries): Observable<JsonObject>
 
 
     //update Diary
