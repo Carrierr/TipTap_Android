@@ -45,7 +45,7 @@
     <string name = "post_ten">10</string>
 
     <!--preview-->
-    <string name = "preview_count">MY DIARY #%d</string>
+    <string name = "my_diary_count">MY DIARY #%d</string>
     <string name = "menu_edit">수정하기</string>
     <string name = "menu_delete">삭제하기</string>
     
@@ -66,6 +66,7 @@
     <string name = "delete">삭제</string>
     <string name = "ask_delete">삭제하시겠습니까?</string>
     <string name = "my_diary">MY DIARY</string>
+    <string name = "detail_count">MY DIARY \n#%d</string>
     
     <string name = "fetch_address">Fetch address</string>
     <string name = "settings">Settings</string>

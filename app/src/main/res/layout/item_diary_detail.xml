@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    xmlns:tools = "http://schemas.android.com/tools"
+    >
+    
+    <data>
+        
+        <variable
+            name = "diary"
+            type = "me.tiptap.tiptap.data.Diary"
+            />
+    </data>
+    
+    
+    <android.support.constraint.ConstraintLayout
+        android:id = "@+id/diary_detail"
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        android:background = "@color/colorMainBlack"
+        >
+        
+        <android.support.constraint.Guideline
+            android:id = "@+id/gl_detail_start"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.061"
+            />
+        
+        <android.support.constraint.Guideline
+            android:id = "@+id/gl_detail_end"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.939"
+            />
+        
+        <android.support.constraint.Guideline
+            android:id = "@+id/gl_detail_bottom"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "horizontal"
+            app:layout_constraintGuide_percent = "1"
+            />
+        
+        <!--container-->
+        <android.support.constraint.ConstraintLayout
+            android:layout_width = "0dp"
+            android:layout_height = "0dp"
+            android:layout_marginTop = "1dp"
+            android:background = "@android:color/white"
+            app:layout_constraintBottom_toTopOf = "@+id/gl_detail_bottom"
+            app:layout_constraintEnd_toEndOf = "@+id/gl_detail_end"
+            app:layout_constraintStart_toStartOf = "@+id/gl_detail_start"
+            app:layout_constraintTop_toTopOf = "parent"
+            >
+            
+            <TextView
+                android:id = "@+id/text_detail_count"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:fontFamily = "@font/montserrat_regular"
+                android:gravity = "center"
+                android:lineSpacingExtra = "4sp"
+                android:text = "@{String.format(@string/detail_count, diary.todayIndex)}"
+                android:textStyle = "bold"
+                app:layout_constraintEnd_toEndOf = "parent"
+                app:layout_constraintStart_toStartOf = "parent"
+                app:layout_constraintTop_toTopOf = "@+id/text_detail_year"
+                tools:text = "MY DIARY\n #7"
+                />
+            
+            <android.support.constraint.Guideline
+                android:id = "@+id/gl_detail_con_start"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:orientation = "vertical"
+                app:layout_constraintGuide_percent = "0.036"
+                />
+            
+            <TextView
+                android:id = "@+id/text_detail_year"
+                style = "@style/DetailDateText"
+                year = "@{diary.createdAt}"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                app:layout_constraintBottom_toBottomOf = "parent"
+                app:layout_constraintStart_toStartOf = "@+id/gl_detail_con_start"
+                app:layout_constraintTop_toTopOf = "parent"
+                app:layout_constraintVertical_bias = "0.036"
+                tools:text = "18'"
+                />
+            
+            <TextView
+                android:id = "@+id/text_detail_month"
+                style = "@style/DetailDateText"
+                dayOfMonth = "@{diary.createdAt}"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:paddingBottom = "10dp"
+                android:paddingTop = "2dp"
+                app:layout_constraintStart_toStartOf = "@+id/gl_detail_con_start"
+                app:layout_constraintTop_toBottomOf = "@+id/text_detail_year"
+                tools:text = "Aug\n02"
+                />
+            
+            <!--Scroll area-->
+            <ScrollView
+                android:id = "@+id/scroll_detail"
+                android:layout_width = "match_parent"
+                android:layout_height = "0dp"
+                android:fillViewport = "true"
+                app:layout_constraintDimensionRatio = "1:1.26"
+                app:layout_constraintTop_toBottomOf = "@+id/text_detail_month"
+                >
+                
+                <LinearLayout
+                    android:layout_width = "match_parent"
+                    android:layout_height = "wrap_content"
+                    android:orientation = "vertical"
+                    >
+                    
+                    <include
+                        android:id = "@+id/layout_detail_img"
+                        layout = "@layout/layout_detail_img"
+                        app:diary = "@{diary}"
+                        />
+                    
+                    <include
+                        android:id = "@+id/layout_detail_text"
+                        layout = "@layout/layout_detail_text"
+                        app:diary = "@{diary}"
+                        />
+                
+                </LinearLayout>
+            </ScrollView>
+            
+            <TextView
+                android:id = "@+id/text_detail_location"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:fontFamily = "@font/ko_pub_dotum_pl"
+                android:text = "@{diary.location}"
+                app:layout_constraintBottom_toBottomOf = "parent"
+                app:layout_constraintEnd_toEndOf = "parent"
+                app:layout_constraintStart_toStartOf = "parent"
+                app:layout_constraintTop_toTopOf = "parent"
+                app:layout_constraintVertical_bias = "0.92"
+                tools:text = "키오스크 망원동 카페"
+                />
+        
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</layout>
