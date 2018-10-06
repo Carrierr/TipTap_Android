@@ -20,7 +20,7 @@ import me.tiptap.tiptap.common.network.DiaryApi
 import me.tiptap.tiptap.common.network.ServerGenerator
 import me.tiptap.tiptap.common.rx.RxBus
 import me.tiptap.tiptap.data.Diary
-import me.tiptap.tiptap.data.TodayResponse
+import me.tiptap.tiptap.data.DiaryResponse
 import me.tiptap.tiptap.databinding.FragmentMainBinding
 import me.tiptap.tiptap.diarywriting.DiaryWritingActivity
 import me.tiptap.tiptap.setting.SettingActivity
@@ -70,8 +70,8 @@ class MainFragment : Fragment() {
                 service.getTodayDiaries(TipTapApplication.getAccessToken())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
-                        .subscribeWith(object : DisposableObserver<TodayResponse>() {
-                            override fun onNext(t: TodayResponse) {
+                        .subscribeWith(object : DisposableObserver<DiaryResponse>() {
+                            override fun onNext(t: DiaryResponse) {
                                 todayDiaries = t.data.diaries
                                 postSize.set(todayDiaries.size)
 
