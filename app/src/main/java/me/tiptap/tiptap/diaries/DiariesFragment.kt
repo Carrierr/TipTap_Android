@@ -7,9 +7,11 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.gson.JsonObject
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
@@ -21,6 +23,7 @@ import me.tiptap.tiptap.common.network.ServerGenerator
 import me.tiptap.tiptap.common.rx.RxBus
 import me.tiptap.tiptap.common.view.DatePickerDialogFragment
 import me.tiptap.tiptap.data.DiariesResponse
+import me.tiptap.tiptap.data.InvalidDiaries
 import me.tiptap.tiptap.databinding.FragmentDiariesBinding
 import me.tiptap.tiptap.diarydetail.DiaryDetailActivity
 import java.text.SimpleDateFormat
@@ -30,7 +33,7 @@ class DiariesFragment : Fragment() {
 
     private lateinit var binding: FragmentDiariesBinding
 
-    private val adapter = DiariesAdapter()
+    private var adapter = DiariesAdapter()
 
     private val service = ServerGenerator.createService(DiaryApi::class.java)
     private val bus = RxBus.getInstance()
@@ -55,7 +58,6 @@ class DiariesFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         initToolbar()
-        initRecyclerView()
     }
 
 
@@ -69,21 +71,20 @@ class DiariesFragment : Fragment() {
         }
     }
 
-
     private fun initRecyclerView() {
         binding.recyclerDiaries.apply {
             setHasFixedSize(true)
 
             layoutManager = LinearLayoutManager(this@DiariesFragment.context)
-            adapter = this@DiariesFragment.adapter.apply {
 
-                getDiaries(1, 2)
+            this@DiariesFragment.adapter =DiariesAdapter().apply {
+                adapter = this
 
                 disposables.addAll(
                         clickSubject.subscribe {
                             //Go to detail page if actionMode is not running.
                             if (this.isCheckboxAvailable.get() == false) {
-                                bus.takeBus(it) //send Diary to DiaryDetailActivity.
+                                bus.takeBus(it) //send Diary's date to DiaryDetailActivity.
                                 startActivity(Intent(this@DiariesFragment.activity, DiaryDetailActivity::class.java))
                             }
                         },
@@ -95,37 +96,39 @@ class DiariesFragment : Fragment() {
     }
 
     private fun getDiaries(page: Int, limit: Int) {
-        service.diaryList(TipTapApplication.getAccessToken(), page, limit) //한번에 하나의 달만 불러올거.
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribeWith(object : DisposableObserver<DiariesResponse>() {
-                    override fun onComplete() {
-                        adapter.notifyDataSetChanged()
-                    }
+        disposables.add(
+                service.diaryList(TipTapApplication.getAccessToken(), page, limit) //한번에 하나의 달만 불러올거.
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribeWith(object : DisposableObserver<DiariesResponse>() {
+                            override fun onComplete() {
+                                adapter.notifyDataSetChanged()
+                            }
 
-                    override fun onNext(t: DiariesResponse) {
-                        if (t.code == "1000") {
-                            totalPage = t.data.total
+                            override fun onNext(t: DiariesResponse) {
+                                if (t.code == "1000") {
+                                    totalPage = t.data.total
 
-                            val list = t.data.list
+                                    val list = t.data.list
 
-                            if(list.isNotEmpty()) {
-                                if (page == 1) { //가장 최근 날짜로 지정하기
-                                    applyDateOnToolbar(list[0].year, list[0].month)
-                                }
+                                    if (list.isNotEmpty()) {
+                                        if (page == 1) { //가장 최근 날짜로 지정하기
+                                            applyDateOnToolbar(list[0].year, list[0].month)
+                                        }
 
-                                for (monthDiary in list.iterator()) {
-                                    if (monthDiary.diariesOfDay != null)
-                                        adapter.addItems(monthDiary.diariesOfDay) //add items
+                                        for (monthDiary in list.iterator()) {
+                                            if (monthDiary.diariesOfDay != null)
+                                                adapter.addItems(monthDiary.diariesOfDay) //add items
+                                        }
+                                    }
                                 }
                             }
-                        }
-                    }
 
-                    override fun onError(e: Throwable) {
-                        e.printStackTrace()
-                    }
-                })
+                            override fun onError(e: Throwable) {
+                                e.printStackTrace()
+                            }
+                        })
+        )
     }
 
 
@@ -173,8 +176,10 @@ class DiariesFragment : Fragment() {
                 //clicked cancel
             }
             R.id.text_bot_dial_delete -> {
-                adapter.deleteCheckedItems() //delete items from adapter's dataSet
-//                deleteDiary(adapter.checkedDataSet) //call deleteDiary api
+                adapter.run {
+                    this.deleteCheckedItems() //delete items from adapter's dataSet
+                    deleteDiaries(this.checkedDataSet) //call deleteDiary api
+                }
             }
         }
 
@@ -182,6 +187,7 @@ class DiariesFragment : Fragment() {
             isCheckboxAvailable.set(false) //change checkbox state
             changeCheckboxState(false)
         }
+
         isBotDialogVisible.set(false) //hide bottom dialog
     }
 
@@ -189,31 +195,46 @@ class DiariesFragment : Fragment() {
     /**
      * call delete diary api
      */
-//    private fun deleteDiary(dataSet: MutableList<String>) {
-//        disposables.add(
-//                service.deleteDiary(TipTapApplication.getAccessToken(), InvalidDiary(dataSet))
-//                        .subscribeOn(Schedulers.io())
-//                        .subscribeWith(object : DisposableObserver<JsonObject>() {
-//                            override fun onComplete() {
-//                                //
-//                            }
-//
-//                            override fun onNext(t: JsonObject) {
-//                                t.apply {
-//                                    if (get(getString(R.string.code)).asString != "1000") { //if not successful.
-//                                        Log.d(getString(R.string.desc),
-//                                                getAsJsonObject(getString(R.string.data)).get(getString(R.string.desc)).asString)
-//                                    }
-//                                }
-//                            }
-//
-//                            override fun onError(e: Throwable) {
-//                                e.printStackTrace()
-//                            }
-//                        })
-//        )
-//    }
+    private fun deleteDiaries(dataSet: MutableList<Date>) {
+        val invalidDiaries = InvalidDiaries().apply {
+            convertDateToString(dataSet)
+        }
 
+        disposables.add(
+                service.deleteDiaryByDay(TipTapApplication.getAccessToken(), invalidDiaries)
+                        .subscribeOn(Schedulers.io())
+                        .subscribeWith(object : DisposableObserver<JsonObject>() {
+                            override fun onComplete() {
+                                //
+                            }
+
+                            override fun onNext(t: JsonObject) {
+                                t.apply {
+                                    if (get(getString(R.string.code)).asString != "1000") { //if not successful.
+                                        Log.d(getString(R.string.desc),
+                                                getAsJsonObject(getString(R.string.data)).get(getString(R.string.desc)).asString)
+                                    }
+                                }
+                            }
+
+                            override fun onError(e: Throwable) {
+                                e.printStackTrace()
+                            }
+                        })
+        )
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        initRecyclerView()
+        getDiaries(1, 2)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        disposables.clear()
+    }
 
     override fun onDestroy() {
         super.onDestroy()

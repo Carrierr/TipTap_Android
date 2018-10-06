@@ -4,18 +4,11 @@
     xmlns:app = "http://schemas.android.com/apk/res-auto"
     xmlns:tools = "http://schemas.android.com/tools"
     >
-    
+   
     <data>
-        
         <variable
-            name = "date"
-            type = "java.util.Date"
-            />
-        
-        <variable
-            name = "activity"
-            type = "me.tiptap.tiptap.diarydetail.DiaryDetailActivity"
-            />
+            name = "diary"
+            type = "me.tiptap.tiptap.data.Diary"/>
     </data>
     
     <android.support.constraint.ConstraintLayout
@@ -57,20 +50,22 @@
             <ImageView
                 android:id = "@+id/img_detail"
                 android:layout_width = "0dp"
+                imgUrl="@{diary.imageUrl}"
+                android:background="@color/colorMainGray"
+                error="@{@drawable/headerimage}"
                 android:layout_height = "0dp"
                 android:scaleType = "centerCrop"
                 app:layout_constraintDimensionRatio = "4:3"
                 app:layout_constraintEnd_toEndOf = "parent"
                 app:layout_constraintStart_toStartOf = "parent"
                 app:layout_constraintTop_toBottomOf = "@+id/guide_detail_img_view"
-                tools:src = "@drawable/headerimage"
                 />
             
             
             <me.tiptap.tiptap.common.view.VerticalTextView
                 android:id = "@+id/text_detail_img_time"
                 style = "@style/DetailDateText"
-                time = "@{date}"
+               time="@{diary.createdAt}"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 app:layout_constraintBottom_toBottomOf = "parent"

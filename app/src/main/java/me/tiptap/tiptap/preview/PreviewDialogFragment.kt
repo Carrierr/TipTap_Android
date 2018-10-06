@@ -66,7 +66,7 @@ class PreviewDialogFragment : DialogFragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dialog_preview, container, false)
         binding.apply {
             diary = data
-            textPreviewCount.text = getString(R.string.preview_count, data.id) //temp
+            textPreviewCount.text = getString(R.string.my_diary_count, data.id) //temp
         }
 
         initToolbar()

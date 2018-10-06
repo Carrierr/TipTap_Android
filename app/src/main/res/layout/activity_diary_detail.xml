@@ -6,9 +6,11 @@
     >
     
     <data>
+        
         <variable
             name = "diary"
-            type = "me.tiptap.tiptap.data.Diary"/>
+            type = "me.tiptap.tiptap.data.Diary"
+            />
         
         <variable
             name = "date"
@@ -26,6 +28,7 @@
         android:layout_width = "match_parent"
         android:layout_height = "match_parent"
         android:background = "@color/colorMainBlack"
+        android:orientation = "vertical"
         tools:context = ".DiaryDetailActivity"
         >
         
@@ -36,134 +39,21 @@
             />
         
         <android.support.constraint.Guideline
-            android:id = "@+id/guide_detail_start"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            android:orientation = "vertical"
-            app:layout_constraintGuide_percent = "0.061"
-            />
-        
-        <android.support.constraint.Guideline
-            android:id = "@+id/guide_detail_end"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            android:orientation = "vertical"
-            app:layout_constraintGuide_percent = "0.939"
-            />
-        
-        <android.support.constraint.Guideline
-            android:id = "@+id/guide_detail_bottom"
+            android:id = "@+id/gl_detail_bot"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "horizontal"
             app:layout_constraintGuide_percent = "0.95"
             />
         
-        <!--container-->
-        <android.support.constraint.ConstraintLayout
-            android:layout_width = "0dp"
+        <android.support.v7.widget.RecyclerView
+            android:id = "@+id/recycler_detail"
+            android:layout_width = "match_parent"
+            tools:items="@layout/item_diary_detail"
             android:layout_height = "0dp"
-            android:layout_marginTop = "7dp"
-            android:background = "@android:color/white"
-            app:layout_constraintBottom_toTopOf = "@+id/guide_detail_bottom"
-            app:layout_constraintEnd_toEndOf = "@+id/guide_detail_end"
-            app:layout_constraintStart_toStartOf = "@+id/guide_detail_start"
+            app:layout_constraintBottom_toTopOf = "@+id/gl_detail_bot"
             app:layout_constraintTop_toBottomOf = "@+id/toolbar_detail"
-            >
-            
-            <TextView
-                android:id = "@+id/text_detail_count"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
-                android:fontFamily = "@font/montserrat_regular"
-                android:gravity = "center"
-                android:lineSpacingExtra = "4sp"
-                android:textStyle = "bold"
-                app:layout_constraintEnd_toEndOf = "parent"
-                app:layout_constraintStart_toStartOf = "parent"
-                app:layout_constraintTop_toTopOf = "@+id/text_detail_year"
-                tools:text = "MY DIARY\n #7"
-                />
-            
-            <android.support.constraint.Guideline
-                android:id = "@+id/guide_detail_con_start"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
-                android:orientation = "vertical"
-                app:layout_constraintGuide_percent = "0.036"
-                />
-            
-            <TextView
-                android:id = "@+id/text_detail_year"
-                style = "@style/DetailDateText"
-                year = "@{date}"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
-                app:layout_constraintBottom_toBottomOf = "parent"
-                app:layout_constraintStart_toStartOf = "@+id/guide_detail_con_start"
-                app:layout_constraintTop_toTopOf = "parent"
-                app:layout_constraintVertical_bias = "0.036"
-                tools:text = "18'"
-                />
-            
-            <TextView
-                android:id = "@+id/text_detail_month"
-                style = "@style/DetailDateText"
-                dayOfMonth = "@{date}"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
-                android:paddingBottom = "10dp"
-                android:paddingTop = "2dp"
-                app:layout_constraintStart_toStartOf = "@+id/guide_detail_con_start"
-                app:layout_constraintTop_toBottomOf = "@+id/text_detail_year"
-                tools:text = "Aug\n02"
-                />
-            
-            <!--Scroll area-->
-            <ScrollView
-                android:layout_width = "match_parent"
-                android:layout_height = "0dp"
-                android:fillViewport = "true"
-                app:layout_constraintDimensionRatio = "1:1.26"
-                app:layout_constraintTop_toBottomOf = "@+id/text_detail_month"
-                >
-                
-                <LinearLayout
-                    android:layout_width = "match_parent"
-                    android:layout_height = "wrap_content"
-                    android:orientation = "vertical"
-                    >
-                    
-                    <include
-                        android:id = "@+id/layout_detail_img"
-                        date = "@{date}"
-                        layout = "@layout/layout_detail_img"
-                        />
-                    
-                    <include
-                        android:id = "@+id/layout_detail_text"
-                        date = "@{date}"
-                        app:content="@{diary.content}"
-                        layout = "@layout/layout_detail_text"
-                        />
-                
-                </LinearLayout>
-            </ScrollView>
-            
-            <TextView
-                android:id = "@+id/text_detail_location"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
-                android:fontFamily = "@font/ko_pub_dotum_pl"
-                app:layout_constraintBottom_toBottomOf = "parent"
-                app:layout_constraintEnd_toEndOf = "parent"
-                app:layout_constraintStart_toStartOf = "parent"
-                app:layout_constraintTop_toTopOf = "parent"
-                app:layout_constraintVertical_bias = "0.9633"
-                tools:text = "키오스크 망원동 카페"
-                android:text="@{diary.location}"
-                />
-        
-        </android.support.constraint.ConstraintLayout>
+            />
     </android.support.constraint.ConstraintLayout>
+
 </layout>

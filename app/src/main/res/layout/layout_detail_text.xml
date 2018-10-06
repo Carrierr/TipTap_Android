@@ -6,15 +6,9 @@
     >
     
     <data>
-        
         <variable
-            name = "date"
-            type = "java.util.Date"
-            />
-        
-        <variable
-            name = "content"
-            type = "java.lang.String"/>
+            name = "diary"
+            type = "me.tiptap.tiptap.data.Diary"/>
     </data>
     
     <android.support.constraint.ConstraintLayout
@@ -80,12 +74,12 @@
             <TextView
                 android:id = "@+id/text_detail"
                 android:layout_width = "0dp"
-                android:text="@{content}"
                 android:layout_height = "0dp"
                 android:fontFamily = "@font/ko_pub_dotum_pl"
                 android:gravity = "center"
                 android:lineSpacingExtra = "10sp"
                 android:maxLength = "800"
+                android:text="@{diary.content}"
                 app:layout_constraintBottom_toBottomOf = "parent"
                 app:layout_constraintEnd_toStartOf = "@+id/guide_detail_text_end"
                 app:layout_constraintStart_toStartOf = "@+id/guide_detail_text_con_start"
@@ -96,10 +90,10 @@
             <me.tiptap.tiptap.common.view.VerticalTextView
                 android:id = "@+id/text_detail_text_time"
                 style = "@style/DetailDateText"
-                time = "@{date}"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:layout_marginTop = "@dimen/dimen_write_side"
+                time="@{diary.createdAt}"
                 app:layout_constraintBottom_toBottomOf = "@+id/text_detail"
                 app:layout_constraintStart_toStartOf = "@+id/guide_detail_text_start"
                 app:layout_constraintTop_toTopOf = "parent"

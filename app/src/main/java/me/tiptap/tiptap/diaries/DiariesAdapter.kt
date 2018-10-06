@@ -3,46 +3,50 @@ package me.tiptap.tiptap.diaries
 
 import android.databinding.ObservableField
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.data.Diaries
+import me.tiptap.tiptap.data.Diary
+import java.util.*
 
 class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
 
     private val dataSet: MutableList<Diaries> = mutableListOf()
-    val checkedDataSet: MutableList<String> = mutableListOf() //checked list
+    val checkedDataSet: MutableList<Date> = mutableListOf() //checked list
 
-    val clickSubject = PublishSubject.create<Diaries>()
+    val clickSubject = PublishSubject.create<Diary>()
     val checkSubject = PublishSubject.create<Diaries>()
 
     var isCheckboxAvailable = ObservableField<Boolean>(false)
 
 
-
     fun addItems(items: MutableList<Diaries>) {
         dataSet.addAll(items)
-        Log.d("Res", "size : ${items.size}")
-
-        visibleSideHeader(dataSet.size-items.size)
-
         notifyDataSetChanged()
+
+
+        visibleSideHeader(dataSet.size - items.size)
     }
 
 
-    private fun visibleSideHeader(position : Int) {
+    private fun visibleSideHeader(position: Int) {
         dataSet[position].isLastDay = true
     }
 
 
     private fun updateCheckedItems(item: Diaries) {
-        if (!checkedDataSet.contains(item.day) && item.isSelected) {
-            checkedDataSet.add(item.day)
-        } else if (checkedDataSet.contains(item.day) && !item.isSelected) {
-            checkedDataSet.remove(item.day)
+        val createdAt: Date? = item.firstLastDiary?.lastDiary?.createdAt
+
+        createdAt?.let {
+            if (!checkedDataSet.contains(it) && item.isSelected) {
+                checkedDataSet.add(it)
+            }
+            if (checkedDataSet.contains(it) && !item.isSelected) {
+                checkedDataSet.remove(it)
+            }
         }
     }
 
@@ -54,7 +58,7 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
                 while (this.hasNext()) {
                     val data = this.next()
 
-                    if (checkedDataSet.contains(data.day)) {
+                    if (checkedDataSet.contains(data.firstLastDiary?.lastDiary?.createdAt)) {
                         this.remove()
                     }
                 }
@@ -96,7 +100,9 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
             binding?.diaries = item
             binding?.adapter = this@DiariesAdapter
 
-            getClickObservable(item).subscribe(clickSubject)
+            item.firstLastDiary?.lastDiary?.let {
+                getClickObservable(it).subscribe(clickSubject)
+            }
             getCheckObservable(item).subscribe(checkSubject)
         }
     }

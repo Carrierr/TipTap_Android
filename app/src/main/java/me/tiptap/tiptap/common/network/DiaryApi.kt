@@ -23,11 +23,19 @@ interface DiaryApi {
             Observable<DiariesResponse>
 
 
+    //Get Diary detail
+    @GET("diary/detail")
+    fun getDiaryDetail(
+            @Header("tiptap-token") token: String,
+            @Query("date") date: String
+    ): Observable<DiaryResponse>
+
+
     //Get today diaries
     @GET("diary/today")
     fun getTodayDiaries(
             @Header("tiptap-token") token: String)
-            : Observable<TodayResponse>
+            : Observable<DiaryResponse>
 
 
     //write Diary
@@ -52,7 +60,7 @@ interface DiaryApi {
 
     //delete Diaries
     @POST("diary/delete/day")
-    fun deleteDiary(
+    fun deleteDiaryByDay(
             @Header("tiptap-token") token: String,
             @Body id: InvalidDiaries): Observable<JsonObject>
 
