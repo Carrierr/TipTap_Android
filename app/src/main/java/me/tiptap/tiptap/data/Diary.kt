@@ -16,7 +16,7 @@ class Diary() {
     var latitude: String = ""
     var longitude: String = ""
     var shared: Boolean = true
-    var createdAt: Date ?=null
+    var createdAt: Date = Date()
     var updatedAt: Date ?=null
     var diaryFile: MultipartBody.Part? = null
 
