@@ -3,17 +3,16 @@ package me.tiptap.tiptap.data
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class TodayResponse {
+class DiaryResponse {
 
     @SerializedName("code")
     val code: String? = null
 
     @SerializedName("data")
-    val data: TodaySubResponse = TodaySubResponse()
+    val data: DiarySubResponse = DiarySubResponse()
 
 
-
-    class TodaySubResponse {
+    class DiarySubResponse {
         @SerializedName("list")
         val diaries: MutableList<Diary> = mutableListOf()
 
