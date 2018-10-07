@@ -11,6 +11,10 @@
             name = "diary"
             type = "me.tiptap.tiptap.data.Diary"
             />
+        
+        <variable
+            name = "idx"
+            type = "java.lang.Integer"/>
     </data>
     
     
@@ -64,7 +68,7 @@
                 android:fontFamily = "@font/montserrat_regular"
                 android:gravity = "center"
                 android:lineSpacingExtra = "4sp"
-                android:text = "@{String.format(@string/detail_count, diary.todayIndex)}"
+                android:text = "@{String.format(@string/detail_count, idx)}"
                 android:textStyle = "bold"
                 app:layout_constraintEnd_toEndOf = "parent"
                 app:layout_constraintStart_toStartOf = "parent"

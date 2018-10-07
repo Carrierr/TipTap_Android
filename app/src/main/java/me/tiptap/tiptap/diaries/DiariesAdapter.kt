@@ -97,8 +97,10 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
         val item = getItem(position)
 
         holder.apply {
-            binding?.diaries = item
-            binding?.adapter = this@DiariesAdapter
+            binding?.also {
+                it.diaries = item
+                it.adapter = this@DiariesAdapter
+            }
 
             item.firstLastDiary?.lastDiary?.let {
                 getClickObservable(it).subscribe(clickSubject)
