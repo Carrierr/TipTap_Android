@@ -53,7 +53,7 @@ interface DiaryApi {
 
     //delete Diary
     @POST("diary/delete")
-    fun deleteDiary(
+    fun deleteDiaryById(
             @Header("tiptap-token") token: String,
             @Body id: InvalidDiary): Observable<JsonObject>
 
