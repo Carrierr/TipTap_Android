@@ -26,7 +26,6 @@ import me.tiptap.tiptap.data.DiariesResponse
 import me.tiptap.tiptap.data.InvalidDiaries
 import me.tiptap.tiptap.databinding.FragmentDiariesBinding
 import me.tiptap.tiptap.diarydetail.DiaryDetailActivity
-import java.text.SimpleDateFormat
 import java.util.*
 
 class DiariesFragment : Fragment() {
@@ -88,6 +87,10 @@ class DiariesFragment : Fragment() {
                                 startActivity(Intent(this@DiariesFragment.activity, DiaryDetailActivity::class.java))
                             }
                         },
+                        longClickSubject.subscribe {
+                            this.startDeleteMode(it)
+                            isBotDialogVisible.set(!it) //change bottom dialog visibility
+                        },
                         checkSubject.subscribe {
                             onCheckedChangeEventPublished(it)
                         })
@@ -112,10 +115,6 @@ class DiariesFragment : Fragment() {
                                     val list = t.data.list
 
                                     if (list.isNotEmpty()) {
-                                        if (page == 1) { //가장 최근 날짜로 지정하기
-                                            applyDateOnToolbar(list[0].year, list[0].month)
-                                        }
-
                                         for (monthDiary in list.iterator()) {
                                             if (monthDiary.diariesOfDay != null)
                                                 adapter.addItems(monthDiary.diariesOfDay) //add items
@@ -132,15 +131,6 @@ class DiariesFragment : Fragment() {
     }
 
 
-    private fun applyDateOnToolbar(year: String, month: String) {
-        val oldMonth = SimpleDateFormat("MM", Locale.US).parse(month)
-        val newMonth = SimpleDateFormat("MMM", Locale.US).format(oldMonth)
-
-        binding.toolbarDiaries?.textToolbarDiariesSub?.text =
-                getString(R.string.last_year_month, year.substring(2, 4), newMonth)
-    }
-
-
     fun onDateFindButtonClick() {
         if (!::datePickerDialog.isInitialized) {
             datePickerDialog = DatePickerDialogFragment()
@@ -154,7 +144,7 @@ class DiariesFragment : Fragment() {
     /**
      * when click delete Icon
      */
-    fun onDeleteMenuItemClick() {
+    fun startItemDelete() {
         //checkbox mode on/off
         adapter.isCheckboxAvailable.get()?.let {
             isBotDialogVisible.set(!it) //change bottom dialog visibility
