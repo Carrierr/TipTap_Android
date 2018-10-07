@@ -83,5 +83,5 @@ interface DiaryApi {
     @GET("diary/random")
     fun shareDiaries(
             @Header("tiptap-token") token: String
-    ): Observable<ShareResponse>
+    ): Observable<DiaryResponse>
 }

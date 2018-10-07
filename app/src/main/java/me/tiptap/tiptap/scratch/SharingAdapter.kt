@@ -5,15 +5,15 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import me.tiptap.tiptap.R
-import me.tiptap.tiptap.data.ShareDiary
+import me.tiptap.tiptap.data.Diary
 
 
 class SharingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val dataSet: MutableList<ShareDiary?> = mutableListOf()
+    private val dataSet: MutableList<Diary?> = mutableListOf()
 
 
-    fun addItems(items: MutableList<ShareDiary?>) {
+    fun addItems(items: MutableList<Diary>) {
         dataSet.addAll(items)
         notifyDataSetChanged()
     }
@@ -29,8 +29,8 @@ class SharingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         if (holder is SharingViewHolder) {
             holder.apply {
                 binding?.also {
-                    it.shareDiary = item
-                    it.idx = (position+1).toString()
+                    it.diary = item
+                    it.idx = (position + 1).toString()
                 }
             }
         }
