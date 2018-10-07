@@ -6,6 +6,9 @@
     >
     
     <data>
+        <variable
+            name = "idx"
+            type = "java.lang.Integer"/>
         
         <variable
             name = "diary"
@@ -29,7 +32,7 @@
             />
         
         <android.support.constraint.Guideline
-            android:id = "@+id/guide_preview_start"
+            android:id = "@+id/gl_preview_start"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "vertical"
@@ -37,7 +40,7 @@
             />
         
         <android.support.constraint.Guideline
-            android:id = "@+id/guide_preview_end"
+            android:id = "@+id/gl_preview_end"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "vertical"
@@ -45,7 +48,7 @@
             />
         
         <android.support.constraint.Guideline
-            android:id = "@+id/guide_preview_top"
+            android:id = "@+id/gl_preview_top"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "horizontal"
@@ -53,7 +56,7 @@
             />
         
         <android.support.constraint.Guideline
-            android:id = "@+id/guide_preview_bot"
+            android:id = "@+id/gl_preview_bot"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "horizontal"
@@ -65,16 +68,16 @@
             android:layout_width = "0dp"
             android:layout_height = "0dp"
             android:background = "@android:color/white"
-            app:layout_constraintBottom_toBottomOf = "@+id/guide_preview_bot"
-            app:layout_constraintEnd_toEndOf = "@+id/guide_preview_end"
-            app:layout_constraintStart_toStartOf = "@+id/guide_preview_start"
-            app:layout_constraintTop_toTopOf = "@+id/guide_preview_top"
+            app:layout_constraintBottom_toBottomOf = "@+id/gl_preview_bot"
+            app:layout_constraintEnd_toEndOf = "@+id/gl_preview_end"
+            app:layout_constraintStart_toStartOf = "@+id/gl_preview_start"
+            app:layout_constraintTop_toTopOf = "@+id/gl_preview_top"
             >
             
             <TextView
                 android:id = "@+id/text_preview_year"
                 style = "@style/PreviewDateText"
-                year = "@{diary.date}"
+                year = "@{diary.createdAt}"
                 android:textSize = "13sp"
                 app:layout_constraintBottom_toBottomOf = "parent"
                 app:layout_constraintEnd_toEndOf = "parent"
@@ -86,19 +89,19 @@
                 />
             
             <android.support.constraint.Guideline
-                android:id = "@+id/guide_preview_con_end"
+                android:id = "@+id/gl_preview_con_end"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:orientation = "vertical"
                 app:layout_constraintGuide_percent = "0.937"
                 />
-            
+    
             <android.support.constraint.Guideline
-                android:id = "@+id/guide_preview_img_start"
+                android:id = "@+id/gl_preview_img_start"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:orientation = "vertical"
-                app:layout_constraintGuide_percent = "0.246"
+                app:layout_constraintGuide_percent="0.21"
                 />
             
             <ScrollView
@@ -107,8 +110,8 @@
                 android:layout_height = "0dp"
                 android:fillViewport = "true"
                 app:layout_constraintDimensionRatio = "4:3"
-                app:layout_constraintEnd_toEndOf = "@+id/guide_preview_con_end"
-                app:layout_constraintStart_toStartOf = "@+id/guide_preview_img_start"
+                app:layout_constraintEnd_toEndOf = "@+id/gl_preview_con_end"
+                app:layout_constraintStart_toStartOf = "@+id/gl_preview_img_start"
                 app:layout_constraintTop_toTopOf = "@+id/text_preview_year"
                 >
                 
@@ -122,8 +125,9 @@
                         android:id = "@+id/img_preview"
                         android:layout_width = "0dp"
                         android:layout_height = "0dp"
+                        imgUrl="@{diary.imageUrl}"
+                        error="@{@drawable/headerimage}"
                         android:scaleType = "centerCrop"
-                        android:src = "@drawable/headerimage"
                         app:layout_constraintDimensionRatio = "4:3"
                         app:layout_constraintEnd_toEndOf = "parent"
                         app:layout_constraintStart_toStartOf = "parent"
@@ -140,6 +144,7 @@
                         android:lineSpacingExtra = "10sp"
                         android:maxLength = "800"
                         android:text = "@{diary.content}"
+                        tools:text="하나둘셋"
                         android:textSize = "12sp"
                         app:layout_constraintDimensionRatio = "4:3"
                         app:layout_constraintEnd_toEndOf = "parent"
@@ -150,18 +155,11 @@
                 </android.support.constraint.ConstraintLayout>
             </ScrollView>
             
-            <android.support.constraint.Guideline
-                android:id = "@+id/guide_preview_img_bot"
-                android:layout_width = "wrap_content"
-                android:layout_height = "wrap_content"
-                android:orientation = "horizontal"
-                app:layout_constraintGuide_percent = "0.71"
-                />
             
             <TextView
                 android:id = "@+id/text_preview_month"
                 style = "@style/PreviewDateText"
-                dayOfMonth = "@{diary.date}"
+                dayOfMonth = "@{diary.createdAt}"
                 android:paddingTop = "2dp"
                 android:textSize = "13sp"
                 app:layout_constraintStart_toStartOf = "@+id/text_preview_year"
@@ -170,7 +168,7 @@
                 />
             
             <android.support.constraint.Guideline
-                android:id = "@+id/guide_preview_view_top"
+                android:id = "@+id/gl_preview_view_top"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:orientation = "horizontal"
@@ -178,7 +176,7 @@
                 />
             
             <android.support.constraint.Guideline
-                android:id = "@+id/guide_preview_view_bot"
+                android:id = "@+id/gl_preview_view_bot"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:orientation = "horizontal"
@@ -188,13 +186,13 @@
             <View
                 android:id = "@+id/view_preview_line"
                 style = "@style/DefaultLine"
-                app:layout_constraintBottom_toTopOf = "@+id/guide_preview_view_bot"
+                app:layout_constraintBottom_toTopOf = "@+id/gl_preview_view_bot"
                 app:layout_constraintStart_toStartOf = "@+id/text_preview_year"
-                app:layout_constraintTop_toBottomOf = "@+id/guide_preview_view_top"
+                app:layout_constraintTop_toBottomOf = "@+id/gl_preview_view_top"
                 />
             
             <android.support.constraint.Guideline
-                android:id = "@+id/guide_preview_con_bot"
+                android:id = "@+id/gl_preview_con_bot"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:orientation = "horizontal"
@@ -205,12 +203,12 @@
             <me.tiptap.tiptap.common.view.VerticalTextView
                 android:id = "@+id/text_preview_time"
                 style = "@style/PreviewDateText"
-                time = "@{diary.date}"
+                time = "@{diary.createdAt}"
                 android:textSize = "12sp"
-                app:layout_constraintBottom_toTopOf = "@+id/guide_preview_con_bot"
+                app:layout_constraintBottom_toTopOf = "@+id/gl_preview_con_bot"
                 app:layout_constraintEnd_toEndOf = "@+id/view_preview_line"
                 app:layout_constraintStart_toStartOf = "@+id/view_preview_line"
-                app:layout_constraintTop_toBottomOf = "@+id/guide_preview_view_bot"
+                app:layout_constraintTop_toBottomOf = "@+id/gl_preview_view_bot"
                 tools:text = "15:00"
                 />
             
@@ -221,7 +219,8 @@
                 android:fontFamily = "@font/montserrat_regular"
                 android:textColor = "@color/colorMainBlack"
                 android:textStyle = "bold"
-                app:layout_constraintEnd_toEndOf = "@+id/guide_preview_con_end"
+                android:text="@{String.format(@string/my_diary_count, idx)}"
+                app:layout_constraintEnd_toEndOf = "@+id/gl_preview_con_end"
                 app:layout_constraintTop_toTopOf = "@+id/text_preview_time"
                 tools:text = "MY DIARY #7"
                 />
@@ -233,8 +232,8 @@
                 android:fontFamily = "@font/ko_pub_dotum_pl"
                 android:text = "@{diary.location}"
                 android:textSize = "12sp"
-                app:layout_constraintBottom_toTopOf = "@+id/guide_preview_con_bot"
-                app:layout_constraintEnd_toEndOf = "@+id/guide_preview_con_end"
+                app:layout_constraintBottom_toTopOf = "@+id/gl_preview_con_bot"
+                app:layout_constraintEnd_toEndOf = "@+id/gl_preview_con_end"
                 app:layout_constraintTop_toBottomOf = "@+id/text_preview_count"
                 app:layout_constraintVertical_bias = "0.77"
                 tools:text = "키오스크 망원동 카페"

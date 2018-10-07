@@ -1,7 +1,6 @@
 package me.tiptap.tiptap.preview
 
 import android.app.Dialog
-import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -10,35 +9,45 @@ import android.support.constraint.ConstraintLayout
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
 import android.view.*
+import com.google.gson.JsonObject
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.observers.DisposableObserver
+import io.reactivex.schedulers.Schedulers
 import me.tiptap.tiptap.R
+import me.tiptap.tiptap.TipTapApplication
+import me.tiptap.tiptap.common.network.DiaryApi
+import me.tiptap.tiptap.common.network.ServerGenerator
 import me.tiptap.tiptap.common.rx.RxBus
+import me.tiptap.tiptap.common.util.preview.PreviewDialogNavigator
 import me.tiptap.tiptap.data.Diary
+import me.tiptap.tiptap.data.InvalidDiary
 import me.tiptap.tiptap.databinding.FragmentDialogPreviewBinding
-import me.tiptap.tiptap.diarywriting.DiaryWritingActivity
 
-class PreviewDialogFragment : DialogFragment() {
+class PreviewDialogFragment: DialogFragment() {
 
     private lateinit var binding: FragmentDialogPreviewBinding
 
     private val rxBus = RxBus.getInstance()
+    private val service = ServerGenerator.createService(DiaryApi::class.java)
     private val disposable = CompositeDisposable()
 
     private lateinit var data: Diary
 
+    var previewDialogNavi : PreviewDialogNavigator?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setHasOptionsMenu(true)
-
-        checkBus()
     }
 
     private fun checkBus() {
         disposable.add(rxBus.toObservable().subscribe {
-            if (it is Diary) {
-                data = it
+            if (it is Pair<*,*>) {
+                binding.idx = it.first as Int
+                binding.diary = it.second as Diary
+                data = it.second as Diary
             }
         })
     }
@@ -64,12 +73,9 @@ class PreviewDialogFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dialog_preview, container, false)
-        binding.apply {
-            diary = data
-            textPreviewCount.text = getString(R.string.my_diary_count, data.id) //temp
-        }
 
         initToolbar()
+        checkBus()
 
         return binding.root
     }
@@ -99,16 +105,41 @@ class PreviewDialogFragment : DialogFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
             when (item.itemId) {
                 R.id.menu_preview_edit -> {
-                    rxBus.takeBus(data) //send be edited Diary.
-                    startActivity(Intent(activity, DiaryWritingActivity::class.java))
+//                    rxBus.takeBus(data) //send be edited Diary.
+//                    startActivity(Intent(activity, DiaryWritingActivity::class.java))
+                    dialog.dismiss()
                     true
                 }
                 R.id.menu_preview_delete -> {
-                    this.dialog.dismiss()
+                    previewDialogNavi?.onDialogDeleteStart()
+                    deleteDiaryById()
                     true
                 }
                 else -> false
             }
+
+
+    private fun deleteDiaryById() {
+        disposable.add(
+                service.deleteDiaryById(TipTapApplication.getAccessToken(), InvalidDiary(mutableListOf(data.id)))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribeWith(object : DisposableObserver<JsonObject>() {
+                            override fun onNext(t: JsonObject) {
+                                //
+                            }
+
+                            override fun onComplete() {
+                                previewDialogNavi?.onDialogDeleteComplete()
+                                dialog.dismiss()
+                            }
+
+                            override fun onError(e: Throwable) {
+                                e.printStackTrace()
+                            }
+                        })
+        )
+    }
 
 
     override fun onDestroy() {

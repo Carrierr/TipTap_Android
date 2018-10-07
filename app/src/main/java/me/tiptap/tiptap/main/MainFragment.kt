@@ -19,14 +19,16 @@ import me.tiptap.tiptap.TipTapApplication
 import me.tiptap.tiptap.common.network.DiaryApi
 import me.tiptap.tiptap.common.network.ServerGenerator
 import me.tiptap.tiptap.common.rx.RxBus
+import me.tiptap.tiptap.common.util.preview.PreviewDialogNavigator
 import me.tiptap.tiptap.data.Diary
 import me.tiptap.tiptap.data.DiaryResponse
 import me.tiptap.tiptap.databinding.FragmentMainBinding
 import me.tiptap.tiptap.diarywriting.DiaryWritingActivity
+import me.tiptap.tiptap.preview.PreviewDialogFragment
 import me.tiptap.tiptap.setting.SettingActivity
 import java.util.*
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment() , PreviewDialogNavigator {
 
     private lateinit var binding: FragmentMainBinding
 
@@ -36,6 +38,7 @@ class MainFragment : Fragment() {
 
     var todayDiaries: MutableList<Diary> = mutableListOf()
     val postSize = ObservableInt(todayDiaries.size) //postSize
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
@@ -55,13 +58,6 @@ class MainFragment : Fragment() {
     }
 
 
-    override fun onResume() {
-        super.onResume()
-
-        getTodayDiaries()
-    }
-
-
     /**
      * Get today diaries
      */
@@ -73,6 +69,8 @@ class MainFragment : Fragment() {
                         .subscribeWith(object : DisposableObserver<DiaryResponse>() {
                             override fun onNext(t: DiaryResponse) {
                                 todayDiaries = t.data.diaries
+                                todayDiaries.sortWith(compareBy { it.todayIndex }) //today Index 로 오름차순 정렬
+
                                 postSize.set(todayDiaries.size)
 
                                 applyStamps(t.data.stamp)
@@ -93,13 +91,15 @@ class MainFragment : Fragment() {
      * apply stamps
      */
     private fun applyStamps(stamps: MutableList<String>) {
-        for (i in 1 until stamps.size - 1) {
-            val stampId = resources.getIdentifier(stamps[i], "drawable", activity?.packageName)
+        for (i in 0 until stamps.size) {
+            val stampNum = stamps[i].subSequence(5, stamps[i].length).toString().toInt() //stamp 넘버 추출
+
+            val stampResId = resources.getIdentifier("stamp$stampNum", "drawable", activity?.packageName)
             val viewId = resources.getIdentifier("img_post_${i + 1}", "id", activity?.packageName)
 
             val view = activity?.findViewById(viewId) as ImageView
 
-            view.setImageResource(stampId)
+            view.setImageResource(stampResId)
         }
     }
 
@@ -112,27 +112,83 @@ class MainFragment : Fragment() {
     }
 
 
-    fun onAddButtonClick() {
-        Intent(context, DiaryWritingActivity::class.java).apply {
-            startActivity(this)
+    /**
+     * Post is clicked.
+     */
+    fun onPostClick(view: View) {
+        val tag = view.tag.toString().toInt()
+
+        //send diary's idx with diary
+        rxBus.takeBus(Pair(tag, todayDiaries[tag-1] ))
+
+         PreviewDialogFragment().apply {
+            previewDialogNavi = this@MainFragment
+            show(this@MainFragment.fragmentManager, "preview")  //Show preview dialog
         }
     }
 
+
+    /**
+     * Add TipTap button is clicked.
+     */
+    fun onAddButtonClick() {
+        if (todayDiaries.size < 10) {
+            Intent(context, DiaryWritingActivity::class.java).apply {
+                startActivity(this)
+            }
+        } else {
+            //더이상 다이어리를 적을 수 없음.
+        }
+    }
+
+
+    /**
+     * Setting button is clicked
+     */
     fun onSettingButtonClick() {
         startActivity(Intent(this@MainFragment.activity, SettingActivity::class.java))
     }
 
+    /**
+     * User click delete button on Dialog
+     */
+    override fun onDialogDeleteStart() {
+        clearResources()
+    }
 
-    override fun onPause() {
-        super.onPause()
+    /**
+     * delete is done
+     */
+    override fun onDialogDeleteComplete() {
+        getTodayDiaries()
+    }
 
+
+    private fun clearResources() {
+        todayDiaries.clear()
+        postSize.set(0)
         disposables.clear()
     }
 
 
+    override fun onStart() {
+        super.onStart()
+
+        getTodayDiaries()
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+
+
+        clearResources()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
 
+        clearResources()
         disposables.dispose()
     }
 }

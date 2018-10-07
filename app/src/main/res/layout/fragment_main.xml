@@ -81,6 +81,7 @@
         <include
             android:id = "@+id/layout_main_post"
             layout = "@layout/layout_post"
+            app:fragment="@{fragment}"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:visibility = "@{fragment.postSize > 0 ? View.VISIBLE : View.GONE}"
