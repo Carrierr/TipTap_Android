@@ -77,7 +77,7 @@ class DiariesFragment : Fragment() {
 
             layoutManager = LinearLayoutManager(this@DiariesFragment.context)
 
-            this@DiariesFragment.adapter =DiariesAdapter().apply {
+            this@DiariesFragment.adapter = DiariesAdapter().apply {
                 adapter = this
 
                 disposables.addAll(

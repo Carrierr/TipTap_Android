@@ -20,8 +20,11 @@ class DetailAdapter : RecyclerView.Adapter<DetailViewHolder>() {
             DetailViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_diary_detail, parent, false))
 
 
-    override fun onBindViewHolder(holder: DetailViewHolder, positon: Int) {
-        holder.binding?.diary = dataSet[positon]
+    override fun onBindViewHolder(holder: DetailViewHolder, position: Int) {
+        holder.binding?.also {
+            it.diary = dataSet[position]
+            it.idx = (dataSet.size-position) % (dataSet.size+1) //diary 의 인덱스를 역순으로 구함.
+        }
     }
 
     override fun getItemCount(): Int = dataSet.size

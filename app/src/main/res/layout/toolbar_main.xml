@@ -41,7 +41,7 @@
                 style = "@style/ToolbarMainTextView"
                 android:layout_width = "wrap_content"
                 tools:text="#0"
-                android:text="@{@string/post_count(fragment.postSize.get())}"
+                android:text="@{@string/post_count(fragment.postSize)}"
                 android:layout_height = "wrap_content"
                 app:layout_constraintEnd_toEndOf = "parent"
                 app:layout_constraintStart_toStartOf = "parent"
