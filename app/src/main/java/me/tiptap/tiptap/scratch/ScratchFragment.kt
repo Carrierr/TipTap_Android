@@ -6,7 +6,6 @@ import android.graphics.Point
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,7 @@ import me.tiptap.tiptap.R
 import me.tiptap.tiptap.TipTapApplication
 import me.tiptap.tiptap.common.network.DiaryApi
 import me.tiptap.tiptap.common.network.ServerGenerator
-import me.tiptap.tiptap.data.ShareResponse
+import me.tiptap.tiptap.data.DiaryResponse
 import me.tiptap.tiptap.databinding.FragmentScratchBinding
 
 
@@ -47,10 +46,8 @@ class ScratchFragment : Fragment() {
     private fun initBind() {
         binding.scratch.setRevealListener(object : ScratchCard.IRevealListener {
             override fun onRevealPercentChangedListener(stv: ScratchCard, percent: Float) {
-                if (percent <= 0.2f) {
-                    if (!stv.isRevealed) {
+                if (percent <= 0.2f && !stv.isRevealed) {
                         stv.mRevealPercent = 1.0f
-                    }
                 }
             }
 
@@ -82,22 +79,20 @@ class ScratchFragment : Fragment() {
 
 
     private fun getShareDiary() {
-        Log.d("Share", "get Share diary")
         disposables.add(
                 service.shareDiaries(TipTapApplication.getAccessToken())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
-                        .subscribeWith(object : DisposableObserver<ShareResponse>() {
-                            override fun onComplete() {
-                                binding.layoutScratchMain?.textScratchMainNum?.text = getString(R.string.count_tiptap, adapter.itemCount)
+                        .subscribeWith(object : DisposableObserver<DiaryResponse>() {
+                            override fun onNext(t: DiaryResponse) {
+                                if (t.code == "1000") {
+                                        adapter.addItems(t.data.diaries)
+                                }
                             }
 
-                            override fun onNext(t: ShareResponse) {
-                                if (t.code == "1000") {
-                                    t.data?.let {
-                                        adapter.addItems(it.shareDiaries)
-                                    }
-                                }
+                            override fun onComplete() {
+                                adapter.notifyDataSetChanged()
+                                binding.layoutScratchMain?.textScratchMainNum?.text = getString(R.string.count_tiptap, adapter.itemCount)
                             }
 
                             override fun onError(e: Throwable) {
@@ -120,6 +115,12 @@ class ScratchFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
+
+        disposables.clear()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
 
         disposables.dispose()
     }
