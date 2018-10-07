@@ -2,9 +2,15 @@
 <layout
     xmlns:android = "http://schemas.android.com/apk/res/android"
     xmlns:app = "http://schemas.android.com/apk/res-auto"
+    xmlns:tools = "http://schemas.android.com/tools"
     >
     
     <data>
+        
+        <variable
+            name = "fragment"
+            type = "me.tiptap.tiptap.main.MainFragment"
+            />
         
         <import
             alias = "View"
@@ -43,9 +49,11 @@
             android:id = "@+id/img_post_1"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:src = "@drawable/stamp7"
-            app:layout_constraintEnd_toStartOf="@+id/img_post_2"
+            android:onClick = "@{fragment::onPostClick}"
+            android:tag = "@string/post_one"
+            app:layout_constraintEnd_toStartOf = "@+id/img_post_2"
             app:layout_constraintStart_toEndOf = "@+id/text_post_1"
+            android:src = "@drawable/stamp7"
             />
         
         
@@ -79,11 +87,13 @@
             android:id = "@+id/img_post_2"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:src = "@drawable/stamp6"
+            android:onClick = "@{fragment::onPostClick}"
+            android:tag = "@string/post_two"
             android:visibility = "@{postSize >=2 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintEnd_toEndOf = "@+id/text_post_4"
             app:layout_constraintStart_toStartOf = "@+id/text_post_2"
             app:layout_constraintTop_toBottomOf = "@+id/text_post_2"
+            android:src = "@drawable/stamp6"
             />
         
         <!--post3-->
@@ -110,8 +120,10 @@
             android:layout_height = "wrap_content"
             android:layout_marginStart = "5dp"
             android:layout_marginTop = "15dp"
+            android:onClick = "@{fragment::onPostClick}"
             android:rotation = "270"
             android:src = "@drawable/stamp2"
+            android:tag = "@string/post_three"
             android:visibility = "@{postSize >=3 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintStart_toStartOf = "@+id/gl_post_3_start"
             app:layout_constraintTop_toTopOf = "@+id/img_post_2"
@@ -142,7 +154,9 @@
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:layout_marginTop = "5dp"
+            android:onClick = "@{fragment::onPostClick}"
             android:src = "@drawable/stamp3"
+            android:tag = "@string/post_four"
             android:visibility = "@{postSize >=4 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintStart_toStartOf = "@+id/gl_post_4_start"
             app:layout_constraintTop_toBottomOf = "@+id/img_post_2"
@@ -172,10 +186,12 @@
             android:id = "@+id/img_post_5"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:src = "@drawable/stamp1"
+            android:onClick = "@{fragment::onPostClick}"
+            android:tag = "@string/post_five"
             android:visibility = "@{postSize >=5 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintEnd_toStartOf = "@+id/img_post_4"
             app:layout_constraintTop_toTopOf = "@+id/gl_post_5_top"
+            android:src = "@drawable/stamp1"
             />
         
         <!--post6-->
@@ -193,7 +209,9 @@
             android:id = "@+id/img_post_6"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
+            android:onClick = "@{fragment::onPostClick}"
             android:src = "@drawable/stamp4"
+            android:tag = "@string/post_six"
             android:visibility = "@{postSize >=6 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintStart_toEndOf = "@+id/img_post_4"
             app:layout_constraintTop_toTopOf = "@+id/gl_post_5_top"
@@ -224,7 +242,9 @@
             android:id = "@+id/img_post_7"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
+            android:onClick = "@{fragment::onPostClick}"
             android:src = "@drawable/stamp9"
+            android:tag = "@string/post_seven"
             android:visibility = "@{postSize >=7 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintStart_toStartOf = "@+id/gl_post_7_start"
             app:layout_constraintTop_toBottomOf = "@+id/text_post_7"
@@ -254,7 +274,7 @@
             android:text = "@string/post_eight"
             android:visibility = "@{postSize >=8 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintStart_toStartOf = "@+id/gl_post_8_text_start"
-            app:layout_constraintTop_toTopOf="@+id/text_post_9"
+            app:layout_constraintTop_toTopOf = "@+id/text_post_9"
             />
         
         <ImageView
@@ -262,11 +282,13 @@
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:layout_marginEnd = "12dp"
+            android:onClick = "@{fragment::onPostClick}"
             android:rotation = "270"
-            android:src = "@drawable/stamp8"
+            android:tag = "@string/post_eight"
             android:visibility = "@{postSize >=8 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintEnd_toStartOf = "@+id/img_post_7"
             app:layout_constraintTop_toTopOf = "@+id/gl_post_8_top"
+            android:src = "@drawable/stamp8"
             />
         
         
@@ -294,10 +316,12 @@
             android:id = "@+id/img_post_9"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:src = "@drawable/stamp12"
+            android:onClick = "@{fragment::onPostClick}"
+            android:tag = "@string/post_nine"
             android:visibility = "@{postSize >=9 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintStart_toStartOf = "@+id/gl_post_9_start"
             app:layout_constraintTop_toBottomOf = "@+id/img_post_6"
+            android:src = "@drawable/stamp12"
             />
         
         <!--post10-->
@@ -315,10 +339,12 @@
             android:id = "@+id/img_post_10"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:src = "@drawable/stamp5"
+            android:onClick = "@{fragment::onPostClick}"
+            android:tag = "@string/post_ten"
             android:visibility = "@{postSize ==10 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintStart_toStartOf = "@+id/img_post_7"
             app:layout_constraintTop_toBottomOf = "@+id/img_post_7"
+            android:src = "@drawable/stamp5"
             />
     </android.support.constraint.ConstraintLayout>
 

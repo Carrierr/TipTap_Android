@@ -1,13 +1,10 @@
 package me.tiptap.tiptap.data
 
-import android.net.Uri
 import okhttp3.MultipartBody
 import java.util.*
 
 class Diary() {
     var id: Int = 0
-    var date: Date? = null
-    var photo: Uri? = null
     //real val
     var content: String = ""
     var location: String = ""
