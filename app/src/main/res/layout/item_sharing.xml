@@ -3,88 +3,120 @@
     xmlns:app = "http://schemas.android.com/apk/res-auto"
     xmlns:tools = "http://schemas.android.com/tools"
     >
-
+    
     <data>
-
+        
         <variable
             name = "idx"
             type = "String"
             />
         
         <variable
-            name = "shareDiary"
-            type = "me.tiptap.tiptap.data.ShareDiary"
+            name = "diary"
+            type = "me.tiptap.tiptap.data.Diary"
             />
     </data>
-
+    
     <android.support.constraint.ConstraintLayout
         android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
         android:layout_marginBottom = "60dp"
         android:background = "@android:color/transparent"
-        android:padding = "14dp"
+        android:paddingTop = "5dp"
         >
-
+        
+        <android.support.constraint.Guideline
+            android:id = "@+id/gl_sharing_line_end"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.047"
+            />
+        
         <View
             android:id = "@+id/viewLine"
-            android:layout_width = "17dp"
+            android:layout_width = "0dp"
             android:layout_height = "1dp"
+            android:background = "@color/colorMainBlack"
+            app:layout_constraintBottom_toBottomOf = "@+id/text_sharing_time"
+            app:layout_constraintEnd_toStartOf = "@+id/gl_sharing_line_end"
             app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintTop_toTopOf = "@+id/text_sharing_time"
             />
         
         <TextView
-            android:id = "@+id/text_sharing_day"
+            android:id = "@+id/text_sharing_time"
+            time = "@{diary.createdAt}"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:fontFamily = "@font/montserrat_regular"
+            android:layout_marginStart = "10dp"
+            android:fontFamily = "@font/montserrat_mid"
             android:maxLength = "8"
-            time = "@{shareDiary.createdAt}"
-            android:textSize = "12sp"
             app:layout_constraintBottom_toBottomOf = "parent"
             app:layout_constraintLeft_toRightOf = "@+id/viewLine"
             app:layout_constraintTop_toTopOf = "parent"
             app:layout_constraintVertical_bias = "0.0"
+            tools:text = "23:44"
+            />
+        
+        <android.support.constraint.Guideline
+            android:id = "@+id/gl_sharing_con_start"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.233"
             />
         
         <TextView
             android:id = "@+id/text_sharing_num"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:layout_marginStart = "21dp"
-            android:fontFamily = "@font/montserrat_regular"
+            android:fontFamily = "@font/montserrat_light"
             android:lineSpacingExtra = "10sp"
             android:text = "@{`#`+idx}"
-            android:textSize = "12sp"
-            app:layout_constraintStart_toEndOf = "@+id/text_sharing_day"
+            app:layout_constraintStart_toEndOf = "@+id/text_sharing_time"
+            app:layout_constraintStart_toStartOf = "@+id/gl_sharing_con_start"
+            tools:text = "#1"
             />
         
         <TextView
             android:id = "@+id/text_sharing_location"
-            android:layout_width = "wrap_content"
+            android:layout_width = "0dp"
             android:layout_height = "wrap_content"
-            android:layout_marginTop = "10dp"
+            android:layout_marginTop = "3dp"
             android:ellipsize = "end"
             android:fontFamily = "@font/ko_pub_dotum_pb"
-            android:lineSpacingExtra = "2sp"
             android:maxLines = "1"
-            android:text = "@{shareDiary.location}"
+            android:text = "@{diary.location}"
             android:textSize = "14sp"
-            android:textStyle = "bold"
-            app:layout_constraintLeft_toLeftOf = "@+id/text_sharing_num"
-            app:layout_constraintTop_toBottomOf = "@+id/text_sharing_day"
+            app:layout_constraintEnd_toEndOf = "@+id/gl_sharing_end"
+            app:layout_constraintStart_toStartOf = "@+id/gl_sharing_con_start"
+            app:layout_constraintTop_toBottomOf = "@+id/text_sharing_time"
+            tools:text = "키오스크 카페"
             />
         
         <TextView
             android:id = "@+id/text_sharing_content"
-            android:layout_width = "238dp"
+            android:layout_width = "0dp"
             android:layout_height = "wrap_content"
             android:layout_marginTop = "14dp"
             android:fontFamily = "@font/ko_pub_dotum_pl"
-            android:lineSpacingExtra = "10sp"
-            android:text = "@{shareDiary.content}"
-            app:layout_constraintLeft_toLeftOf = "@+id/text_sharing_num"
+            android:lineSpacingExtra = "6sp"
+            android:text = "@{diary.content}"
+            app:layout_constraintEnd_toEndOf = "@+id/gl_sharing_end"
+            app:layout_constraintStart_toStartOf = "@+id/gl_sharing_con_start"
             app:layout_constraintTop_toBottomOf = "@+id/text_sharing_location"
+            tools:text = "오늘 날씨는 하루종일 맑음. 어제도 오늘도 맑은 에브리데마륵ㅇ느 안 맑은 날이 없네 진짜\n레알드투로"
             />
-
+        
+        <android.support.constraint.Guideline
+            android:id = "@+id/gl_sharing_end"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.9"
+            />
+    
+    
     </android.support.constraint.ConstraintLayout>
 </layout>
