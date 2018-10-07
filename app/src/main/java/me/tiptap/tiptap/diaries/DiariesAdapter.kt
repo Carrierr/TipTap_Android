@@ -1,7 +1,7 @@
 package me.tiptap.tiptap.diaries
 
 
-import android.databinding.ObservableField
+import android.databinding.ObservableBoolean
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -18,9 +18,10 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
     val checkedDataSet: MutableList<Date> = mutableListOf() //checked list
 
     val clickSubject = PublishSubject.create<Diary>()
+    val longClickSubject = PublishSubject.create<Boolean>()
     val checkSubject = PublishSubject.create<Diaries>()
 
-    var isCheckboxAvailable = ObservableField<Boolean>(false)
+    var isCheckboxAvailable = ObservableBoolean(false)
 
 
     fun addItems(items: MutableList<Diaries>) {
@@ -50,6 +51,13 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
         }
     }
 
+    fun startDeleteMode(state : Boolean) {
+        isCheckboxAvailable.set(!state) //change checkbox available or not
+
+        if (state) {
+            changeCheckboxState(false)
+        }
+    }
 
     fun deleteCheckedItems() {
         if (checkedDataSet.size > 0) {
@@ -62,7 +70,6 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
                         this.remove()
                     }
                 }
-
                 notifyDataSetChanged()
             }
         }
@@ -94,7 +101,7 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
 
 
     override fun onBindViewHolder(holder: DiariesViewHolder, position: Int) {
-        val item = getItem(position)
+        val item = dataSet[position]
 
         holder.apply {
             binding?.also {
@@ -105,13 +112,10 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
             item.firstLastDiary?.lastDiary?.let {
                 getClickObservable(it).subscribe(clickSubject)
             }
+            getLongClickObservable(isCheckboxAvailable.get()).subscribe(longClickSubject)
             getCheckObservable(item).subscribe(checkSubject)
         }
     }
 
     override fun getItemCount(): Int = dataSet.size
-
-    //get item by position
-    fun getItem(position: Int) = dataSet[position]
-
 }
