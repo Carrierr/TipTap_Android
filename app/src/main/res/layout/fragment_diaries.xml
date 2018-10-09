@@ -56,8 +56,8 @@
             android:id = "@+id/recycler_diaries"
             android:layout_width = "match_parent"
             android:layout_height = "0dp"
-            app:layout_constraintBottom_toTopOf = "@+id/layout_bot_dialog"
             app:layout_constraintBottom_toBottomOf = "parent"
+            app:layout_constraintBottom_toTopOf = "@+id/layout_bot_dialog"
             app:layout_constraintTop_toTopOf = "@+id/gl_diaries_recycler_top"
             />
         
@@ -69,6 +69,16 @@
             android:layout_height = "50dp"
             android:visibility = "@{fragment.isBotDialogVisible ? View.VISIBLE : View.GONE}"
             app:fragment = "@{fragment}"
+            app:layout_constraintBottom_toBottomOf = "parent"
+            />
+        
+        <!--bot date range-->
+        <include
+            android:id = "@+id/layout_bot_range"
+            layout = "@layout/layout_bottom_date_range"
+            android:layout_width = "match_parent"
+            android:layout_height = "50dp"
+            android:visibility = "@{fragment.isDateRangeAvailable ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf = "parent"
             />
     
