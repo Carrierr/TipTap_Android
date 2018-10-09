@@ -52,14 +52,13 @@ class DiaryDetailActivity : AppCompatActivity() {
 
 
     private fun checkBus() {
-        disposable.add(
-                RxBus.getInstance().toObservable()
-                        .subscribe {
-                            if (it is Diary) {
-                                lastDiary = it
-                            }
-                        }
-        )
+        RxBus.getInstance().toObservable()
+                .subscribe {
+                    if (it is Diary) {
+                        lastDiary = it
+                    }
+                }.dispose()
+
     }
 
     private fun initRecyclerView() {
@@ -107,7 +106,6 @@ class DiaryDetailActivity : AppCompatActivity() {
     /**
      * When click delete button.
      */
-    //이거 날짜로 지우는 api로 고쳐야함.
     fun onDeleteButtonClick() {
         val invalidDiaries = InvalidDiaries().apply {
             convertDateToString(mutableListOf(lastDiary.createdAt))

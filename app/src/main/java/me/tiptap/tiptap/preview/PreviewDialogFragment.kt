@@ -43,13 +43,13 @@ class PreviewDialogFragment: DialogFragment() {
     }
 
     private fun checkBus() {
-        disposable.add(rxBus.toObservable().subscribe {
+        rxBus.toObservable().subscribe {
             if (it is Pair<*,*>) {
                 binding.idx = it.first as Int
                 binding.diary = it.second as Diary
                 data = it.second as Diary
             }
-        })
+        }.dispose()
     }
 
 
