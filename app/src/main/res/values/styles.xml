@@ -75,8 +75,9 @@
     <style name = "MainDateText">
         <item name = "android:layout_height">wrap_content</item>
         <item name = "android:layout_width">wrap_content</item>
+        <item name = "android:textSize">13sp</item>
         <item name = "android:fontFamily">@font/montserrat_light</item>
-        <item name = "android:textColor">#252525</item>
+        <item name = "android:textColor">#6d6d6d</item>
     </style>
     
     <style name = "PreviewDateText">
