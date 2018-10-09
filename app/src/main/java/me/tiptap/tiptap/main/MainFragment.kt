@@ -133,6 +133,7 @@ class MainFragment : Fragment() , PreviewDialogNavigator {
      */
     fun onAddButtonClick() {
         if (todayDiaries.size < 10) {
+            rxBus.takeBus(todayDiaries.size) //현재 다이어리의 사이즈를 보냄
             Intent(context, DiaryWritingActivity::class.java).apply {
                 startActivity(this)
             }
