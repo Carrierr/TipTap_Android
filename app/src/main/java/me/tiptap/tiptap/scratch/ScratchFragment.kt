@@ -52,8 +52,10 @@ class ScratchFragment : Fragment() {
             }
 
             override fun onRevealed(tv: ScratchCard) {
+                activity?.runOnUiThread {
+                    tv.fadeOutAnimation(binding.scratch, 300)
+                }
                 tv.isRevealed = true
-                tv.fadeOutAnimation(binding.scratch, 300)
 
                 getShareDiary() //get Share diary if scratch is revealed.
             }
