@@ -23,6 +23,14 @@ interface DiaryApi {
             Observable<DiariesResponse>
 
 
+    //Get Diary List (date)
+    fun diaryListWithDate(
+            @Header("tiptap-token") token: String,
+            @Query("startDate") startDate: String,
+            @Query("endDate") endDate: String
+    ): Observable<DiariesResponse>
+
+
     //Get Diary detail
     @GET("diary/detail")
     fun getDiaryDetail(

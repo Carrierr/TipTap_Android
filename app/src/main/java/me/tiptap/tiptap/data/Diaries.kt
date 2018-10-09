@@ -8,6 +8,9 @@ class Diaries {
     @SerializedName("day")
     val day : String =""
 
+    @SerializedName("dataCount")
+    val dataCount : Int =0
+
     @SerializedName("diaryDatas")
     val firstLastDiary : FirstLastDiary? =null
 

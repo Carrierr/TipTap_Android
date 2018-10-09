@@ -59,6 +59,8 @@
             android:name=".diarywriting.DiaryWritingActivity"
             android:theme="@style/DiaryWritingTheme"/>
         <activity android:name=".setting.SettingActivity"/>
+        <activity android:name = ".diaries.CalendarActivity">
+        </activity>
     </application>
 
 </manifest>

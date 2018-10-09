@@ -74,6 +74,14 @@
         app:font = "@font/gotham_black"
         app:fontStyle = "normal"
         />
-
-
+    
+    <font
+        android:font = "@font/roboto_mid"
+        android:fontStyle = "normal"
+        />
+    <font
+        app:font = "@font/roboto_mid"
+        app:fontStyle = "normal"
+        />
+    
 </font-family>
