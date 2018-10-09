@@ -148,15 +148,16 @@ class DiaryWritingActivity : AppCompatActivity() {
 
 
     private fun checkBus() {
-        disposables.add(
-                rxBus
-                        .toObservable()
-                        .subscribe {
-                            if (it is Diary) {
-                                diary = it
-                                binding.diary = it
-                            }
-                        })
+        rxBus
+                .toObservable()
+                .subscribe {
+                    if (it is Diary) {
+                        diary = it
+                        binding.diary = it
+                    } else if (it is Int) {
+                        binding.toolbarWriteTitle.text = getString(R.string.post_count, (it+1).toString())
+                    }
+                }.dispose()
     }
 
 
