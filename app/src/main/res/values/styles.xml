@@ -7,18 +7,23 @@
         <item name = "windowActionModeOverlay">true</item>
         <item name = "android:textViewStyle">@style/TextViewStyle</item>
         <item name = "colorPrimary">@color/colorPrimary</item>
-        <item name = "colorPrimaryDark">#7ac8bc</item>
+        <item name = "colorPrimaryDark">@color/colorSeafoamBlue</item>
         <item name = "colorAccent">@color/colorAccent</item>
         <item name = "android:homeAsUpIndicator">@drawable/ic_back</item>
-        <item name = "android:actionMenuTextColor">@android:color/white</item>
-        <item name = "android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>
         <item name = "android:itemTextAppearance">@style/ItemTextStyle</item>
         <item name = "android:windowFullscreen">true</item>
+        <item name = "android:datePickerDialogTheme">@style/BaseDatePickerTheme</item>
     </style>
     
+    <style name = "BaseDatePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name = "android:fontFamily">@font/roboto_mid</item>
+        <item name="colorAccent">@color/colorSeafoamBlue</item>
+    </style>
+
+
     <style name = "SwitchCompat"
         parent = "Theme.AppCompat.Light">
-        <item name = "colorControlActivated">#7ac8bc</item>
+        <item name = "colorControlActivated">@color/colorSeafoamBlue</item>
         <item name = "colorSwitchThumbNormal">@color/colorDefaultBackground</item>
         <item name = "android:colorForeground">@color/colorMainGray</item>
     </style>
@@ -29,11 +34,6 @@
         <item name = "switchMinWidth">52dp</item>
         <item name = "layout_constraintEnd_toEndOf">parent</item>
         <item name = "android:theme">@style/SwitchCompat</item>
-    </style>
-    
-    <style name = "ActionOverflowButtonStyle"
-        parent = "Widget.AppCompat.ActionButton.Overflow">
-        <item name = "android:tint">@android:color/white</item>
     </style>
     
     <style name = "PreviewDialogAnimation">
@@ -48,7 +48,7 @@
     </style>
     
     <style name = "TextViewStyle"
-        parent = "android:Widget.TextView">>
+        parent = "android:Widget.TextView">
         <item name = "android:textColor">@color/colorMainBlack</item>
         <item name = "android:textSize">12sp</item>
     </style>
@@ -58,7 +58,7 @@
         <item name = "android:windowBackground">@drawable/splash_background</item>
         <item name = "android:windowFullscreen">true</item>
     </style>
-
+    
     <style name = "LoginTheme"
         parent = "Theme.AppCompat.NoActionBar">
         <item name = "android:windowBackground">@drawable/login_background</item>
@@ -160,6 +160,37 @@
         <item name = "android:fontFamily">@font/montserrat_bold</item>
         <item name = "android:layout_width">wrap_content</item>
         <item name = "android:layout_height">wrap_content</item>
+    </style>
+    
+    <style name = "CalendarTitleText">
+        <item name = "android:layout_width">wrap_content</item>
+        <item name = "android:layout_height">wrap_content</item>
+        <item name = "android:fontFamily">@font/ko_pub_dotum_pm</item>
+        <item name = "android:paddingBottom">16dp</item>
+        <item name = "android:textSize">14sp</item>
+        <item name = "android:paddingEnd">28dp</item>
+        <item name = "android:paddingStart">28dp</item>
+        <item name = "android:paddingTop">16dp</item>
+        <item name = "android:gravity">center</item>
+        <item name = "layout_constraintBottom_toBottomOf">parent</item>
+        <item name = "layout_constraintTop_toTopOf">parent</item>
+        <item name = "layout_constraintStart_toStartOf">parent</item>
+    </style>
+    
+    <style name = "CalendarContentText">
+        <item name = "android:layout_width">wrap_content</item>
+        <item name = "android:layout_height">wrap_content</item>
+        <item name = "android:fontFamily">@font/montserrat_mid</item>
+        <item name = "android:textSize">14sp</item>
+        <item name = "android:paddingStart">28dp</item>
+        <item name = "android:gravity">center</item>
+        <item name = "android:paddingTop">16dp</item>
+        <item name = "android:paddingEnd">28dp</item>
+        <item name = "android:paddingBottom">16dp</item>
+        <item name = "android:textColor">@color/colorMainGray</item>
+        <item name = "layout_constraintTop_toTopOf">parent</item>
+        <item name = "layout_constraintBottom_toBottomOf">parent</item>
+        <item name = "layout_constraintEnd_toEndOf">parent</item>
     </style>
 
 </resources>
