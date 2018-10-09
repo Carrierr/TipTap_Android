@@ -2,7 +2,7 @@ package me.tiptap.tiptap.diaries
 
 import android.content.Intent
 import android.databinding.DataBindingUtil
-import android.databinding.ObservableField
+import android.databinding.ObservableBoolean
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -21,7 +21,6 @@ import me.tiptap.tiptap.TipTapApplication
 import me.tiptap.tiptap.common.network.DiaryApi
 import me.tiptap.tiptap.common.network.ServerGenerator
 import me.tiptap.tiptap.common.rx.RxBus
-import me.tiptap.tiptap.common.view.DatePickerDialogFragment
 import me.tiptap.tiptap.data.DiariesResponse
 import me.tiptap.tiptap.data.InvalidDiaries
 import me.tiptap.tiptap.databinding.FragmentDiariesBinding
@@ -35,14 +34,13 @@ class DiariesFragment : Fragment() {
     private var adapter = DiariesAdapter()
 
     private val service = ServerGenerator.createService(DiaryApi::class.java)
-    private val bus = RxBus.getInstance()
+    private val rxBus = RxBus.getInstance()
     private val disposables: CompositeDisposable = CompositeDisposable()
 
     private var totalPage = 0 //total page
 
-    private lateinit var datePickerDialog: DatePickerDialogFragment
-
-    val isBotDialogVisible = ObservableField<Boolean>(false)
+    val isBotDialogVisible = ObservableBoolean(false)
+    val isDateRangeAvailable = ObservableBoolean(false)
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -57,6 +55,20 @@ class DiariesFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         initToolbar()
+
+    }
+
+    private fun checkBus() {
+        rxBus.toObservable()
+                .subscribe {
+                    if (it is Pair<*, *>) {
+                        val startDate = it.first
+                        val endDate = it.second
+
+                        isDateRangeAvailable.set(true)
+                        binding.layoutBotRange?.textBotRange?.text = getString(R.string.date_range, startDate, endDate)
+                    }
+                }.dispose()
     }
 
 
@@ -83,7 +95,7 @@ class DiariesFragment : Fragment() {
                         clickSubject.subscribe {
                             //Go to detail page if actionMode is not running.
                             if (this.isCheckboxAvailable.get() == false) {
-                                bus.takeBus(it) //send Diary's date to DiaryDetailActivity.
+                                rxBus.takeBus(it) //send Diary's date to DiaryDetailActivity.
                                 startActivity(Intent(this@DiariesFragment.activity, DiaryDetailActivity::class.java))
                             }
                         },
@@ -132,28 +144,7 @@ class DiariesFragment : Fragment() {
 
 
     fun onDateFindButtonClick() {
-        if (!::datePickerDialog.isInitialized) {
-            datePickerDialog = DatePickerDialogFragment()
-        }
-
-        activity?.let {
-            datePickerDialog.show(it.supportFragmentManager, it.getString(R.string.app_name))
-        }
-    }
-
-    /**
-     * when click delete Icon
-     */
-    fun startItemDelete() {
-        //checkbox mode on/off
-        adapter.isCheckboxAvailable.get()?.let {
-            isBotDialogVisible.set(!it) //change bottom dialog visibility
-            adapter.isCheckboxAvailable.set(!it) //change checkbox available or not
-
-            if (it) {
-                adapter.changeCheckboxState(false)
-            }
-        }
+        startActivity(Intent(this@DiariesFragment.activity, CalendarActivity::class.java))
     }
 
 
@@ -217,7 +208,9 @@ class DiariesFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        checkBus() //사용자가 날짜 범위를 선택했는지 여부 확인함.
         initRecyclerView()
+
         getDiaries(1, 2)
     }
 

@@ -51,7 +51,6 @@
             app:layout_constraintTop_toTopOf = "parent"
             />
         
-        <!--이거 어쩌지-->
         <me.tiptap.tiptap.common.view.VerticalTextView
             android:id = "@+id/text_diary_month"
             android:layout_width = "wrap_content"
@@ -147,7 +146,7 @@
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:fontFamily = "@font/montserrat_light"
-                android:text = "@{String.format(@string/count_diary_tiptap, diaries.firstLastDiary.lastDiary.todayIndex)}"
+                android:text = "@{String.format(@string/count_diary_tiptap, diaries.dataCount)}"
                 android:textColor = "@color/colorMainGrayDark"
                 android:textSize = "12sp"
                 app:layout_constraintStart_toEndOf = "@+id/gl_diary_card_content_start"
