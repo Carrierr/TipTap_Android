@@ -10,9 +10,31 @@
         android:layout_height = "match_parent"
         android:background = "@color/colorDefaultBackground"
         >
+    
+        <android.support.constraint.Guideline
+            android:id="@+id/gl_scratch_main_top"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.054"
+            />
+    
+        <TextView
+            android:id = "@+id/text_scratch_main_num"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/gl_scratch_main_top"
+            android:fontFamily = "@font/montserrat_regular"
+            android:gravity = "center"
+            android:text = "@{String.format(@string/count_tiptap, 0)}"
+            android:textSize = "16sp"
+            app:layout_constraintEnd_toEndOf = "parent"
+            app:layout_constraintStart_toStartOf = "parent"
+            tools:text = "10\n TIPTAP"
+            />
         
         <android.support.constraint.Guideline
-            android:id = "@+id/guide_scratch_main_side"
+            android:id = "@+id/gl_scratch_main_side"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "vertical"
@@ -22,21 +44,29 @@
         
         <View
             android:id = "@+id/view_scratch_main_line"
-            android:layout_width = "1dp"
+            android:layout_width = "0.5dp"
             android:layout_height = "0dp"
-            android:background = "@color/colorMainBlack"
-            app:layout_constraintBottom_toBottomOf = "@+id/guide_scratch_main_side_ho"
-            app:layout_constraintEnd_toStartOf = "@+id/guide_scratch_main_side"
-            app:layout_constraintStart_toStartOf = "parent"
-            app:layout_constraintTop_toTopOf = "parent"
+            android:background = "@color/colorMainGrayIsh"
+            app:layout_constraintBottom_toBottomOf="@+id/gl_scratch_main_line_bot"
+            app:layout_constraintEnd_toStartOf = "@+id/gl_scratch_main_side"
+            app:layout_constraintStart_toStartOf ="parent"
+            app:layout_constraintTop_toTopOf = "@+id/gl_scratch_main_line_top"
             />
         
         <android.support.constraint.Guideline
-            android:id = "@+id/guide_scratch_main_side_ho"
+            android:id = "@+id/gl_scratch_main_line_top"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "horizontal"
-            app:layout_constraintGuide_percent = "0.04"
+            app:layout_constraintGuide_percent = "0.15"
+            />
+    
+        <android.support.constraint.Guideline
+            android:id = "@+id/gl_scratch_main_line_bot"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "horizontal"
+            app:layout_constraintGuide_percent = "0.375"
             />
         
         <me.tiptap.tiptap.common.view.VerticalTextView
@@ -44,12 +74,18 @@
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:layout_marginTop = "@dimen/dimen_fifteen"
+<<<<<<< Updated upstream
             android:fontFamily = "@font/montserrat_bold"
+=======
+            android:fontFamily = "@font/montserrat_light"
+>>>>>>> Stashed changes
             android:maxLines = "1"
+            android:textSize="12sp"
+            android:textColor="@color/colorMainGrayIsh"
             android:text = "@string/from"
-            app:layout_constraintEnd_toStartOf = "@+id/guide_scratch_main_side"
+            app:layout_constraintEnd_toStartOf = "@+id/gl_scratch_main_side"
             app:layout_constraintStart_toStartOf = "parent"
-            app:layout_constraintTop_toBottomOf = "@+id/guide_scratch_main_side_ho"
+            app:layout_constraintTop_toBottomOf="@+id/view_scratch_main_line"
             />
         
         <me.tiptap.tiptap.common.view.VerticalTextView
@@ -57,34 +93,23 @@
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:layout_marginTop = "5dp"
-            android:fontFamily = "@font/ko_pub_dotum_pm"
+            android:textSize="12sp"
+            android:textColor="@color/colorMainGrayIsh"
+            android:fontFamily = "@font/ko_pub_dotum_pl"
             android:text = "경기도 부천시 어쩌고 저쩌고 이러쿵 저러쿵 요기조기요기"
-            app:layout_constraintEnd_toStartOf = "@+id/guide_scratch_main_side"
+            app:layout_constraintEnd_toStartOf = "@+id/gl_scratch_main_side"
             app:layout_constraintStart_toStartOf = "parent"
             app:layout_constraintTop_toBottomOf = "@+id/text_scratch_main_from"
             />
         
-        <TextView
-            android:id = "@+id/text_scratch_main_num"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
-            android:fontFamily = "@font/montserrat_regular"
-            android:gravity = "center"
-            android:text = "@{String.format(@string/count_tiptap, 0)}"
-            android:textSize = "14sp"
-            app:layout_constraintEnd_toEndOf = "parent"
-            app:layout_constraintStart_toStartOf = "parent"
-            app:layout_constraintTop_toTopOf = "@+id/text_scratch_main_from"
-            tools:text = "10\n TIPTAP"
-            />
-        
+            
         <!--scroll button-->
         <ImageView
             android:id = "@+id/btn_scratch_main_scroll"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:background = "@android:color/transparent"
-            android:src = "@drawable/scroll"
+            android:src = "@drawable/tiptap"
             app:layout_constraintBottom_toBottomOf = "parent"
             app:layout_constraintEnd_toEndOf = "parent"
             app:layout_constraintStart_toStartOf = "parent"
