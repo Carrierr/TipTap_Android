@@ -114,6 +114,7 @@ class DiaryWritingActivity : AppCompatActivity() {
 
             textWriteLocation.setOnClickListener { _ ->
                 SimplePlacesSearchDialogBuilder(this@DiaryWritingActivity)
+                        .setSearchHint(getString(R.string.place_search_hint))
                         .setLocationListener(object : SimplePlacesSearchDialog.PlaceSelectedCallback {
                             override fun onPlaceSelected(place: Place) {
                                 place.name.apply {

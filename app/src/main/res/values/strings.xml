@@ -26,6 +26,7 @@
     <string name = "hint_write">당신의 TIPTAP을 기록하세요.</string>
     <string name = "setting_location">위치설정</string>
     <string name = "text_length">%s / 800</string>
+    <string name = "place_search_hint">장소검색</string>
     
     <!--main-->
     <string name = "today">TODAY</string>
