@@ -10,26 +10,27 @@
         android:layout_height = "match_parent"
         android:background = "@color/colorDefaultBackground"
         >
-    
+        
         <android.support.constraint.Guideline
-            android:id="@+id/gl_scratch_main_top"
+            android:id = "@+id/gl_scratch_main_top"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.054"
+            android:orientation = "horizontal"
+            app:layout_constraintGuide_percent = "0.055"
             />
-    
+        
         <TextView
             android:id = "@+id/text_scratch_main_num"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/gl_scratch_main_top"
             android:fontFamily = "@font/montserrat_regular"
             android:gravity = "center"
             android:text = "@{String.format(@string/count_tiptap, 0)}"
             android:textSize = "16sp"
+            android:textStyle = "bold"
             app:layout_constraintEnd_toEndOf = "parent"
             app:layout_constraintStart_toStartOf = "parent"
+            app:layout_constraintTop_toBottomOf = "@+id/gl_scratch_main_top"
             tools:text = "10\n TIPTAP"
             />
         
@@ -47,9 +48,9 @@
             android:layout_width = "0.5dp"
             android:layout_height = "0dp"
             android:background = "@color/colorMainGrayIsh"
-            app:layout_constraintBottom_toBottomOf="@+id/gl_scratch_main_line_bot"
+            app:layout_constraintBottom_toBottomOf = "@+id/gl_scratch_main_line_bot"
             app:layout_constraintEnd_toStartOf = "@+id/gl_scratch_main_side"
-            app:layout_constraintStart_toStartOf ="parent"
+            app:layout_constraintStart_toStartOf = "parent"
             app:layout_constraintTop_toTopOf = "@+id/gl_scratch_main_line_top"
             />
         
@@ -60,7 +61,7 @@
             android:orientation = "horizontal"
             app:layout_constraintGuide_percent = "0.15"
             />
-    
+        
         <android.support.constraint.Guideline
             android:id = "@+id/gl_scratch_main_line_bot"
             android:layout_width = "wrap_content"
@@ -76,12 +77,12 @@
             android:layout_marginTop = "@dimen/dimen_fifteen"
             android:fontFamily = "@font/montserrat_light"
             android:maxLines = "1"
-            android:textSize="12sp"
-            android:textColor="@color/colorMainGrayIsh"
             android:text = "@string/from"
+            android:textColor = "@color/colorMainGrayIsh"
+            android:textSize = "12sp"
             app:layout_constraintEnd_toStartOf = "@+id/gl_scratch_main_side"
             app:layout_constraintStart_toStartOf = "parent"
-            app:layout_constraintTop_toBottomOf="@+id/view_scratch_main_line"
+            app:layout_constraintTop_toBottomOf = "@+id/view_scratch_main_line"
             />
         
         <me.tiptap.tiptap.common.view.VerticalTextView
@@ -89,16 +90,32 @@
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:layout_marginTop = "5dp"
-            android:textSize="12sp"
-            android:textColor="@color/colorMainGrayIsh"
             android:fontFamily = "@font/ko_pub_dotum_pl"
-            android:text = "경기도 부천시 어쩌고 저쩌고 이러쿵 저러쿵 요기조기요기"
+            android:textColor = "@color/colorMainGrayIsh"
+            android:textSize = "12sp"
             app:layout_constraintEnd_toStartOf = "@+id/gl_scratch_main_side"
             app:layout_constraintStart_toStartOf = "parent"
             app:layout_constraintTop_toBottomOf = "@+id/text_scratch_main_from"
             />
         
-            
+        <android.support.constraint.Guideline
+            android:id = "@+id/gl_scratch_post_start"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "vertical"
+            app:layout_constraintGuide_percent = "0.175"
+            app:layout_constraintTop_toTopOf = "parent"
+            />
+        
+        <include
+            android:id = "@+id/layout_scratch_post"
+            layout = "@layout/layout_post"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            app:layout_constraintStart_toStartOf = "@+id/gl_scratch_post_start"
+            app:layout_constraintTop_toTopOf = "@+id/gl_scratch_main_line_top"
+            />
+        
         <!--scroll button-->
         <ImageView
             android:id = "@+id/btn_scratch_main_scroll"

@@ -2,6 +2,7 @@ package me.tiptap.tiptap.scratch
 
 import android.annotation.SuppressLint
 import android.databinding.DataBindingUtil
+import android.databinding.ObservableInt
 import android.graphics.Point
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -30,10 +31,13 @@ class ScratchFragment : Fragment() {
 
     private val adapter = SharingAdapter()
 
+    val postSize = ObservableInt(0)
+
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_scratch, container, false)
+        binding.layoutScratchMain?.layoutScratchPost?.postSize = postSize
 
         initBind()
 
@@ -47,7 +51,7 @@ class ScratchFragment : Fragment() {
         binding.scratch.setRevealListener(object : ScratchCard.IRevealListener {
             override fun onRevealPercentChangedListener(stv: ScratchCard, percent: Float) {
                 if (percent <= 0.2f && !stv.isRevealed) {
-                        stv.mRevealPercent = 1.0f
+                    stv.mRevealPercent = 1.0f
                 }
             }
 
@@ -88,13 +92,17 @@ class ScratchFragment : Fragment() {
                         .subscribeWith(object : DisposableObserver<DiaryResponse>() {
                             override fun onNext(t: DiaryResponse) {
                                 if (t.code == "1000") {
-                                        adapter.addItems(t.data.diaries)
+                                    adapter.addItems(t.data.diaries)
                                 }
                             }
 
                             override fun onComplete() {
-                                adapter.notifyDataSetChanged()
-                                binding.layoutScratchMain?.textScratchMainNum?.text = getString(R.string.count_tiptap, adapter.itemCount)
+                                postSize.set(adapter.itemCount)
+
+                                binding.layoutScratchMain?.apply {
+                                    textScratchMainNum?.text = getString(R.string.count_tiptap, adapter.itemCount)
+                                    textScratchMainLocation?.text = adapter.getItem(0).location
+                                }
                             }
 
                             override fun onError(e: Throwable) {
@@ -110,8 +118,7 @@ class ScratchFragment : Fragment() {
             setHasFixedSize(true)
 
             layoutManager = LinearLayoutManager(this@ScratchFragment.context)
-            adapter = this@ScratchFragment.adapter.apply {
-            }
+            adapter = this@ScratchFragment.adapter
         }
     }
 

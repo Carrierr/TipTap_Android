@@ -29,7 +29,7 @@
     <string name = "place_search_hint">장소검색</string>
     
     <!--main-->
-    <string name = "today">TODAY</string>
+    <string name = "today_count">TODAY\n#%d</string>
     <string name = "no_tiptap">당신의\n첫번째 TIPTAP을\n작성해주세요.</string>
     <string name = "post_count">#%s</string>
     <string name = "msg_today_warn">하루 TIPTAP은 최대 10개까지 작성할 수 있습니다.</string>
