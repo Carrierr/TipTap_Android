@@ -84,30 +84,42 @@ class DiariesFragment : Fragment() {
 
     private fun initRecyclerView() {
         binding.recyclerDiaries.apply {
-            setHasFixedSize(true)
-
             layoutManager = LinearLayoutManager(this@DiariesFragment.context)
-
-            this@DiariesFragment.adapter = DiariesAdapter().apply {
-                adapter = this
-
-                disposables.addAll(
-                        clickSubject.subscribe {
-                            //Go to detail page if actionMode is not running.
-                            if (this.isCheckboxAvailable.get() == false) {
-                                rxBus.takeBus(it) //send Diary's date to DiaryDetailActivity.
-                                startActivity(Intent(this@DiariesFragment.activity, DiaryDetailActivity::class.java))
-                            }
-                        },
-                        longClickSubject.subscribe {
-                            this.startDeleteMode(it)
-                            isBotDialogVisible.set(!it) //change bottom dialog visibility
-                        },
-                        checkSubject.subscribe {
-                            onCheckedChangeEventPublished(it)
-                        })
+            adapter = this@DiariesFragment.adapter.apply {
+                setHasStableIds(true)
             }
+
+            setHasFixedSize(true)
+            (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
+
+            initRecyclerViewEvent()
         }
+    }
+
+    private fun initRecyclerViewEvent() {
+        Log.d("Today", "init recyclerview event")
+        adapter.apply {
+            disposables.addAll(
+                    clickSubject.subscribe {
+                        if (!this.isCheckboxAvailable.get()) {   //Go to detail page if delete mode is not running.
+                            rxBus.takeBus(it) //send Diary's date to DiaryDetailActivity.
+                            startActivity(Intent(this@DiariesFragment.activity, DiaryDetailActivity::class.java))
+                        }
+                    },
+                    longClickSubject.subscribe {
+                        this.changeDeleteModeState(it)
+                        isBotDialogVisible.set(it) //change bottom dialog visibility
+                    },
+                    checkSubject.subscribe {
+                        onCheckedChangeEventPublished(it)
+                    }
+            )
+        }
+    }
+
+                            }
+                        }
+        )
     }
 
     private fun getDiaries(page: Int, limit: Int) {
@@ -157,9 +169,9 @@ class DiariesFragment : Fragment() {
                 //clicked cancel
             }
             R.id.text_bot_dial_delete -> {
-                adapter.run {
-                    this.deleteCheckedItems() //delete items from adapter's dataSet
-                    deleteDiaries(this.checkedDataSet) //call deleteDiary api
+                adapter.apply {
+                    deleteCheckedItems() //delete items from adapter's dataSet
+                    this@DiariesFragment.deleteDiaries(this.checkedDataSet) //call deleteDiary api
                 }
             }
         }

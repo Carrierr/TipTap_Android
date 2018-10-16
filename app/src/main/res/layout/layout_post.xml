@@ -42,6 +42,7 @@
             android:id = "@+id/text_post_1"
             style = "@style/PostNumberTextStyle"
             android:text = "@string/post_one"
+            android:visibility = "@{postSize >=1 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintStart_toStartOf = "@+id/gl_post_1"
             />
         
@@ -51,6 +52,7 @@
             android:layout_height = "wrap_content"
             android:onClick = "@{fragment::onPostClick}"
             android:tag = "@string/post_one"
+            android:visibility = "@{postSize >=1 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintEnd_toStartOf = "@+id/img_post_2"
             app:layout_constraintStart_toEndOf = "@+id/text_post_1"
             android:src = "@drawable/stamp7"

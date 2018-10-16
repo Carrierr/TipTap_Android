@@ -24,12 +24,29 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
     var isCheckboxAvailable = ObservableBoolean(false)
 
 
+    fun addItemOnTop(item : Diaries) {
+        dataSet[0] = item
+
+        visibleSideHeader(0)
+    }
+
     fun addItems(items: MutableList<Diaries>) {
         dataSet.addAll(items)
         notifyDataSetChanged()
 
-
         visibleSideHeader(dataSet.size - items.size)
+    }
+
+    fun updateItems(items: MutableList<Diaries>) {
+        dataSet.clear()
+        dataSet.addAll(items)
+
+        notifyDataSetChanged()
+    }
+
+    fun deleteAllItems() {
+        dataSet.clear()
+        notifyDataSetChanged()
     }
 
 
@@ -51,16 +68,17 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
         }
     }
 
-    fun startDeleteMode(state : Boolean) {
-        isCheckboxAvailable.set(!state) //change checkbox available or not
+    fun changeDeleteModeState(state: Boolean) {
+        isCheckboxAvailable.set(state) //change checkbox available or not
 
-        if (state) {
-            changeCheckboxState(false)
+        if (!state) {
+            changeCheckboxState(state)
         }
     }
 
+
     fun deleteCheckedItems() {
-        if (checkedDataSet.size > 0) {
+        if (checkedDataSet.isNotEmpty()) {
 
             dataSet.iterator().run {
                 while (this.hasNext()) {
@@ -112,7 +130,7 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
             item.firstLastDiary?.lastDiary?.let {
                 getClickObservable(it).subscribe(clickSubject)
             }
-            getLongClickObservable(isCheckboxAvailable.get()).subscribe(longClickSubject)
+            getLongClickObservable().subscribe(longClickSubject)
             getCheckObservable(item).subscribe(checkSubject)
         }
     }
