@@ -6,12 +6,12 @@ import android.databinding.ObservableBoolean
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.gson.JsonObject
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
@@ -31,11 +31,11 @@ class DiariesFragment : Fragment() {
 
     private lateinit var binding: FragmentDiariesBinding
 
-    private var adapter = DiariesAdapter()
+    private val adapter = DiariesAdapter()
 
     private val service = ServerGenerator.createService(DiaryApi::class.java)
     private val rxBus = RxBus.getInstance()
-    private val disposables: CompositeDisposable = CompositeDisposable()
+    private val disposables = CompositeDisposable()
 
     private var totalPage = 0 //total page
 
@@ -55,20 +55,7 @@ class DiariesFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         initToolbar()
-
-    }
-
-    private fun checkBus() {
-        rxBus.toObservable()
-                .subscribe {
-                    if (it is Pair<*, *>) {
-                        val startDate = it.first
-                        val endDate = it.second
-
-                        isDateRangeAvailable.set(true)
-                        binding.layoutBotRange?.textBotRange?.text = getString(R.string.date_range, startDate, endDate)
-                    }
-                }.dispose()
+        initRecyclerView()
     }
 
 
@@ -84,42 +71,91 @@ class DiariesFragment : Fragment() {
 
     private fun initRecyclerView() {
         binding.recyclerDiaries.apply {
-            setHasFixedSize(true)
-
             layoutManager = LinearLayoutManager(this@DiariesFragment.context)
-
-            this@DiariesFragment.adapter = DiariesAdapter().apply {
-                adapter = this
-
-                disposables.addAll(
-                        clickSubject.subscribe {
-                            //Go to detail page if actionMode is not running.
-                            if (this.isCheckboxAvailable.get() == false) {
-                                rxBus.takeBus(it) //send Diary's date to DiaryDetailActivity.
-                                startActivity(Intent(this@DiariesFragment.activity, DiaryDetailActivity::class.java))
-                            }
-                        },
-                        longClickSubject.subscribe {
-                            this.startDeleteMode(it)
-                            isBotDialogVisible.set(!it) //change bottom dialog visibility
-                        },
-                        checkSubject.subscribe {
-                            onCheckedChangeEventPublished(it)
-                        })
+            adapter = this@DiariesFragment.adapter.apply {
+                setHasStableIds(true)
             }
+
+            setHasFixedSize(true)
+            (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
+
+            initRecyclerViewEvent()
         }
     }
 
-    private fun getDiaries(page: Int, limit: Int) {
+    private fun initRecyclerViewEvent() {
+        Log.d("Today", "init recyclerview event")
+        adapter.apply {
+            disposables.addAll(
+                    clickSubject.subscribe {
+                        if (!this.isCheckboxAvailable.get()) {   //Go to detail page if delete mode is not running.
+                            rxBus.takeBus(it) //send Diary's date to DiaryDetailActivity.
+                            startActivity(Intent(this@DiariesFragment.activity, DiaryDetailActivity::class.java))
+                        }
+                    },
+                    longClickSubject.subscribe {
+                        this.changeDeleteModeState(it)
+                        isBotDialogVisible.set(it) //change bottom dialog visibility
+                    },
+                    checkSubject.subscribe {
+                        onCheckedChangeEventPublished(it)
+                    }
+            )
+        }
+    }
+
+    private fun checkBus() {
+        rxBus.toObservable()
+                .subscribe {
+                    if (it is ArrayList<*>) {
+                        val startDate = it[0].toString()
+                        val endDate = it[1].toString()
+
+                        isDateRangeAvailable.set(true)
+                        binding.layoutBotRange?.textBotRange?.text = getString(R.string.date_range, startDate, endDate)
+
+                        getDiariesByDate(startDate, endDate)
+
+                    } else if (it is Boolean) {
+                        getDiaries(1, 2, it)
+                    }
+                }
+                .dispose()
+    }
+
+    /**
+     * Get diaries by date range.
+     */
+    private fun getDiariesByDate(startDate: String, endDate: String) {
         disposables.add(
-                service.diaryList(TipTapApplication.getAccessToken(), page, limit) //한번에 하나의 달만 불러올거.
+                service.getDiariesByDate(
+                        TipTapApplication.getAccessToken(), startDate, endDate)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnError { e -> e.printStackTrace() }
+                        .subscribe { t ->
+                            if (t.code == "1000") {
+                                val list = t.data.list
+
+                                if (list.isNotEmpty()) {
+                                    for (monthDiary in list.iterator()) {
+                                        if (monthDiary.diariesOfDay != null) {
+                                            adapter.updateItems(monthDiary.diariesOfDay) //update items
+                                        }
+                                    }
+                                }
+                            }
+                        }
+        )
+    }
+
+    private fun getDiaries(page: Int, limit: Int, isDataNotAdded: Boolean) {
+        Log.d("Today", "getDiaries")
+        disposables.add(
+                service.getDiaries(TipTapApplication.getAccessToken(), page, limit) //한번에 하나의 달만 불러올거.
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .subscribeWith(object : DisposableObserver<DiariesResponse>() {
-                            override fun onComplete() {
-                                adapter.notifyDataSetChanged()
-                            }
-
                             override fun onNext(t: DiariesResponse) {
                                 if (t.code == "1000") {
                                     totalPage = t.data.total
@@ -129,10 +165,19 @@ class DiariesFragment : Fragment() {
                                     if (list.isNotEmpty()) {
                                         for (monthDiary in list.iterator()) {
                                             if (monthDiary.diariesOfDay != null)
-                                                adapter.addItems(monthDiary.diariesOfDay) //add items
+                                                if (!isDataNotAdded && adapter.itemCount != 0) { //금일에 추가된 일기가 있고, 한번 리스트를 로드한 적이 있다면,
+                                                    adapter.addItemOnTop(monthDiary.diariesOfDay[0])
+                                                    return
+                                                } else {
+                                                    adapter.addItems(monthDiary.diariesOfDay) //add items
+                                                }
                                         }
                                     }
                                 }
+                            }
+
+                            override fun onComplete() {
+                                adapter.notifyDataSetChanged()
                             }
 
                             override fun onError(e: Throwable) {
@@ -144,7 +189,17 @@ class DiariesFragment : Fragment() {
 
 
     fun onDateFindButtonClick() {
+        adapter.changeDeleteModeState(false)
+
         startActivity(Intent(this@DiariesFragment.activity, CalendarActivity::class.java))
+    }
+
+
+    fun onDateClearButtonClick() {
+        isDateRangeAvailable.set(false)
+
+        adapter.deleteAllItems()
+        getDiaries(1, 2, true)
     }
 
 
@@ -157,9 +212,9 @@ class DiariesFragment : Fragment() {
                 //clicked cancel
             }
             R.id.text_bot_dial_delete -> {
-                adapter.run {
-                    this.deleteCheckedItems() //delete items from adapter's dataSet
-                    deleteDiaries(this.checkedDataSet) //call deleteDiary api
+                adapter.apply {
+                    deleteCheckedItems() //delete items from adapter's dataSet
+                    this@DiariesFragment.deleteDiaries(this.checkedDataSet) //call deleteDiary api
                 }
             }
         }
@@ -184,38 +239,52 @@ class DiariesFragment : Fragment() {
         disposables.add(
                 service.deleteDiaryByDay(TipTapApplication.getAccessToken(), invalidDiaries)
                         .subscribeOn(Schedulers.io())
-                        .subscribeWith(object : DisposableObserver<JsonObject>() {
-                            override fun onComplete() {
-                                //
-                            }
-
-                            override fun onNext(t: JsonObject) {
-                                t.apply {
-                                    if (get(getString(R.string.code)).asString != "1000") { //if not successful.
-                                        Log.d(getString(R.string.desc),
-                                                getAsJsonObject(getString(R.string.data)).get(getString(R.string.desc)).asString)
-                                    }
+                        .doOnError { e -> e.printStackTrace() }
+                        .subscribe { t ->
+                            t.apply {
+                                if (get(getString(R.string.code)).asString != "1000") { //if not successful.
+                                    Log.d(getString(R.string.desc), getAsJsonObject(getString(R.string.data)).get(getString(R.string.desc)).asString)
                                 }
                             }
-
-                            override fun onError(e: Throwable) {
-                                e.printStackTrace()
-                            }
                         })
-        )
     }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+
+        if (isVisibleToUser) {
+            if (!isDateRangeAvailable.get()) {
+                checkBus()
+            }
+        } else {
+            resetAllMode()
+            disposables.clear()
+        }
+    }
+
+
+    private fun resetAllMode() {
+        adapter.changeDeleteModeState(false)
+        isBotDialogVisible.set(false)
+
+        isDateRangeAvailable.set(false)
+    }
+
 
     override fun onResume() {
         super.onResume()
 
-        checkBus() //사용자가 날짜 범위를 선택했는지 여부 확인함.
-        initRecyclerView()
+        userVisibleHint = true
 
-        getDiaries(1, 2)
+        if (disposables.size() == 0) {
+            initRecyclerViewEvent()
+        }
     }
 
     override fun onPause() {
         super.onPause()
+
+        resetAllMode()
         disposables.clear()
     }
 

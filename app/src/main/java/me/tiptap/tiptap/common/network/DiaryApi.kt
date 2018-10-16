@@ -16,7 +16,7 @@ interface DiaryApi {
 
     //Get DiaryList
     @GET("diary/list")
-    fun diaryList(
+    fun getDiaries(
             @Header("tiptap-token") token: String,
             @Query("page") page: Int,
             @Query("limit") limit: Int):
@@ -24,7 +24,8 @@ interface DiaryApi {
 
 
     //Get Diary List (date)
-    fun diaryListWithDate(
+    @GET("diary/list/by/date")
+    fun getDiariesByDate(
             @Header("tiptap-token") token: String,
             @Query("startDate") startDate: String,
             @Query("endDate") endDate: String

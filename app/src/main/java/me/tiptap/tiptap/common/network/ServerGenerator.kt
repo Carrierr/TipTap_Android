@@ -19,6 +19,7 @@ class ServerGenerator {
         private fun getClient(): OkHttpClient =
                 OkHttpClient.Builder()
                         .addNetworkInterceptor(StethoInterceptor())
+                        .retryOnConnectionFailure(true)
                         .writeTimeout(WRITE_TIMEOUT, TimeUnit.SECONDS)
                         .readTimeout(READ_TIMEOUT, TimeUnit.SECONDS)
                         .build()

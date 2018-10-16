@@ -20,10 +20,10 @@ class DiariesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 }
             }
 
-    fun getLongClickObservable(item: Boolean): Observable<Boolean> =
+    fun getLongClickObservable(): Observable<Boolean> =
             Observable.create { emitter ->
                 itemView.setOnLongClickListener {
-                    emitter.onNext(item)
+                    emitter.onNext(true)
                     true
                 }
             }

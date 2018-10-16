@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil
 import android.databinding.ObservableInt
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
@@ -28,7 +29,7 @@ import me.tiptap.tiptap.preview.PreviewDialogFragment
 import me.tiptap.tiptap.setting.SettingActivity
 import java.util.*
 
-class MainFragment : Fragment() , PreviewDialogNavigator {
+class MainFragment : Fragment(), PreviewDialogNavigator {
 
     private lateinit var binding: FragmentMainBinding
 
@@ -77,7 +78,7 @@ class MainFragment : Fragment() , PreviewDialogNavigator {
                             }
 
                             override fun onComplete() {
-
+                                rxBus.takeBus(false)
                             }
 
                             override fun onError(e: Throwable) {
@@ -119,9 +120,9 @@ class MainFragment : Fragment() , PreviewDialogNavigator {
         val tag = view.tag.toString().toInt()
 
         //send diary's idx with diary
-        rxBus.takeBus(Pair(tag, todayDiaries[tag-1] ))
+        rxBus.takeBus(Pair(tag, todayDiaries[tag - 1]))
 
-         PreviewDialogFragment().apply {
+        PreviewDialogFragment().apply {
             previewDialogNavi = this@MainFragment
             show(this@MainFragment.fragmentManager, "preview")  //Show preview dialog
         }
@@ -139,9 +140,19 @@ class MainFragment : Fragment() , PreviewDialogNavigator {
             }
         } else {
             //더이상 다이어리를 적을 수 없음.
+            showWarnDialog()
         }
     }
 
+    private fun showWarnDialog() {
+        this.context?.let {
+            AlertDialog.Builder(it).apply {
+                setMessage(getString(R.string.msg_today_warn))
+                setPositiveButton(getString(R.string.ok), null)
+                create()
+            }.show()
+        }
+    }
 
     /**
      * Setting button is clicked
@@ -172,19 +183,30 @@ class MainFragment : Fragment() , PreviewDialogNavigator {
     }
 
 
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+
+        if (isVisibleToUser) {
+            getTodayDiaries()
+        } else {
+            disposables.clear()
+        }
+    }
+
     override fun onStart() {
         super.onStart()
 
-        getTodayDiaries()
+        userVisibleHint = true
     }
 
 
     override fun onStop() {
         super.onStop()
 
-
         clearResources()
+        disposables.clear()
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

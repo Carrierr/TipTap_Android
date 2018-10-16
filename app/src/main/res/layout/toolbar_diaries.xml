@@ -64,6 +64,7 @@
                 android:layout_height = "wrap_content"
                 android:background = "@android:color/transparent"
                 android:paddingEnd = "22dp"
+                android:onClick="@{() -> fragment.onDateClearButtonClick()}"
                 android:visibility="@{fragment.isDateRangeAvailable ? View.VISIBLE : View.GONE, default = gone}"
                 android:paddingStart = "5dp"
                 android:paddingTop="5dp"
