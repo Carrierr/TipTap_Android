@@ -41,7 +41,7 @@ class CalendarActivity : AppCompatActivity() {
         val startDate = binding.textCalStart.text
         val endDate = binding.textCalEnd.text
 
-        RxBus.getInstance().takeBus(Pair(startDate, endDate))
+        RxBus.getInstance().takeBus(arrayListOf(startDate, endDate))
     }
 
 

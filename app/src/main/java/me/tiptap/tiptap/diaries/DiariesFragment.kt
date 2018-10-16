@@ -55,20 +55,6 @@ class DiariesFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         initToolbar()
-
-    }
-
-    private fun checkBus() {
-        rxBus.toObservable()
-                .subscribe {
-                    if (it is Pair<*, *>) {
-                        val startDate = it.first
-                        val endDate = it.second
-
-                        isDateRangeAvailable.set(true)
-                        binding.layoutBotRange?.textBotRange?.text = getString(R.string.date_range, startDate, endDate)
-                    }
-                }.dispose()
     }
 
 
@@ -117,6 +103,24 @@ class DiariesFragment : Fragment() {
         }
     }
 
+    private fun checkBus() {
+        rxBus.toObservable()
+                .subscribe {
+                    if (it is ArrayList<*>) {
+                        val startDate = it[0].toString()
+                        val endDate = it[1].toString()
+
+                        isDateRangeAvailable.set(true)
+                        binding.layoutBotRange?.textBotRange?.text = getString(R.string.date_range, startDate, endDate)
+
+                        getDiariesByDate(startDate, endDate)
+
+                    } else if (it is Boolean) {
+                        getDiaries(1, 2, it)
+                    }
+                }
+                .dispose()
+    }
                             }
                         }
         )

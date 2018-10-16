@@ -78,6 +78,7 @@ class MainFragment : Fragment() , PreviewDialogNavigator {
 
                             override fun onComplete() {
 
+                                rxBus.takeBus(false)
                             }
 
                             override fun onError(e: Throwable) {
