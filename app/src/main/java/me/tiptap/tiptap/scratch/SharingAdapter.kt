@@ -10,7 +10,7 @@ import me.tiptap.tiptap.data.Diary
 
 class SharingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val dataSet: MutableList<Diary?> = mutableListOf()
+    private val dataSet: MutableList<Diary> = mutableListOf()
 
 
     fun addItems(items: MutableList<Diary>) {
@@ -39,7 +39,7 @@ class SharingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemCount(): Int = dataSet.size
 
     //get item by position
-    private fun getItem(position: Int) = dataSet[position]
+    fun getItem(position: Int) = dataSet[position]
 
 
 }
