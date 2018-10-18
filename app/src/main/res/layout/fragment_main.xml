@@ -83,7 +83,6 @@
             layout = "@layout/layout_post"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:visibility = "@{fragment.postSize > 0 ? View.VISIBLE : View.GONE}"
             app:fragment = "@{fragment}"
             app:layout_constraintEnd_toEndOf = "@+id/gl_main_post_end"
             app:layout_constraintStart_toStartOf = "@+id/gl_main_post_start"
