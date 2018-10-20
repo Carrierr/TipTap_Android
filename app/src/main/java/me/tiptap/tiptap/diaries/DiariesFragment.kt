@@ -254,8 +254,13 @@ class DiariesFragment : Fragment() {
 
         if (isVisibleToUser) {
             if (!isDateRangeAvailable.get()) {
+                if (disposables.size() == 0) {
+                    initRecyclerViewEvent()
+                }
+
                 checkBus()
             }
+
         } else {
             resetAllMode()
             disposables.clear()
