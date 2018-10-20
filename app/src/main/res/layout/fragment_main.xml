@@ -27,12 +27,22 @@
         android:layout_width = "match_parent"
         android:layout_height = "match_parent"
         android:background = "@color/colorDefaultBackground"
-        android:paddingTop = "18dp"
         >
-        
+
+        <android.support.constraint.Guideline
+            android:layout_width = "wrap_content"
+            android:id="@+id/gl_main_top"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent = "0.05"
+            android:layout_height = "wrap_content" />
+
+
         <include
             android:id = "@+id/toolbar"
             fragment = "@{fragment}"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/gl_main_top"
             layout = "@layout/toolbar_main"
             />
         
