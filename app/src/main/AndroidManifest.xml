@@ -29,7 +29,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-    
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -39,7 +39,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths"/>
         </provider>
-        
+
         <activity
             android:name=".splash.SplashActivity"
             android:theme="@style/SplashTheme"
@@ -61,6 +61,7 @@
         <activity android:name=".setting.SettingActivity"/>
         <activity android:name = ".diaries.CalendarActivity">
         </activity>
+        <activity android:name =".onboarding.OnBoardingActivity"/>
     </application>
 
 </manifest>
