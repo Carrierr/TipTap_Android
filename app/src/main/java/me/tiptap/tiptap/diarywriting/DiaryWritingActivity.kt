@@ -17,6 +17,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.ImageView
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.gms.location.places.Place
 import com.taskail.googleplacessearchdialog.SimplePlacesSearchDialog
@@ -69,9 +70,7 @@ class DiaryWritingActivity : AppCompatActivity() {
             }
 
             val geoCoder = Geocoder(applicationContext, Locale.getDefault())
-
             val listAddresses = geoCoder.getFromLocation(location.latitude, location.longitude, 1)
-
 
             if (listAddresses != null && listAddresses.size > 0) {
                 val locationText = listAddresses[0].getAddressLine(0)
@@ -98,8 +97,6 @@ class DiaryWritingActivity : AppCompatActivity() {
         initBind(binding)
 
         checkBus() //넘겨진 데이터가 있는지 확인
-
-        checkLocationPermission() //check network permission
     }
 
 
@@ -153,9 +150,16 @@ class DiaryWritingActivity : AppCompatActivity() {
                     if (it is Pair<*, *>) { //수정
                         diary = it.second as Diary
                         binding.diary = diary
+
+                        if (diary.imageUrl != null) {
+                            isPhotoAvailable.set(true)
+                        }
+
                         binding.toolbarWriteTitle.text = getString(R.string.post_count, it.first.toString())
                     } else if (it is Int) { //등록
                         binding.toolbarWriteTitle.text = getString(R.string.post_count, (it + 1).toString())
+
+                        checkLocationPermission() //check network permission
                     }
                 }.dispose()
     }
@@ -217,17 +221,11 @@ class DiaryWritingActivity : AppCompatActivity() {
      * Request Permission callback.
      */
     override fun onRequestPermissionsResult(reqCode: Int, permissions: Array<out String>, results: IntArray) {
-        when (reqCode) {
-            storageCode -> {
-                if (results.isNotEmpty() && results[0] == PackageManager.PERMISSION_GRANTED) {
-                    openImagePicker()
-                }
-            }
+        if (results.isNotEmpty() && results[0] == PackageManager.PERMISSION_GRANTED) {
+            when (reqCode) {
+                storageCode -> openImagePicker()
 
-            locationCode -> {
-                if (results.isNotEmpty() && results[0] == PackageManager.PERMISSION_GRANTED) {
-                    findCurrentLocation()
-                }
+                locationCode -> findCurrentLocation()
             }
         }
     }
@@ -247,6 +245,16 @@ class DiaryWritingActivity : AppCompatActivity() {
     }
 
     /**
+     * Delete added photo.
+     */
+    fun onDeletePhotoClick() {
+        isPhotoAvailable.set(false)
+
+        imgUri = null
+        diary.imageUrl = null
+    }
+
+    /**
      * Open bottom picker.
      */
     private fun openImagePicker() {
@@ -255,6 +263,7 @@ class DiaryWritingActivity : AppCompatActivity() {
                 .setOnImageSelectedListener { uri ->
                     imgUri = uri //set img uri
                     isPhotoAvailable.set(true)
+
                     applyImage(binding.imgWriteMyPicture, uri) //apply image uri to imageView
                 }
                 .setImageProvider { imageView, imageUri ->
@@ -278,6 +287,7 @@ class DiaryWritingActivity : AppCompatActivity() {
         GlideApp
                 .with(this@DiaryWritingActivity)
                 .load(uri)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .thumbnail(0.1f)
                 .into(imgView)
     }
@@ -298,8 +308,7 @@ class DiaryWritingActivity : AppCompatActivity() {
     /**
      * convert object to RequestBody
      */
-    private fun toRequestBody(content: String): RequestBody =
-            RequestBody.create(MediaType.parse("text/plain"), content)
+    private fun toRequestBody(content: String): RequestBody = RequestBody.create(MediaType.parse("text/plain"), content)
 
 
     /**
