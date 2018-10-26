@@ -247,6 +247,16 @@ class DiaryWritingActivity : AppCompatActivity() {
     }
 
     /**
+     * Delete added photo.
+     */
+    fun onDeletePhotoClick() {
+        isPhotoAvailable.set(false)
+
+        imgUri = null
+        diary.imageUrl = null
+    }
+
+    /**
      * Open bottom picker.
      */
     private fun openImagePicker() {
