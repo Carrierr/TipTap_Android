@@ -229,12 +229,9 @@ class DiariesFragment : Fragment() {
                         .subscribeOn(Schedulers.io())
                         .doOnError { e -> e.printStackTrace() }
                         .doOnComplete { if (adapter.itemCount == 0) isDiaryExist.set(false) }
+                        .filter { task -> task.get(getString(R.string.code)).asString != "1000" }
                         .subscribe { t ->
-                            t.apply {
-                                if (get(getString(R.string.code)).asString != "1000") { //if not successful.
-                                    Log.d(getString(R.string.desc), getAsJsonObject(getString(R.string.data)).get(getString(R.string.desc)).asString)
-                                }
-                            }
+                            Log.d(getString(R.string.desc), t.getAsJsonObject(getString(R.string.data)).get(getString(R.string.desc)).asString)
                         })
     }
 
