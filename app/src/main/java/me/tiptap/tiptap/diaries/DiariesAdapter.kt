@@ -24,12 +24,6 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
     var isCheckboxAvailable = ObservableBoolean(false)
 
 
-    fun addItemOnTop(item : Diaries) {
-        dataSet[0] = item
-
-        visibleSideHeader(0)
-    }
-
     fun addItems(items: MutableList<Diaries>) {
         dataSet.addAll(items)
         notifyDataSetChanged()
@@ -104,6 +98,7 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
                 .subscribe { item ->
                     item.isSelected = state
                 }
+                .dispose()
     }
 
     /**
