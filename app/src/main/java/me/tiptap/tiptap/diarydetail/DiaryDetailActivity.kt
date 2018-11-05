@@ -58,7 +58,6 @@ class DiaryDetailActivity : AppCompatActivity() {
                         lastDiary = it
                     }
                 }.dispose()
-
     }
 
     private fun initRecyclerView() {
@@ -77,22 +76,13 @@ class DiaryDetailActivity : AppCompatActivity() {
                         TipTapApplication.getAccessToken(), lastDiary?.createdAt.toString())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
-                        .subscribeWith(object : DisposableObserver<DiaryResponse>() {
-                            override fun onNext(task: DiaryResponse) {
-                                if (task.code == "1000") {
-                                    adapter.addItems(task.data.diaries)
-                                }
-                            }
-
-                            override fun onComplete() {
-                                adapter.notifyDataSetChanged()
-                            }
-
-                            override fun onError(e: Throwable) {
-                                e.printStackTrace()
-                            }
-                        }))
+                        .doOnError { e -> e.printStackTrace() }
+                        .doOnComplete { adapter.notifyDataSetChanged() }
+                        .filter { task -> task.code == "1000" }
+                        .subscribe { task -> adapter.addItems(task.data.diaries) }
+        )
     }
+
 
     private fun initToolbar() {
         setupActionBar(R.id.toolbar_detail) {
@@ -110,21 +100,19 @@ class DiaryDetailActivity : AppCompatActivity() {
         val invalidDiaries = InvalidDiaries().apply {
             convertDateToString(mutableListOf(lastDiary.createdAt))
         }
+
         disposable.add(
                 service.deleteDiaryByDay(TipTapApplication.getAccessToken(), invalidDiaries)
                         .subscribeOn(Schedulers.io())
+                        .filter { task -> task.get(getString(R.string.code)).asString != "1000" }
                         .subscribeWith(object : DisposableObserver<JsonObject>() {
-                            override fun onComplete() {
-                                finish()
+                            override fun onNext(t: JsonObject) {
+                                Log.d(getString(R.string.desc), t.getAsJsonObject(getString(R.string.data)).get(getString(R.string.desc)).asString)
                             }
 
-                            override fun onNext(t: JsonObject) {
-                                t.apply {
-                                    if (get(getString(R.string.code)).asString != "1000") { //if not successful.
-                                        Log.d(getString(R.string.desc),
-                                                getAsJsonObject(getString(R.string.data)).get(getString(R.string.desc)).asString)
-                                    }
-                                }
+                            override fun onComplete() {
+                                RxBus.getInstance().takeBus(false)
+                                finish()
                             }
 
                             override fun onError(e: Throwable) {

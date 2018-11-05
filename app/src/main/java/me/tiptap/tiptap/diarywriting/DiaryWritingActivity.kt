@@ -38,6 +38,7 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
+import java.lang.reflect.InvocationTargetException
 import java.util.*
 
 
@@ -68,19 +69,22 @@ class DiaryWritingActivity : AppCompatActivity() {
                 latitude = location.latitude.toString()
                 longitude = location.longitude.toString()
             }
+            try {
+                val geoCoder = Geocoder(applicationContext, Locale.getDefault())
+                val listAddresses = geoCoder.getFromLocation(location.latitude, location.longitude, 1)
 
-            val geoCoder = Geocoder(applicationContext, Locale.getDefault())
-            val listAddresses = geoCoder.getFromLocation(location.latitude, location.longitude, 1)
+                if (listAddresses != null && listAddresses.size > 0) {
+                    val locationText = listAddresses[0].getAddressLine(0)
 
-            if (listAddresses != null && listAddresses.size > 0) {
-                val locationText = listAddresses[0].getAddressLine(0)
+                    //이 부분 수정 필요함.
+                    locationText.substring(locationText.indexOf(" ")).apply {
+                        binding.textWriteLocation.text = this
 
-                //이 부분 수정 필요함.
-                locationText.substring(locationText.indexOf(" ")).apply {
-                    binding.textWriteLocation.text = this
-
-                    diary.location = this.replaceFirst(" ", "")
+                        diary.location = this.replaceFirst(" ", "")
+                    }
                 }
+            } catch (e: InvocationTargetException) {
+                e.printStackTrace()
             }
         }
 
@@ -342,12 +346,9 @@ class DiaryWritingActivity : AppCompatActivity() {
                         .subscribeOn(Schedulers.io())
                         .doOnComplete { finish() }
                         .doOnError { e -> e.printStackTrace() }
+                        .filter { task -> task.get(getString(R.string.code)).asString != "1000" }
                         .subscribe { t ->
-                            t.apply {
-                                if (get(getString(R.string.code)).asString != "1000") { //if not successful.
-                                    Log.d(getString(R.string.desc), getAsJsonObject(getString(R.string.data)).get(getString(R.string.desc)).asString)
-                                }
-                            }
+                            Log.d(getString(R.string.desc), t.getAsJsonObject(getString(R.string.data)).get(getString(R.string.desc)).asString)
                         })
     }
 
@@ -367,14 +368,10 @@ class DiaryWritingActivity : AppCompatActivity() {
                         .subscribeOn(Schedulers.io())
                         .doOnComplete { finish() }
                         .doOnError { e -> e.printStackTrace() }
+                        .filter { task -> task.get(getString(R.string.code)).asString != "1000" }
                         .subscribe { t ->
-                            t.apply {
-                                if (get(getString(R.string.code)).asString != "1000") { //if not successful.
-                                    Log.d(getString(R.string.desc), getAsJsonObject(getString(R.string.data)).get(getString(R.string.desc)).asString)
-                                }
-                            }
-                        }
-        )
+                            Log.d(getString(R.string.desc), t.getAsJsonObject(getString(R.string.data)).get(getString(R.string.desc)).asString)
+                        })
     }
 
 
