@@ -56,7 +56,7 @@
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:fontFamily = "@font/ko_pub_dotum_pl"
-            android:text = "@string/hint_no_diary"
+            android:text = "@{fragment.isDateRangeAvailable() ? @string/hint_no_diary_period : @string/hint_no_diary}"
             android:visibility = "@{fragment.isDiaryExist() ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf = "parent"
             app:layout_constraintBottom_toTopOf = "@+id/layout_bot_dialog"

@@ -73,9 +73,7 @@ class DiariesFragment : Fragment() {
     private fun initRecyclerView() {
         binding.recyclerDiaries.apply {
             layoutManager = LinearLayoutManager(this@DiariesFragment.context)
-            adapter = this@DiariesFragment.adapter.apply {
-                setHasStableIds(true)
-            }
+            adapter = this@DiariesFragment.adapter
 
             setHasFixedSize(true)
             (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
@@ -112,12 +110,12 @@ class DiariesFragment : Fragment() {
                         val endDate = it[1].toString()
 
                         isDateRangeAvailable.set(true)
-                        binding.layoutBotRange?.textBotRange?.text = getString(R.string.date_range, startDate, endDate)
+                        binding.layoutBotRange.textBotRange.text = getString(R.string.date_range, startDate, endDate)
 
                         getDiariesByDate(startDate, endDate)
 
                     } else if (it is Boolean) {
-                        getDiaries(1, 2, it)
+                        getDiaries(1, 2)
                     }
                 }
                 .dispose()
@@ -133,61 +131,48 @@ class DiariesFragment : Fragment() {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .doOnError { e -> e.printStackTrace() }
+                        .filter { task -> task.code == "1000" }
                         .subscribe { t ->
-                            if (t.code == "1000") {
-                                val list = t.data.list
+                            val list = t.data.list
 
-                                if (list.isNotEmpty()) {
-                                    isDiaryExist.set(true)
+                            if (list.size > 0) {
+                                isDiaryExist.set(true)
 
-                                    for (monthDiary in list.iterator()) {
-                                        if (monthDiary.diariesOfDay != null) {
-                                            adapter.updateItems(monthDiary.diariesOfDay) //update items
-                                        }
+                                for (monthDiary in list.iterator()) {
+                                    if (monthDiary.diariesOfDay != null) {
+                                        adapter.updateItems(monthDiary.diariesOfDay) //update items
                                     }
                                 }
+                            } else { //there's no diary.
+                                adapter.deleteAllItems()
                             }
                         }
         )
     }
 
-    private fun getDiaries(page: Int, limit: Int, isDataNotAdded: Boolean) {
+
+    private fun getDiaries(page: Int, limit: Int) {
         disposables.add(
                 service.getDiaries(TipTapApplication.getAccessToken(), page, limit) //한번에 하나의 달만 불러올거.
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
-                        .subscribeWith(object : DisposableObserver<DiariesResponse>() {
-                            override fun onNext(t: DiariesResponse) {
-                                if (t.code == "1000") {
-                                    totalPage = t.data.total
+                        .doOnError { e -> e.printStackTrace() }
+                        .filter { task -> task.code == "1000" }
+                        .subscribe { t ->
+                            totalPage = t.data.total
 
-                                    val list = t.data.list
+                            val list = t.data.list
 
-                                    if (list.isNotEmpty()) {
-                                        isDiaryExist.set(true)
+                            if (list.isNotEmpty()) {
+                                isDiaryExist.set(true)
 
-                                        for (monthDiary in list.iterator()) {
-                                            if (monthDiary.diariesOfDay != null)
-                                                if (!isDataNotAdded && adapter.itemCount != 0) { //금일에 추가된 일기가 있고, 한번 리스트를 로드한 적이 있다면,
-                                                    adapter.addItemOnTop(monthDiary.diariesOfDay[0])
-                                                    return
-                                                } else {
-                                                    adapter.addItems(monthDiary.diariesOfDay) //add items
-                                                }
-                                        }
+                                for (monthDiary in list.iterator()) {
+                                    if (monthDiary.diariesOfDay != null) {
+                                        adapter.addItems(monthDiary.diariesOfDay) //add items
                                     }
                                 }
                             }
-
-                            override fun onComplete() {
-                                adapter.notifyDataSetChanged()
-                            }
-
-                            override fun onError(e: Throwable) {
-                                e.printStackTrace()
-                            }
                         })
-        )
     }
 
 
@@ -202,7 +187,7 @@ class DiariesFragment : Fragment() {
         isDateRangeAvailable.set(false)
 
         adapter.deleteAllItems()
-        getDiaries(1, 2, true)
+        getDiaries(1, 2)
     }
 
 
@@ -244,12 +229,9 @@ class DiariesFragment : Fragment() {
                         .subscribeOn(Schedulers.io())
                         .doOnError { e -> e.printStackTrace() }
                         .doOnComplete { if (adapter.itemCount == 0) isDiaryExist.set(false) }
+                        .filter { task -> task.get(getString(R.string.code)).asString != "1000" }
                         .subscribe { t ->
-                            t.apply {
-                                if (get(getString(R.string.code)).asString != "1000") { //if not successful.
-                                    Log.d(getString(R.string.desc), getAsJsonObject(getString(R.string.data)).get(getString(R.string.desc)).asString)
-                                }
-                            }
+                            Log.d(getString(R.string.desc), t.getAsJsonObject(getString(R.string.data)).get(getString(R.string.desc)).asString)
                         })
     }
 
@@ -274,6 +256,7 @@ class DiariesFragment : Fragment() {
 
     private fun resetAllMode() {
         adapter.changeDeleteModeState(false)
+        adapter.deleteAllItems()
         isBotDialogVisible.set(false)
 
         isDateRangeAvailable.set(false)
@@ -293,8 +276,10 @@ class DiariesFragment : Fragment() {
     override fun onPause() {
         super.onPause()
 
-        resetAllMode()
-        disposables.clear()
+        if (!isDateRangeAvailable.get()) {
+            resetAllMode()
+            disposables.clear()
+        }
     }
 
     override fun onDestroy() {
