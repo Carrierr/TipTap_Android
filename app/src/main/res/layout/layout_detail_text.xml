@@ -1,22 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android = "http://schemas.android.com/apk/res/android"
+<layout xmlns:android = "http://schemas.android.com/apk/res/android"
     xmlns:app = "http://schemas.android.com/apk/res-auto"
     xmlns:tools = "http://schemas.android.com/tools"
     >
-    
+
     <data>
+
         <variable
             name = "diary"
-            type = "me.tiptap.tiptap.data.Diary"/>
+            type = "me.tiptap.tiptap.data.Diary"
+            />
     </data>
-    
+
     <android.support.constraint.ConstraintLayout
         android:layout_width = "match_parent"
         android:layout_height = "match_parent"
         android:background = "@android:color/white"
         >
-        
+
         <android.support.constraint.ConstraintLayout
             android:layout_width = "match_parent"
             android:layout_height = "0dp"
@@ -24,53 +25,53 @@
             >
             <!--img-->
             <android.support.constraint.Guideline
-                android:id = "@+id/guide_detail_text_start"
+                android:id = "@+id/gl_detail_text_start"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:orientation = "vertical"
                 app:layout_constraintGuide_percent = "0.036"
                 />
-            
+
             <View
                 android:id = "@+id/view_detail_line"
                 style = "@style/DefaultLine"
-                app:layout_constraintBottom_toTopOf = "@+id/guide_detail_text_view"
-                app:layout_constraintStart_toStartOf = "@+id/guide_detail_text_start"
+                app:layout_constraintBottom_toTopOf = "@+id/gl_detail_text_view"
+                app:layout_constraintStart_toStartOf = "@+id/gl_detail_text_start"
                 app:layout_constraintTop_toTopOf = "parent"
                 />
-            
+
             <android.support.constraint.Guideline
-                android:id = "@+id/guide_detail_text_view"
+                android:id = "@+id/gl_detail_text_view"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:orientation = "horizontal"
                 app:layout_constraintGuide_percent = "0.26"
                 />
-            
+
             <android.support.constraint.Guideline
-                android:id = "@+id/guide_detail_text_top"
+                android:id = "@+id/gl_detail_text_top"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:orientation = "horizontal"
-                app:layout_constraintGuide_percent = "0.034"
+                app:layout_constraintGuide_percent = "0.045"
                 />
-            
+
             <android.support.constraint.Guideline
-                android:id = "@+id/guide_detail_text_con_start"
+                android:id = "@+id/gl_detail_text_con_start"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:orientation = "vertical"
-                app:layout_constraintGuide_percent = "0.0949"
+                app:layout_constraintGuide_percent = "0.139"
                 />
-            
+
             <android.support.constraint.Guideline
-                android:id = "@+id/guide_detail_text_end"
+                android:id = "@+id/gl_detail_text_end"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:orientation = "vertical"
-                app:layout_constraintGuide_percent = "0.8670"
+                app:layout_constraintGuide_percent = "0.883"
                 />
-            
+
             <TextView
                 android:id = "@+id/text_detail"
                 android:layout_width = "0dp"
@@ -79,25 +80,28 @@
                 android:gravity = "center"
                 android:lineSpacingExtra = "10sp"
                 android:maxLength = "800"
-                android:text="@{diary.content}"
+                android:paddingBottom = "2dp"
+                android:text = "@{diary.content}"
+                android:textSize = "12sp"
                 app:layout_constraintBottom_toBottomOf = "parent"
-                app:layout_constraintEnd_toStartOf = "@+id/guide_detail_text_end"
-                app:layout_constraintStart_toStartOf = "@+id/guide_detail_text_con_start"
-                app:layout_constraintTop_toBottomOf = "@+id/guide_detail_text_top"
+                app:layout_constraintEnd_toStartOf = "@+id/gl_detail_text_end"
+                app:layout_constraintStart_toStartOf = "@+id/gl_detail_text_con_start"
+                app:layout_constraintTop_toBottomOf = "@+id/gl_detail_text_top"
                 tools:text = "가나다라마바사아자차카나파타\n라\n마\n바\n사"
                 />
-            
+
             <me.tiptap.tiptap.common.view.VerticalTextView
                 android:id = "@+id/text_detail_text_time"
                 style = "@style/DetailDateText"
+                time = "@{diary.createdAt}"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:layout_marginTop = "@dimen/dimen_write_side"
-                time="@{diary.createdAt}"
+                android:fontFamily = "@font/montserrat_light"
                 app:layout_constraintBottom_toBottomOf = "@+id/text_detail"
-                app:layout_constraintStart_toStartOf = "@+id/guide_detail_text_start"
+                app:layout_constraintStart_toStartOf = "@+id/gl_detail_text_start"
                 app:layout_constraintTop_toTopOf = "parent"
-                app:layout_constraintVertical_bias = "0.941"
+                app:layout_constraintVertical_bias = "1"
                 tools:text = "15:00"
                 />
         </android.support.constraint.ConstraintLayout>
