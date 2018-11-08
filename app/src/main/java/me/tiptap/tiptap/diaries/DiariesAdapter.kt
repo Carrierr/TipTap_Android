@@ -76,16 +76,19 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
 
     fun deleteCheckedItems() {
         if (checkedDataSet.isNotEmpty()) {
-
             dataSet.iterator().run {
                 while (this.hasNext()) {
                     val data = this.next()
+                    val position = dataSet.indexOf(data)
 
                     if (checkedDataSet.contains(data.firstLastDiary?.lastDiary?.createdAt)) {
                         this.remove()
+                        notifyItemChanged(position)
+                    }
+                    if(position == 0) {
+                        visibleSideHeader(0)
                     }
                 }
-                notifyDataSetChanged()
             }
         }
     }
