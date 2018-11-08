@@ -1,13 +1,12 @@
 <resources>
-    
+
     <!-- Base application theme. -->
-    <style name = "AppTheme"
-        parent = "Theme.AppCompat.Light.NoActionBar">
+    <style name = "AppTheme" parent = "Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name = "windowActionModeOverlay">true</item>
         <item name = "android:textViewStyle">@style/TextViewStyle</item>
         <item name = "colorPrimary">@color/colorPrimary</item>
-        <item name = "colorPrimaryDark">@color/colorSeafoamBlue</item>
+        <item name = "colorPrimaryDark">@color/colorSeaFoamBlue</item>
         <item name = "colorAccent">@color/colorAccent</item>
         <item name = "android:homeAsUpIndicator">@drawable/ic_back</item>
         <item name = "android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>
@@ -162,7 +161,17 @@
         <item name = "android:layout_width">wrap_content</item>
         <item name = "android:layout_height">wrap_content</item>
     </style>
-    
+
+    <style name = "CalendarMenuTextStyle">
+        <item name = "layout_constraintTop_toBottomOf">@+id/gl_cal_menu_top</item>
+        <item name = "android:paddingBottom">13dp</item>
+        <item name = "android:paddingTop">5dp</item>
+        <item name = "android:paddingEnd">22dp</item>
+        <item name = "android:paddingStart">22dp</item>
+        <item name = "android:fontFamily">@font/ko_pub_dotum_pm</item>
+        <item name = "android:textSize">14sp</item>
+    </style>
+
     <style name = "CalendarTitleText">
         <item name = "android:layout_width">wrap_content</item>
         <item name = "android:layout_height">wrap_content</item>

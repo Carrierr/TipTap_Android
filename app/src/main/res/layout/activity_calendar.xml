@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android = "http://schemas.android.com/apk/res/android"
+<layout xmlns:android = "http://schemas.android.com/apk/res/android"
     xmlns:app = "http://schemas.android.com/apk/res-auto"
     xmlns:tools = "http://schemas.android.com/tools"
     >
-    
+
     <data>
-        
+
         <variable
             name = "activity"
             type = "me.tiptap.tiptap.diaries.CalendarActivity"
             />
-    
+
         <variable
             name = "date"
             type = "java.util.Date"
             />
     </data>
-    
+
     <android.support.constraint.ConstraintLayout
         android:layout_width = "match_parent"
         android:layout_height = "match_parent"
         android:background = "@color/colorDefaultBackground"
         tools:context = ".diaries.CalendarActivity"
         >
-        
+
         <android.support.constraint.Guideline
             android:id = "@+id/gl_cal_top"
             android:layout_width = "wrap_content"
@@ -32,7 +31,16 @@
             android:orientation = "horizontal"
             app:layout_constraintGuide_percent = "0.053"
             />
-        
+
+
+        <android.support.constraint.Guideline
+            android:id = "@+id/gl_cal_menu_top"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation = "horizontal"
+            app:layout_constraintGuide_percent = "0.05"
+            />
+
         <TextView
             android:id = "@+id/text_cal_title"
             android:layout_width = "wrap_content"
@@ -45,36 +53,28 @@
             app:layout_constraintStart_toStartOf = "parent"
             app:layout_constraintTop_toBottomOf = "@+id/gl_cal_top"
             />
-        
+
         <TextView
             android:id = "@+id/text_cal_cancel"
+            style = "@style/CalendarMenuTextStyle"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:fontFamily = "@font/ko_pub_dotum_pm"
             android:onClick = "@{activity::onMenuButtonClick}"
-            android:paddingEnd = "22dp"
-            android:paddingStart = "22dp"
             android:text = "@string/cancel"
             android:textColor = "@color/colorMainGray"
-            android:textSize = "14sp"
             app:layout_constraintStart_toStartOf = "parent"
-            app:layout_constraintTop_toBottomOf = "@+id/gl_cal_top"
             />
-        
+
         <TextView
             android:id = "@+id/text_cal_ok"
+            style = "@style/CalendarMenuTextStyle"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
-            android:fontFamily = "@font/ko_pub_dotum_pm"
             android:onClick = "@{activity::onMenuButtonClick}"
-            android:paddingEnd = "22dp"
-            android:paddingStart = "22dp"
             android:text = "@string/ok"
-            android:textSize = "14sp"
             app:layout_constraintEnd_toEndOf = "parent"
-            app:layout_constraintTop_toBottomOf = "@+id/gl_cal_top"
             />
-        
+
         <android.support.constraint.Guideline
             android:id = "@+id/gl_cal_con_top"
             android:layout_width = "wrap_content"
@@ -93,27 +93,27 @@
             app:layout_constraintStart_toStartOf = "parent"
             app:layout_constraintTop_toBottomOf = "@+id/gl_cal_con_top"
             >
-            
+
             <android.support.constraint.ConstraintLayout
                 android:layout_width = "match_parent"
                 android:layout_height = "match_parent"
                 >
-                
+
                 <TextView
                     style = "@style/CalendarTitleText"
                     android:text = "@string/date_start"
                     />
-                
+
                 <TextView
                     android:id = "@+id/text_cal_start"
                     style = "@style/CalendarContentText"
-                   android:text="@{date}"
                     android:onClick = "@{activity::onCalendarOpenClick}"
+                    android:text = "@{date}"
                     tools:text = "2018.09.28"
                     />
             </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.CardView>
-        
+
         <android.support.v7.widget.CardView
             android:id = "@+id/card_cal_end"
             android:layout_width = "match_parent"
@@ -124,22 +124,22 @@
             app:layout_constraintStart_toStartOf = "parent"
             app:layout_constraintTop_toBottomOf = "@+id/card_cal_start"
             >
-            
+
             <android.support.constraint.ConstraintLayout
                 android:layout_width = "match_parent"
                 android:layout_height = "wrap_content"
                 >
-                
+
                 <TextView
                     style = "@style/CalendarTitleText"
                     android:text = "@string/date_end"
                     />
-                
+
                 <TextView
                     android:id = "@+id/text_cal_end"
                     style = "@style/CalendarContentText"
-                    android:text="@{date}"
                     android:onClick = "@{activity::onCalendarOpenClick}"
+                    android:text = "@{date}"
                     />
             </android.support.constraint.ConstraintLayout>
         </android.support.v7.widget.CardView>
