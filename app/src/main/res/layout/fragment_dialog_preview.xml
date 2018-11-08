@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android = "http://schemas.android.com/apk/res/android"
+<layout xmlns:android = "http://schemas.android.com/apk/res/android"
     xmlns:app = "http://schemas.android.com/apk/res-auto"
     xmlns:tools = "http://schemas.android.com/tools"
     >
     
     <data>
+
+        <import
+            alias = "View"
+            type = "android.view.View"
+            />
+
         <variable
             name = "idx"
-            type = "java.lang.Integer"/>
-        
+            type = "java.lang.Integer"
+            />
+
         <variable
             name = "diary"
             type = "me.tiptap.tiptap.data.Diary"
@@ -23,14 +29,14 @@
         android:focusable = "false"
         android:focusableInTouchMode = "false"
         >
-        
+
         <android.support.v7.widget.Toolbar
             android:id = "@+id/toolbar_preview"
             android:layout_width = "match_parent"
             android:layout_height = "?android:attr/actionBarSize"
             android:background = "@android:color/transparent"
             />
-        
+
         <android.support.constraint.Guideline
             android:id = "@+id/gl_preview_start"
             android:layout_width = "wrap_content"
@@ -38,7 +44,7 @@
             android:orientation = "vertical"
             app:layout_constraintGuide_percent = "0.06"
             />
-        
+
         <android.support.constraint.Guideline
             android:id = "@+id/gl_preview_end"
             android:layout_width = "wrap_content"
@@ -46,7 +52,7 @@
             android:orientation = "vertical"
             app:layout_constraintGuide_percent = "0.938"
             />
-        
+
         <android.support.constraint.Guideline
             android:id = "@+id/gl_preview_top"
             android:layout_width = "wrap_content"
@@ -54,7 +60,7 @@
             android:orientation = "horizontal"
             app:layout_constraintGuide_percent = "0.272"
             />
-        
+
         <android.support.constraint.Guideline
             android:id = "@+id/gl_preview_bot"
             android:layout_width = "wrap_content"
@@ -62,7 +68,7 @@
             android:orientation = "horizontal"
             app:layout_constraintGuide_percent = "0.674"
             />
-        
+
         <!--Container-->
         <android.support.constraint.ConstraintLayout
             android:layout_width = "0dp"
@@ -73,7 +79,7 @@
             app:layout_constraintStart_toStartOf = "@+id/gl_preview_start"
             app:layout_constraintTop_toTopOf = "@+id/gl_preview_top"
             >
-            
+
             <TextView
                 android:id = "@+id/text_preview_year"
                 style = "@style/PreviewDateText"
@@ -87,7 +93,7 @@
                 app:layout_constraintVertical_bias = "0.077"
                 tools:text = "18'"
                 />
-            
+
             <android.support.constraint.Guideline
                 android:id = "@+id/gl_preview_con_end"
                 android:layout_width = "wrap_content"
@@ -95,15 +101,15 @@
                 android:orientation = "vertical"
                 app:layout_constraintGuide_percent = "0.937"
                 />
-    
+
             <android.support.constraint.Guideline
                 android:id = "@+id/gl_preview_img_start"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:orientation = "vertical"
-                app:layout_constraintGuide_percent="0.21"
+                app:layout_constraintGuide_percent = "0.21"
                 />
-            
+
             <ScrollView
                 android:id = "@+id/scroll_preview"
                 android:layout_width = "0dp"
@@ -114,27 +120,28 @@
                 app:layout_constraintStart_toStartOf = "@+id/gl_preview_img_start"
                 app:layout_constraintTop_toTopOf = "@+id/text_preview_year"
                 >
-                
+
                 <android.support.constraint.ConstraintLayout
                     android:layout_width = "match_parent"
                     android:layout_height = "wrap_content"
                     android:orientation = "vertical"
                     >
-                    
+
                     <ImageView
                         android:id = "@+id/img_preview"
+                        error = "@{null}"
+                        imgUrl = "@{diary.imageUrl}"
                         android:layout_width = "0dp"
                         android:layout_height = "0dp"
-                        imgUrl="@{diary.imageUrl}"
-                        error="@{@drawable/headerimage}"
+                        android:background = "@color/colorMainGray"
                         android:scaleType = "centerCrop"
+                        android:visibility = "@{diary.imageUrl == null ? View.GONE : View.VISIBLE}"
                         app:layout_constraintDimensionRatio = "4:3"
                         app:layout_constraintEnd_toEndOf = "parent"
                         app:layout_constraintStart_toStartOf = "parent"
                         app:layout_constraintTop_toTopOf = "parent"
-                        tools:src = "@drawable/headerimage"
                         />
-                    
+
                     <TextView
                         android:id = "@+id/text_preview"
                         android:layout_width = "0dp"
@@ -143,19 +150,21 @@
                         android:gravity = "center"
                         android:lineSpacingExtra = "10sp"
                         android:maxLength = "800"
+                        android:paddingStart = "5dp"
+                        android:paddingEnd = "5dp"
                         android:text = "@{diary.content}"
-                        tools:text="하나둘셋"
                         android:textSize = "12sp"
                         app:layout_constraintDimensionRatio = "4:3"
                         app:layout_constraintEnd_toEndOf = "parent"
                         app:layout_constraintStart_toStartOf = "parent"
                         app:layout_constraintTop_toBottomOf = "@+id/img_preview"
+                        tools:text = "하나둘셋"
                         />
-                
+
                 </android.support.constraint.ConstraintLayout>
             </ScrollView>
-            
-            
+
+
             <TextView
                 android:id = "@+id/text_preview_month"
                 style = "@style/PreviewDateText"
@@ -166,7 +175,7 @@
                 app:layout_constraintTop_toBottomOf = "@+id/text_preview_year"
                 tools:text = "Aug\n02"
                 />
-            
+
             <android.support.constraint.Guideline
                 android:id = "@+id/gl_preview_view_top"
                 android:layout_width = "wrap_content"
@@ -174,7 +183,7 @@
                 android:orientation = "horizontal"
                 app:layout_constraintGuide_percent = "0.31"
                 />
-            
+
             <android.support.constraint.Guideline
                 android:id = "@+id/gl_preview_view_bot"
                 android:layout_width = "wrap_content"
@@ -182,7 +191,7 @@
                 android:orientation = "horizontal"
                 app:layout_constraintGuide_percent = "0.7587"
                 />
-            
+
             <View
                 android:id = "@+id/view_preview_line"
                 style = "@style/DefaultLine"
@@ -190,7 +199,7 @@
                 app:layout_constraintStart_toStartOf = "@+id/text_preview_year"
                 app:layout_constraintTop_toBottomOf = "@+id/gl_preview_view_top"
                 />
-            
+
             <android.support.constraint.Guideline
                 android:id = "@+id/gl_preview_con_bot"
                 android:layout_width = "wrap_content"
@@ -198,8 +207,8 @@
                 android:orientation = "horizontal"
                 app:layout_constraintGuide_percent = "0.922"
                 />
-            
-            
+
+
             <me.tiptap.tiptap.common.view.VerticalTextView
                 android:id = "@+id/text_preview_time"
                 style = "@style/PreviewDateText"
@@ -211,20 +220,20 @@
                 app:layout_constraintTop_toBottomOf = "@+id/gl_preview_view_bot"
                 tools:text = "15:00"
                 />
-            
+
             <TextView
                 android:id = "@+id/text_preview_count"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:fontFamily = "@font/montserrat_regular"
+                android:text = "@{String.format(@string/my_diary_count, idx)}"
                 android:textColor = "@color/colorMainBlack"
                 android:textStyle = "bold"
-                android:text="@{String.format(@string/my_diary_count, idx)}"
                 app:layout_constraintEnd_toEndOf = "@+id/gl_preview_con_end"
                 app:layout_constraintTop_toTopOf = "@+id/text_preview_time"
                 tools:text = "MY DIARY #7"
                 />
-            
+
             <TextView
                 android:id = "@+id/text_preview_location"
                 android:layout_width = "wrap_content"
@@ -238,9 +247,9 @@
                 app:layout_constraintVertical_bias = "0.77"
                 tools:text = "키오스크 망원동 카페"
                 />
-        
-        
+
+
         </android.support.constraint.ConstraintLayout>
-    
+
     </android.support.constraint.ConstraintLayout>
 </layout>
