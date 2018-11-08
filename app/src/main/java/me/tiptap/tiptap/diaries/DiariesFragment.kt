@@ -72,11 +72,13 @@ class DiariesFragment : Fragment() {
 
     private fun initRecyclerView() {
         binding.recyclerDiaries.apply {
-            layoutManager = LinearLayoutManager(this@DiariesFragment.context)
-            adapter = this@DiariesFragment.adapter
+            val mLayoutManager = LinearLayoutManager(this@DiariesFragment.context)
+            adapter = this@DiariesFragment.adapter.apply {
+                setHasStableIds(true)
+            }
 
+            layoutManager = mLayoutManager
             setHasFixedSize(true)
-            (itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false
 
             initRecyclerViewEvent()
         }

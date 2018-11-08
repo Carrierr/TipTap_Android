@@ -13,6 +13,9 @@ import me.tiptap.tiptap.data.Diary
 import java.util.*
 
 class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
+    override fun getItemId(position: Int): Long {
+        return dataSet[position].firstLastDiary!!.lastDiary!!.id.toLong()
+    }
 
     private val dataSet: MutableList<Diaries> = mutableListOf()
     val checkedDataSet: MutableList<Date> = mutableListOf() //checked list
