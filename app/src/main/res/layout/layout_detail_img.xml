@@ -1,79 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android = "http://schemas.android.com/apk/res/android"
+<layout xmlns:android = "http://schemas.android.com/apk/res/android"
     xmlns:app = "http://schemas.android.com/apk/res-auto"
-    xmlns:tools = "http://schemas.android.com/tools"
-    >
-   
+    xmlns:tools = "http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name = "diary"
-            type = "me.tiptap.tiptap.data.Diary"/>
+            type = "me.tiptap.tiptap.data.Diary" />
     </data>
-    
+
     <android.support.constraint.ConstraintLayout
         android:layout_width = "match_parent"
         android:layout_height = "match_parent"
-        android:background = "@android:color/white"
-        >
-        
+        android:background = "@android:color/white">
+
         <android.support.constraint.ConstraintLayout
             android:layout_width = "match_parent"
             android:layout_height = "0dp"
-            app:layout_constraintDimensionRatio = "1:1.26"
-            >
+            app:layout_constraintDimensionRatio = "1:1.26">
             <!--img-->
             <android.support.constraint.Guideline
                 android:id = "@+id/guide_detail_img_start"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:orientation = "vertical"
-                app:layout_constraintGuide_percent = "0.036"
-                />
-            
+                app:layout_constraintGuide_percent = "0.036" />
+
             <View
                 android:id = "@+id/view_detail_line"
-                style="@style/DefaultLine"
-                app:layout_constraintTop_toTopOf="parent"
+                style = "@style/DefaultLine"
                 app:layout_constraintBottom_toTopOf = "@+id/guide_detail_img_view"
                 app:layout_constraintStart_toStartOf = "@+id/guide_detail_img_start"
-                />
-            
+                app:layout_constraintTop_toTopOf = "parent" />
+
             <android.support.constraint.Guideline
                 android:id = "@+id/guide_detail_img_view"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:orientation = "horizontal"
-                app:layout_constraintGuide_percent = "0.20"
-                />
-            
+                app:layout_constraintGuide_percent = "0.20" />
+
             <ImageView
                 android:id = "@+id/img_detail"
+                error = "@{null}"
+                imgUrl = "@{diary.imageUrl}"
                 android:layout_width = "0dp"
-                imgUrl="@{diary.imageUrl}"
-                android:background="@color/colorMainGray"
-                error="@{@drawable/headerimage}"
                 android:layout_height = "0dp"
+                android:background = "@color/colorMainGray"
                 android:scaleType = "centerCrop"
                 app:layout_constraintDimensionRatio = "4:3"
                 app:layout_constraintEnd_toEndOf = "parent"
                 app:layout_constraintStart_toStartOf = "parent"
-                app:layout_constraintTop_toBottomOf = "@+id/guide_detail_img_view"
-                />
-            
-            
+                app:layout_constraintTop_toBottomOf = "@+id/guide_detail_img_view" />
+
+
             <me.tiptap.tiptap.common.view.VerticalTextView
                 android:id = "@+id/text_detail_img_time"
                 style = "@style/DetailDateText"
-               time="@{diary.createdAt}"
+                time = "@{diary.createdAt}"
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
+                android:fontFamily = "@font/montserrat_light"
                 app:layout_constraintBottom_toBottomOf = "parent"
                 app:layout_constraintStart_toStartOf = "@+id/guide_detail_img_start"
                 app:layout_constraintTop_toTopOf = "parent"
-                app:layout_constraintVertical_bias = "0.941"
-                tools:text = "15:00"
-                />
+                app:layout_constraintVertical_bias = "1"
+                tools:text = "15:00" />
         </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>
 </layout>

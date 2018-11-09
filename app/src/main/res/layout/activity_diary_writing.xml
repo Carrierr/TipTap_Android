@@ -160,20 +160,20 @@
                 />
 
             <ImageView
-                android:id = "@+id/img_write_myPicture"
-                imgUrl = "@{diary!=null ? diary.imageUrl : null}"
-                android:layout_width = "0dp"
-                android:layout_height = "0dp"
-                android:layout_marginTop = "@dimen/dimen_write_top"
-                android:adjustViewBounds = "true"
-                android:scaleType = "centerCrop"
-                android:visibility = "@{activity.isPhotoAvailable ? View.VISIBLE : View.GONE}"
-                app:layout_constraintDimensionRatio = "4:3"
-                app:layout_constraintEnd_toEndOf = "@+id/guide_write"
-                app:layout_constraintHorizontal_bias = "0"
-                app:layout_constraintStart_toStartOf = "@+id/text_write_date"
-                app:layout_constraintTop_toBottomOf = "@+id/view_write_line"
-                tools:background = "@color/colorMainBlack"
+                android:id="@+id/img_write_myPicture"
+                imgUrl="@{diary!=null ? diary.imageUrl : null}"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/dimen_write_top"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:visibility="@{activity.isPhotoAvailable ? View.VISIBLE : View.GONE}"
+                app:layout_constraintDimensionRatio="4:3"
+                app:layout_constraintEnd_toEndOf="@+id/guide_write"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="@+id/text_write_date"
+                app:layout_constraintTop_toBottomOf="@+id/view_write_line"
+                tools:background="@color/colorMainBlack"
                 />
 
             <ImageView
