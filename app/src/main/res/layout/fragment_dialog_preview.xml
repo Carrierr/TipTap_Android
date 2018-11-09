@@ -42,7 +42,7 @@
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "vertical"
-            app:layout_constraintGuide_percent = "0.06"
+            app:layout_constraintGuide_percent = "0.061"
             />
 
         <android.support.constraint.Guideline
@@ -66,7 +66,7 @@
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:orientation = "horizontal"
-            app:layout_constraintGuide_percent = "0.674"
+            app:layout_constraintGuide_percent = "0.673"
             />
 
         <!--Container-->
@@ -84,10 +84,11 @@
                 android:id = "@+id/text_preview_year"
                 style = "@style/PreviewDateText"
                 year = "@{diary.createdAt}"
+                android:fontFamily="@font/montserrat_regular"
                 android:textSize = "13sp"
                 app:layout_constraintBottom_toBottomOf = "parent"
                 app:layout_constraintEnd_toEndOf = "parent"
-                app:layout_constraintHorizontal_bias = "0.06"
+                app:layout_constraintHorizontal_bias = "0.063"
                 app:layout_constraintStart_toStartOf = "parent"
                 app:layout_constraintTop_toTopOf = "parent"
                 app:layout_constraintVertical_bias = "0.077"
@@ -99,7 +100,7 @@
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:orientation = "vertical"
-                app:layout_constraintGuide_percent = "0.937"
+                app:layout_constraintGuide_percent = "0.938"
                 />
 
             <android.support.constraint.Guideline
@@ -107,7 +108,7 @@
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:orientation = "vertical"
-                app:layout_constraintGuide_percent = "0.21"
+                app:layout_constraintGuide_percent = "0.247"
                 />
 
             <ScrollView
@@ -133,7 +134,6 @@
                         imgUrl = "@{diary.imageUrl}"
                         android:layout_width = "0dp"
                         android:layout_height = "0dp"
-                        android:background = "@color/colorMainGray"
                         android:scaleType = "centerCrop"
                         android:visibility = "@{diary.imageUrl == null ? View.GONE : View.VISIBLE}"
                         app:layout_constraintDimensionRatio = "4:3"
@@ -169,7 +169,8 @@
                 android:id = "@+id/text_preview_month"
                 style = "@style/PreviewDateText"
                 dayOfMonth = "@{diary.createdAt}"
-                android:paddingTop = "2dp"
+                android:fontFamily="@font/montserrat_light"
+                android:paddingTop = "3dp"
                 android:textSize = "13sp"
                 app:layout_constraintStart_toStartOf = "@+id/text_preview_year"
                 app:layout_constraintTop_toBottomOf = "@+id/text_preview_year"
@@ -189,7 +190,7 @@
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:orientation = "horizontal"
-                app:layout_constraintGuide_percent = "0.7587"
+                app:layout_constraintGuide_percent = "0.766"
                 />
 
             <View
@@ -243,8 +244,6 @@
                 android:textSize = "12sp"
                 app:layout_constraintBottom_toTopOf = "@+id/gl_preview_con_bot"
                 app:layout_constraintEnd_toEndOf = "@+id/gl_preview_con_end"
-                app:layout_constraintTop_toBottomOf = "@+id/text_preview_count"
-                app:layout_constraintVertical_bias = "0.77"
                 tools:text = "키오스크 망원동 카페"
                 />
 
