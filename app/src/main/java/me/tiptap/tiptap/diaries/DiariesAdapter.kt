@@ -34,25 +34,24 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
         visibleSideHeader(dataSet.size - items.size)
     }
 
-    fun updateItems(items: MutableList<Diaries>) {
-        dataSet.clear()
-        dataSet.addAll(items)
-
-        notifyDataSetChanged()
-    }
 
     fun deleteAllItems() {
         dataSet.clear()
         notifyDataSetChanged()
     }
 
-
+    /**
+     * set visible side header
+     */
     private fun visibleSideHeader(position: Int) {
         dataSet[position].isLastDay = true
     }
 
 
-    private fun updateCheckedItems(item: Diaries) {
+    /**
+     * when item's checkbox is clicked.
+     */
+    fun updateCheckedItems(item: Diaries) {
         val createdAt: Date? = item.firstLastDiary?.lastDiary?.createdAt
 
         createdAt?.let {
@@ -83,9 +82,9 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
 
                     if (checkedDataSet.contains(data.firstLastDiary?.lastDiary?.createdAt)) {
                         this.remove()
-                        notifyItemChanged(position)
+                        notifyItemRemoved(position)
                     }
-                    if(position == 0) {
+                    if (position == 0) {
                         visibleSideHeader(0)
                     }
                 }
@@ -98,20 +97,12 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
         Observable.fromIterable(dataSet)
                 .filter { data -> data.isSelected != state }
                 .doOnComplete {
-                    notifyDataSetChanged()
                     checkedDataSet.clear()
                 }
-                .subscribe { item ->
-                    item.isSelected = state
+                .subscribe { data ->
+                    data.isSelected = state
                 }
                 .dispose()
-    }
-
-    /**
-     * When item Checked changed event is published.
-     */
-    fun onCheckedChangeEventPublished(item: Diaries) {
-        updateCheckedItems(item)
     }
 
 

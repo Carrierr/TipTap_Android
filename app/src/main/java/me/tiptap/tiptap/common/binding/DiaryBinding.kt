@@ -2,6 +2,8 @@ package me.tiptap.tiptap.common.binding
 
 import android.databinding.BindingAdapter
 import android.graphics.drawable.Drawable
+import android.support.v4.content.ContextCompat
+import android.support.v4.widget.SwipeRefreshLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Priority
@@ -22,7 +24,7 @@ fun extractDayOfMonthFromDate(view: TextView, date: Date) {
 }
 
 @BindingAdapter("time")
-fun extractTimeFromDate(view: TextView, date: Date) {
+fun extractTimeFromDate(view: TextView, date: Date?) {
     view.text = SimpleDateFormat("HH:mm", Locale.KOREAN).format(date)
 }
 
@@ -42,3 +44,7 @@ fun loadImage(imgView: ImageView, url: String?, errDrawable: Drawable?) {
 }
 
 
+@BindingAdapter("colorSchemeResources")
+fun setColorSchemeResources( view : SwipeRefreshLayout, colorResId : Int) {
+    view.setColorSchemeColors(ContextCompat.getColor(view.context, colorResId))
+}
