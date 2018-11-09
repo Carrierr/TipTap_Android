@@ -117,13 +117,7 @@
         <item name = "android:textColor">#242424</item>
         <item name = "android:textSize">14sp</item>
     </style>
-    
-    <style name = "SuperActivityToast_Progress_ProgressBar"
-        parent = "android:Widget.Holo.ProgressBar">
-        <item name = "android:layout_width">32dp</item>
-        <item name = "android:layout_marginLeft">8dp</item>
-    </style>
-    
+
     <style name = "DiaryItemTextStyle">
         <item name = "android:fontFamily">@font/ko_pub_dotum_pm</item>
         <item name = "android:ellipsize">end</item>
