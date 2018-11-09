@@ -26,7 +26,7 @@ import me.tiptap.tiptap.data.InvalidDiary
 import me.tiptap.tiptap.databinding.FragmentDialogPreviewBinding
 import me.tiptap.tiptap.diarywriting.DiaryWritingActivity
 
-class PreviewDialogFragment: DialogFragment() {
+class PreviewDialogFragment : DialogFragment() {
 
     private lateinit var binding: FragmentDialogPreviewBinding
 
@@ -36,7 +36,7 @@ class PreviewDialogFragment: DialogFragment() {
 
     private lateinit var data: Diary
 
-    var previewDialogNavi : PreviewDialogNavigator?=null
+    var previewDialogNavi: PreviewDialogNavigator? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,13 +45,15 @@ class PreviewDialogFragment: DialogFragment() {
     }
 
     private fun checkBus() {
-        rxBus.toObservable().subscribe {
-            if (it is Pair<*,*>) {
-                binding.idx = it.first as Int
-                binding.diary = it.second as Diary
-                data = it.second as Diary
-            }
-        }.dispose()
+        rxBus.toObservable()
+                .subscribe {
+                    if (it is Pair<*, *>) {
+                        binding.idx = it.first as Int
+                        binding.diary = it.second as Diary
+                        data = it.second as Diary
+                    }
+                }
+                .dispose()
     }
 
 
@@ -65,7 +67,7 @@ class PreviewDialogFragment: DialogFragment() {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
             setContentView(root)
 
-            window.run {
+            window?.run {
                 setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             }
@@ -91,6 +93,7 @@ class PreviewDialogFragment: DialogFragment() {
                 setDisplayShowTitleEnabled(false)
                 setHomeAsUpIndicator(R.drawable.ic_back_white)
                 setDisplayHomeAsUpEnabled(true)
+                setHomeButtonEnabled(true)
             }
         }
     }
@@ -107,7 +110,7 @@ class PreviewDialogFragment: DialogFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
             when (item.itemId) {
                 R.id.menu_preview_edit -> {
-                    rxBus.takeBus(Pair(binding.idx , data)) //send be edited Diary.
+                    rxBus.takeBus(Pair(binding.idx, data)) //send be edited Diary.
                     startActivity(Intent(activity, DiaryWritingActivity::class.java))
                     dialog.dismiss()
                     true
@@ -115,6 +118,10 @@ class PreviewDialogFragment: DialogFragment() {
                 R.id.menu_preview_delete -> {
                     previewDialogNavi?.onDialogDeleteStart()
                     deleteDiaryById()
+                    true
+                }
+                android.R.id.home -> {
+                    dialog.dismiss()
                     true
                 }
                 else -> false
