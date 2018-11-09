@@ -32,13 +32,12 @@ fun extractMonthFromDate(view: TextView, date: Date) {
 }
 
 @BindingAdapter("imgUrl", "error")
-fun loadImage(imgView: ImageView, url: String?, errDrawable: Drawable) {
+fun loadImage(imgView: ImageView, url: String?, errDrawable: Drawable?) {
     GlideApp
             .with(imgView)
             .load(url)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .error(errDrawable)
-            .priority(Priority.HIGH)
             .into(imgView)
 }
 
