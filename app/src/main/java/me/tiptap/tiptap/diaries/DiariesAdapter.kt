@@ -13,6 +13,9 @@ import me.tiptap.tiptap.data.Diary
 import java.util.*
 
 class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
+    override fun getItemId(position: Int): Long {
+        return dataSet[position].firstLastDiary!!.lastDiary!!.id.toLong()
+    }
 
     private val dataSet: MutableList<Diaries> = mutableListOf()
     val checkedDataSet: MutableList<Date> = mutableListOf() //checked list
@@ -73,16 +76,19 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
 
     fun deleteCheckedItems() {
         if (checkedDataSet.isNotEmpty()) {
-
             dataSet.iterator().run {
                 while (this.hasNext()) {
                     val data = this.next()
+                    val position = dataSet.indexOf(data)
 
                     if (checkedDataSet.contains(data.firstLastDiary?.lastDiary?.createdAt)) {
                         this.remove()
+                        notifyItemChanged(position)
+                    }
+                    if(position == 0) {
+                        visibleSideHeader(0)
                     }
                 }
-                notifyDataSetChanged()
             }
         }
     }

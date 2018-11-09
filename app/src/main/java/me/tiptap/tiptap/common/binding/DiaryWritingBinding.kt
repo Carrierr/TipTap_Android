@@ -13,7 +13,7 @@ import java.util.*
 
 @BindingAdapter("writeDate")
 fun convertWriteDateFormat(view: TextView, date: Date) {
-    view.text = SimpleDateFormat("yyyy MMM dd - hh:mm", Locale.US).format(date)
+    view.text = SimpleDateFormat("yyyy MMM dd - HH:mm", Locale.US).format(date)
 }
 
 @BindingAdapter("imgUrl")

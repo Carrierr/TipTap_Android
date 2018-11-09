@@ -55,7 +55,7 @@ class CalendarActivity : AppCompatActivity() {
         val datePickerDialog = DatePickerDialog(this, R.style.BaseDatePickerTheme,
                 DatePickerDialog.OnDateSetListener { _, pickYear, pickMonth, pickDay ->
                     if (view is TextView) {
-                        view.setTextColor(ContextCompat.getColor(this@CalendarActivity, R.color.colorSeafoamBlue))
+                        view.setTextColor(ContextCompat.getColor(this@CalendarActivity, R.color.colorSeaFoamBlue))
                         view.text = getString(R.string.date_format, pickYear, pickMonth + 1, pickDay)
                     }
                 }, year, month, day)
