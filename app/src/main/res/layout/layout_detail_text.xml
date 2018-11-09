@@ -53,7 +53,7 @@
                 android:layout_width = "wrap_content"
                 android:layout_height = "wrap_content"
                 android:orientation = "horizontal"
-                app:layout_constraintGuide_percent = "0.045"
+                app:layout_constraintGuide_percent = "0.043"
                 />
 
             <android.support.constraint.Guideline
@@ -78,7 +78,7 @@
                 android:layout_height = "0dp"
                 android:fontFamily = "@font/ko_pub_dotum_pl"
                 android:gravity = "center"
-                android:lineSpacingExtra = "10sp"
+                android:lineSpacingExtra = "9sp"
                 android:maxLength = "800"
                 android:paddingBottom = "2dp"
                 android:text = "@{diary.content}"
