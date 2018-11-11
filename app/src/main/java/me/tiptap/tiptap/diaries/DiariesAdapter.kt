@@ -13,9 +13,6 @@ import me.tiptap.tiptap.data.Diary
 import java.util.*
 
 class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
-    override fun getItemId(position: Int): Long {
-        return dataSet[position].firstLastDiary!!.lastDiary!!.id.toLong()
-    }
 
     private val dataSet: MutableList<Diaries> = mutableListOf()
     val checkedDataSet: MutableList<Date> = mutableListOf() //checked list
@@ -28,8 +25,10 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
 
 
     fun addItems(items: MutableList<Diaries>) {
+        val startPosition = itemCount
         dataSet.addAll(items)
-        notifyDataSetChanged()
+
+        notifyItemRangeInserted(startPosition, itemCount)
 
         visibleSideHeader(dataSet.size - items.size)
     }
@@ -125,6 +124,13 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
             getLongClickObservable().subscribe(longClickSubject)
             getCheckObservable(item).subscribe(checkSubject)
         }
+    }
+
+    override fun getItemId(position: Int): Long {
+        dataSet[position].firstLastDiary?.lastDiary?.let {
+            return it.id.toLong()
+        }
+        return -1
     }
 
     override fun getItemCount(): Int = dataSet.size
