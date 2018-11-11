@@ -15,6 +15,10 @@
         <item name = "android:datePickerDialogTheme">@style/BaseDatePickerTheme</item>
     </style>
 
+    <style name = "AppTheme.Launcher">
+        <item name = "android:windowBackground">@drawable/splash_background</item>
+    </style>
+    
     <style name = "BaseDatePickerTheme" parent = "Theme.AppCompat.Light.Dialog">
         <item name = "android:fontFamily">@font/roboto_mid</item>
         <item name = "colorAccent">@color/colorSeaFoamBlue</item>
