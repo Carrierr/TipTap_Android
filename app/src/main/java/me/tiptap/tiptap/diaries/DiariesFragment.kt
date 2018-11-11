@@ -157,6 +157,7 @@ class DiariesFragment : Fragment() {
                                     }
                                 }
                             } else { //there's no diary.
+                                isDiaryExist.set(false)
                                 adapter.deleteAllItems()
                             }
                         }
