@@ -21,6 +21,7 @@ import me.tiptap.tiptap.common.network.DiaryApi
 import me.tiptap.tiptap.common.network.ServerGenerator
 import me.tiptap.tiptap.common.rx.RxBus
 import me.tiptap.tiptap.common.util.preview.PreviewDialogNavigator
+import me.tiptap.tiptap.common.util.setupActionBar
 import me.tiptap.tiptap.data.Diary
 import me.tiptap.tiptap.data.DiaryResponse
 import me.tiptap.tiptap.databinding.FragmentMainBinding
@@ -78,7 +79,7 @@ class MainFragment : Fragment(), PreviewDialogNavigator {
                             }
 
                             override fun onComplete() {
-                                rxBus.takeBus(false)
+                                rxBus.takeBus(true) //some data is added
                             }
 
                             override fun onError(e: Throwable) {
@@ -106,9 +107,8 @@ class MainFragment : Fragment(), PreviewDialogNavigator {
 
 
     private fun initToolbar() {
-        (activity as AppCompatActivity).apply {
-            setSupportActionBar(binding.toolbar?.toolbarMain)
-            supportActionBar?.setDisplayShowTitleEnabled(false)
+        (activity as AppCompatActivity).setupActionBar(R.id.toolbar_main) {
+            setDisplayShowTitleEnabled(false)
         }
     }
 
@@ -124,6 +124,7 @@ class MainFragment : Fragment(), PreviewDialogNavigator {
 
         PreviewDialogFragment().apply {
             previewDialogNavi = this@MainFragment
+
             show(this@MainFragment.fragmentManager, "preview")  //Show preview dialog
         }
     }
@@ -135,11 +136,12 @@ class MainFragment : Fragment(), PreviewDialogNavigator {
     fun onAddButtonClick() {
         if (todayDiaries.size < 10) {
             rxBus.takeBus(todayDiaries.size) //현재 다이어리의 사이즈를 보냄
+
             Intent(context, DiaryWritingActivity::class.java).apply {
                 startActivity(this)
             }
         } else {
-            //더이상 다이어리를 적을 수 없음.
+            //if todayDiaries.size over 10, user can't write diary anymore.
             showWarnDialog()
         }
     }
@@ -178,7 +180,6 @@ class MainFragment : Fragment(), PreviewDialogNavigator {
 
     private fun clearResources() {
         todayDiaries.clear()
-        postSize.set(0)
         disposables.clear()
     }
 
@@ -189,7 +190,7 @@ class MainFragment : Fragment(), PreviewDialogNavigator {
         if (isVisibleToUser) {
             getTodayDiaries()
         } else {
-            disposables.clear()
+            clearResources()
         }
     }
 
@@ -204,7 +205,6 @@ class MainFragment : Fragment(), PreviewDialogNavigator {
         super.onStop()
 
         clearResources()
-        disposables.clear()
     }
 
 
