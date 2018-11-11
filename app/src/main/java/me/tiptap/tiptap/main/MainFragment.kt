@@ -71,8 +71,6 @@ class MainFragment : Fragment(), PreviewDialogNavigator {
                         .subscribeWith(object : DisposableObserver<DiaryResponse>() {
                             override fun onNext(t: DiaryResponse) {
                                 todayDiaries = t.data.diaries
-                                todayDiaries.sortWith(compareBy { it.todayIndex }) //today Index 로 오름차순 정렬
-
                                 postSize.set(todayDiaries.size)
 
                                 applyStamps(t.data.stamp)
