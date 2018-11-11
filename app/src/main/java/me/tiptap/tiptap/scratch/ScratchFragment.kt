@@ -18,6 +18,7 @@ import me.tiptap.tiptap.R
 import me.tiptap.tiptap.TipTapApplication
 import me.tiptap.tiptap.common.network.DiaryApi
 import me.tiptap.tiptap.common.network.ServerGenerator
+import me.tiptap.tiptap.common.view.ScratchCard
 import me.tiptap.tiptap.data.DiaryResponse
 import me.tiptap.tiptap.databinding.FragmentScratchBinding
 
@@ -37,7 +38,7 @@ class ScratchFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_scratch, container, false)
-        binding.layoutScratchMain?.layoutScratchPost?.postSize = postSize
+        binding.postSize = postSize
 
         initBind()
 
@@ -49,17 +50,17 @@ class ScratchFragment : Fragment() {
 
     private fun initBind() {
         binding.scratch.setRevealListener(object : ScratchCard.IRevealListener {
-            override fun onRevealPercentChangedListener(stv: ScratchCard, percent: Float) {
-                if (percent <= 0.2f && !stv.isRevealed) {
-                    stv.mRevealPercent = 1.0f
+            override fun onRevealPercentChangedListener(siv: ScratchCard, percent: Float) {
+                if (percent <= 0.2f && !siv.isRevealed) {
+                    siv.mRevealPercent = 1.0f
                 }
             }
 
-            override fun onRevealed(tv: ScratchCard) {
+            override fun onRevealed(iv: ScratchCard) {
                 activity?.runOnUiThread {
-                    tv.fadeOutAnimation(binding.scratch, 300)
+                    iv.fadeOutAnimation(binding.scratch, 300)
                 }
-                tv.isRevealed = true
+                iv.isRevealed = true
 
                 getShareDiary() //get Share diary if scratch is revealed.
             }
@@ -89,17 +90,16 @@ class ScratchFragment : Fragment() {
                 service.shareDiaries(TipTapApplication.getAccessToken())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
+                        .filter { t -> t.code == "1000" }
                         .subscribeWith(object : DisposableObserver<DiaryResponse>() {
                             override fun onNext(t: DiaryResponse) {
-                                if (t.code == "1000") {
-                                    adapter.addItems(t.data.diaries)
-                                }
+                                adapter.addItems(t.data.diaries)
                             }
 
                             override fun onComplete() {
                                 postSize.set(adapter.itemCount)
 
-                                binding.layoutScratchMain?.apply {
+                                binding.layoutScratchMain.apply {
                                     textScratchMainNum?.text = getString(R.string.count_tiptap, adapter.itemCount)
                                     textScratchMainLocation?.text = adapter.getItem(0).location
                                 }
@@ -119,6 +119,16 @@ class ScratchFragment : Fragment() {
 
             layoutManager = LinearLayoutManager(this@ScratchFragment.context)
             adapter = this@ScratchFragment.adapter
+        }
+    }
+
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        if (!isVisibleToUser && postSize.get() > 0) { //if share diary already loaded. and there's more to load
+            adapter.deleteAllItems()
+            postSize.set(0)
+
+            binding.scratch.redrawCover()
         }
     }
 
