@@ -47,7 +47,6 @@
                 imgUrl = "@{diary.imageUrl}"
                 android:layout_width = "0dp"
                 android:layout_height = "0dp"
-                android:background = "@color/colorMainGray"
                 android:scaleType = "centerCrop"
                 app:layout_constraintDimensionRatio = "4:3"
                 app:layout_constraintEnd_toEndOf = "parent"
