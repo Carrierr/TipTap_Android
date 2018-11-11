@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package me.tiptap.tiptap.scratch
+package me.tiptap.tiptap.common.view
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -23,24 +23,32 @@ import android.os.AsyncTask
 import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.util.Log
-import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
+import android.widget.ImageView
 import com.cooltechworks.utils.BitmapUtils
 import me.tiptap.tiptap.R
 import java.util.*
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.graphics.Bitmap
+import android.graphics.Shader.TileMode
+import android.graphics.LinearGradient
 
-@Suppress("NAME_SHADOWING")
-/**
- * Created by Harish on 25/03/16.
- */
-class ScratchCard : android.support.v7.widget.AppCompatTextView {
 
-    private var mX: Float = 0.toFloat()
-    private var mY: Float = 0.toFloat()
+class ScratchCard : ImageView {
+
+    interface IRevealListener {
+        fun onRevealed(iv: ScratchCard)
+        fun onRevealPercentChangedListener(siv: ScratchCard, percent: Float)
+    }
+
+    private var mX: Float = 0f
+    private var mY: Float = 0f
+
     /**
      * Bitmap holding the scratch region.
      */
@@ -49,12 +57,12 @@ class ScratchCard : android.support.v7.widget.AppCompatTextView {
     /**
      * Drawable canvas area through which the scratchable area is drawn.
      */
-    private var mCanvas: Canvas? = null
+    private var mCanvas: Canvas = Canvas()
 
     /**
      * Path holding the erasing path done by the user.
      */
-    private var mErasePath: Path? = null
+    private var mErasePath: Path = Path()
 
     /**
      * Path to indicate where the user have touched.
@@ -63,20 +71,24 @@ class ScratchCard : android.support.v7.widget.AppCompatTextView {
 
 
     /**
+     * Paint properties for drawing the scratch area.
+     */
+    private var mBitmapPaint: Paint? = null
+
+    /**
      * Paint properties for erasing the scratch region.
      */
-    private var mErasePaint: Paint? = null
+    private var mErasePaint: Paint = Paint()
 
     /**
      * Gradient paint properties that lies as a background for scratch region.
      */
-    private var mGradientBgPaint: Paint? = null
+    private var mGradientBgPaint: Paint = Paint()
 
     /**
      * Sample Drawable bitmap having the scratch pattern.
      */
     private var mDrawable: BitmapDrawable? = null
-
 
     /**
      * Listener object callback reference to send back the callback when the text has been revealed.
@@ -94,101 +106,126 @@ class ScratchCard : android.support.v7.widget.AppCompatTextView {
     private var mThreadCount = 0
 
     val color: Int
-        get() = mErasePaint!!.color
+        get() = mErasePaint.color
 
-    var isRevealed: Boolean = false
-
-    private val textBounds: IntArray
-        get() = getTextBounds(1f)
-
-
-    interface IRevealListener {
-        fun onRevealed(tv: ScratchCard)
-        fun onRevealPercentChangedListener(stv: ScratchCard, percent: Float)
-    }
+    var isRevealed: Boolean = false //리스너에서 사용
 
 
     constructor(context: Context) : super(context) {
         init()
-
     }
 
     constructor(context: Context, set: AttributeSet) : super(context, set) {
         init()
     }
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        init()
-    }
 
     /**
      * Set the strokes width based on the parameter multiplier.
      * @param multiplier can be 1,2,3 and so on to set the stroke width of the paint.
      */
-    fun setStrokeWidth(multiplier: Int) {
-        mErasePaint!!.strokeWidth = multiplier * STROKE_WIDTH
+    private fun setStrokeWidth(multiplier: Int) {
+        mErasePaint.strokeWidth = multiplier * STROKE_WIDTH
     }
+
 
     /**
      * Initialises the paint drawing elements.
      */
     private fun init() {
         mTouchPath = Path()
-
         mErasePaint = Paint()
-        mErasePaint!!.isAntiAlias = true
-        mErasePaint!!.isDither = true
-        mErasePaint!!.color = -0x10000
-        mErasePaint!!.style = Paint.Style.STROKE
-        mErasePaint!!.strokeJoin = Paint.Join.BEVEL
-        mErasePaint!!.strokeCap = Paint.Cap.ROUND
-        mErasePaint!!.xfermode = PorterDuffXfermode(
-                PorterDuff.Mode.CLEAR)
-        setStrokeWidth(20)
+
+        mErasePaint.apply {
+            isAntiAlias = true
+            isDither = true
+            color = -0x10000
+            style = Paint.Style.STROKE
+            strokeJoin = Paint.Join.BEVEL
+            strokeCap = Paint.Cap.ROUND
+            xfermode = PorterDuffXfermode(
+                    PorterDuff.Mode.CLEAR)
+        }
+
+        setStrokeWidth(18)
 
         mGradientBgPaint = Paint()
 
         mErasePath = Path()
         mBitmapPaint = Paint(Paint.DITHER_FLAG)
 
-        val rand = Random()
-        val scratchNum = (rand.nextInt(50) + 1) % 2
+        val scratchNum = (Random().nextInt(10) + 1) % 2
+
         when (scratchNum) {
             0 -> scratchBitmap = BitmapFactory.decodeResource(resources, R.drawable.img_scratch_01)
             1 -> scratchBitmap = BitmapFactory.decodeResource(resources, R.drawable.img_scratch_02)
         }
-        mDrawable = BitmapDrawable(resources, scratchBitmap)
+
+        mDrawable = BitmapDrawable(resources, scratchBitmap).apply {
+            if (visibility != View.VISIBLE) {
+                visibility = View.VISIBLE
+            }
+        }
+
+        setEraserMode()
+    }
+
+    /**
+     * Redraw cover.
+     */
+    fun redrawCover() {
+        isRevealed = false
+        mRevealPercent = 0f
+
+        init() //call init.
+        paintCoverScreen()
+    }
+
+    /**
+     * Paint cover screen.
+     */
+    private fun paintCoverScreen() {
+        mScratchBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)?.apply {
+            val startGradientColor = ContextCompat.getColor(this@ScratchCard.context, R.color.scratch_start_gradient)
+            val endGradientColor = ContextCompat.getColor(this@ScratchCard.context, R.color.scratch_end_gradient)
+
+            val rect = Rect(0, 0, width, height)
+
+            mGradientBgPaint.shader = LinearGradient(0.0f, 0.0f, 0.0f, height.toFloat(),
+                    startGradientColor, endGradientColor, TileMode.MIRROR)
+
+            mCanvas = Canvas(this).apply {
+                drawRect(rect, mGradientBgPaint)
+            }
+
+            mDrawable?.run {
+                this.bounds = rect
+                draw(mCanvas)
+            }
+        }
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        mScratchBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
-        mCanvas = Canvas(mScratchBitmap!!)
 
-        val rect = Rect(0, 0, mScratchBitmap!!.width, mScratchBitmap!!.height)
-        mDrawable!!.bounds = rect
-
-        val startGradientColor = ContextCompat.getColor(context, R.color.scratch_start_gradient)
-        val endGradientColor = ContextCompat.getColor(context, R.color.scratch_end_gradient)
-
-
-        mGradientBgPaint!!.shader = LinearGradient(0f, 0f, 0f, height.toFloat(), startGradientColor, endGradientColor, Shader.TileMode.MIRROR)
-
-        mCanvas!!.drawRect(rect, mGradientBgPaint!!)
-        mDrawable!!.draw(mCanvas)
+        paintCoverScreen() //paint
     }
 
     override fun onDraw(canvas: Canvas) {
-
         super.onDraw(canvas)
-        canvas.drawBitmap(mScratchBitmap!!, 0f, 0f, mBitmapPaint)
-        canvas.drawPath(mErasePath!!, mErasePaint!!)
 
+        canvas.also {
+            it.drawBitmap(mScratchBitmap!!, 0f, 0f, mBitmapPaint)
+            it.drawPath(mErasePath, mErasePaint)
+        }
     }
 
-    private fun touch_start(x: Float, y: Float) {
-        mErasePath!!.reset()
-        mErasePath!!.moveTo(x, y)
+    private fun touchStart(x: Float, y: Float) {
+        mErasePath.also {
+            it.reset()
+            it.moveTo(x, y)
+        }
+
         mX = x
         mY = y
     }
@@ -212,12 +249,11 @@ class ScratchCard : android.support.v7.widget.AppCompatTextView {
         }
     }
 
-    private fun touch_move(x: Float, y: Float) {
-
+    private fun touchMove(x: Float, y: Float) {
         val dx = Math.abs(x - mX)
         val dy = Math.abs(y - mY)
         if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
-            mErasePath!!.quadTo(mX, mY, (x + mX) / 2, (y + mY) / 2)
+            mErasePath.quadTo(mX, mY, (x + mX) / 2, (y + mY) / 2)
             mX = x
             mY = y
 
@@ -230,93 +266,93 @@ class ScratchCard : android.support.v7.widget.AppCompatTextView {
     }
 
     private fun drawPath() {
-        mErasePath!!.lineTo(mX, mY)
+        mErasePath.lineTo(mX, mY)
         // commit the path to our offscreen
-        mCanvas!!.drawPath(mErasePath!!, mErasePaint!!)
+        mCanvas.drawPath(mErasePath, mErasePaint)
         // kill this so we don't double draw
-        mTouchPath!!.reset()
-        mErasePath!!.reset()
-        mErasePath!!.moveTo(mX, mY)
+        mTouchPath?.reset()
+        mErasePath.reset()
+        mErasePath.moveTo(mX, mY)
 
         checkRevealed()
     }
 
+    private fun touchUp() {
+        drawPath()
+    }
 
-    @SuppressLint("ClickableViewAccessibility")
+
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val x = event.x
         val y = event.y
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                touch_start(x, y)
+                touchStart(x, y)
                 invalidate()
             }
             MotionEvent.ACTION_MOVE -> {
-                touch_move(x, y)
+                touchMove(x, y)
                 invalidate()
             }
             MotionEvent.ACTION_UP -> {
                 drawPath()
                 invalidate()
             }
-            else -> {
-            }
         }
         return true
     }
 
+    private fun setEraserMode() {
+        mErasePaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+    }
 
     fun setRevealListener(listener: IRevealListener) {
         this.mRevealListener = listener
     }
 
+
     @SuppressLint("StaticFieldLeak")
     private fun checkRevealed() {
-
         if (!isRevealed && mRevealListener != null) {
 
-            val bounds = textBounds
+            val bounds = getImageBounds()
             val left = bounds[0]
             val top = bounds[1]
             val width = bounds[2] - left
             val height = bounds[3] - top
 
-
             // Do not create multiple calls to compare.
             if (mThreadCount > 1) {
+                Log.d("Captcha", "Count greater than 1")
                 return
             }
 
             mThreadCount++
 
             object : AsyncTask<Int, Void, Float>() {
-
                 override fun doInBackground(vararg params: Int?): Float? {
                     if (mRevealPercent == 1.0f) {
-                        mRevealListener!!.onRevealed(this@ScratchCard)
+                        mRevealListener?.onRevealed(this@ScratchCard)
                     }
-                    try {
-                        val left = params[0]
-                        val top = params[1]
-                        val width = params[2]
-                        val height = params[3]
 
-                        val croppedBitmap = Bitmap.createBitmap(mScratchBitmap!!, left!!, top!!, width!!, height!!)
+                    try {
+                        val leftLine = params[0]
+                        val topLine = params[1]
+                        val widthLine = params[2]
+                        val heightLine = params[3]
+
+                        val croppedBitmap = Bitmap.createBitmap(mScratchBitmap, leftLine!!, topLine!!, widthLine!!, heightLine!!)
 
                         return BitmapUtils.getTransparentPixelPercent(croppedBitmap)
                     } finally {
                         mThreadCount--
-                        Log.d("Thread Count", Integer.toString(mThreadCount))
-
                     }
                 }
 
                 public override fun onPostExecute(percentRevealed: Float?) {
-
                     // check if not revealed before.
                     if (!isRevealed) {
-
                         val oldValue = mRevealPercent
                         mRevealPercent = percentRevealed!!
 
@@ -330,95 +366,68 @@ class ScratchCard : android.support.v7.widget.AppCompatTextView {
         }
     }
 
-    @SuppressLint("RtlHardcoded")
-    private fun getTextBounds(scale: Float): IntArray {
+    private fun getImageBounds(): IntArray {
+        val vWidth = width - paddingLeft - paddingRight
+        val vHeight = height - paddingBottom - paddingTop
 
-        val paddingLeft = paddingLeft
-        val paddingTop = paddingTop
-        val paddingRight = paddingRight
-        val paddingBottom = paddingBottom
+        val centerX = vWidth / 2
+        val centerY = vHeight / 2
 
-        val vwidth = width
-        val vheight = height
+        val bounds = mDrawable!!.bounds
 
-        val centerX = vwidth / 2
-        val centerY = vheight / 2
+        var width = mDrawable!!.intrinsicWidth
+        var height = mDrawable!!.intrinsicHeight
 
-
-        val paint = paint
-
-        val text = text.toString()
-
-        val dimens = getTextDimens(text, paint)
-        var width = dimens[0]
-        var height = dimens[1]
-
-        val lines = lineCount
-        height *= lines
-        width /= lines
-
-
-        var left = 0
-        var top = 0
-
-        if (height > vheight) {
-            height = vheight - (paddingBottom + paddingTop)
-        } else {
-            height = (height * scale).toInt()
+        if (width <= 0) {
+            width = bounds.right - bounds.left
         }
 
-        if (width > vwidth) {
-            width = vwidth - (paddingLeft + paddingRight)
-        } else {
-            width = (width * scale).toInt()
+        if (height <= 0) {
+            height = bounds.bottom - bounds.top
         }
 
-        val gravity = gravity
+        val left: Int
+        val top: Int
+
+        if (height > vHeight) {
+            height = vHeight
+        }
+
+        if (width > vWidth) {
+            width = vWidth
+        }
 
 
-        //todo Gravity.START
-        if (gravity and Gravity.LEFT == Gravity.LEFT) {
-            left = paddingLeft
-        } else if (gravity and Gravity.RIGHT == Gravity.RIGHT) {
-            left = vwidth - paddingRight - width
-        } else if (gravity and Gravity.CENTER_HORIZONTAL == Gravity.CENTER_HORIZONTAL) {
-            left = centerX - width / 2
-        }//todo Gravity.END
+        val scaleType = scaleType
 
-        if (gravity and Gravity.TOP == Gravity.TOP) {
-            top = paddingTop
-        } else if (gravity and Gravity.BOTTOM == Gravity.BOTTOM) {
-            top = vheight - paddingBottom - height
-        } else if (gravity and Gravity.CENTER_VERTICAL == Gravity.CENTER_VERTICAL) {
-            top = centerY - height / 2
+        when (scaleType) {
+            ImageView.ScaleType.FIT_START -> {
+                left = paddingLeft
+                top = centerY - height / 2
+            }
+            ImageView.ScaleType.FIT_END -> {
+                left = vWidth - paddingRight - width
+                top = centerY - height / 2
+            }
+            ImageView.ScaleType.CENTER -> {
+                left = centerX - width / 2
+                top = centerY - height / 2
+            }
+            else -> {
+                left = paddingLeft
+                top = paddingTop
+                width = vWidth
+                height = vHeight
+            }
         }
 
         return intArrayOf(left, top, left + width, top + height)
     }
 
     companion object {
-
         const val STROKE_WIDTH = 12f
         private const val TOUCH_TOLERANCE = 4f
         lateinit var scratchBitmap: Bitmap
-
-        /**
-         * Paint properties for drawing the scratch area.
-         */
-        lateinit var mBitmapPaint: Paint
-
-
-        private fun getTextDimens(text: String, paint: Paint): IntArray {
-
-            val end = text.length
-            val bounds = Rect()
-            paint.getTextBounds(text, 0, end, bounds)
-            val width = bounds.left + bounds.width()
-            val height = bounds.bottom + bounds.height()
-
-            return intArrayOf(width, height)
-        }
     }
-
 
 }
