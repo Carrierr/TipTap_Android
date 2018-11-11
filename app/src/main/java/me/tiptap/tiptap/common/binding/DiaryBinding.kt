@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import me.tiptap.tiptap.common.util.GlideApp
 import java.text.SimpleDateFormat
 import java.util.*
@@ -39,6 +40,7 @@ fun loadImage(imgView: ImageView, url: String?, errDrawable: Drawable?) {
             .with(imgView)
             .load(url)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .transition(DrawableTransitionOptions.withCrossFade())
             .error(errDrawable)
             .into(imgView)
 }
