@@ -49,17 +49,17 @@ class ScratchFragment : Fragment() {
 
     private fun initBind() {
         binding.scratch.setRevealListener(object : ScratchCard.IRevealListener {
-            override fun onRevealPercentChangedListener(stv: ScratchCard, percent: Float) {
-                if (percent <= 0.2f && !stv.isRevealed) {
-                    stv.mRevealPercent = 1.0f
+            override fun onRevealPercentChangedListener(siv: ScratchCard, percent: Float) {
+                if (percent <= 0.2f && !siv.isRevealed) {
+                    siv.mRevealPercent = 1.0f
                 }
             }
 
-            override fun onRevealed(tv: ScratchCard) {
+            override fun onRevealed(iv: ScratchCard) {
                 activity?.runOnUiThread {
-                    tv.fadeOutAnimation(binding.scratch, 300)
+                    iv.fadeOutAnimation(binding.scratch, 300)
                 }
-                tv.isRevealed = true
+                iv.isRevealed = true
 
                 getShareDiary() //get Share diary if scratch is revealed.
             }
@@ -119,6 +119,16 @@ class ScratchFragment : Fragment() {
 
             layoutManager = LinearLayoutManager(this@ScratchFragment.context)
             adapter = this@ScratchFragment.adapter
+        }
+    }
+
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        if (!isVisibleToUser && postSize.get() > 0) { //if share diary already loaded. and there's more to load
+            adapter.deleteAllItems()
+            postSize.set(0)
+
+            binding.scratch.redrawCover()
         }
     }
 
