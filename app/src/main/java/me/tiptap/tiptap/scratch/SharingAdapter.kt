@@ -14,10 +14,17 @@ class SharingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     fun addItems(items: MutableList<Diary>) {
+        val startPosition = itemCount
         dataSet.addAll(items)
-        notifyDataSetChanged()
+
+        notifyItemRangeInserted(startPosition, itemCount)
+
     }
 
+    fun deleteAllItems() {
+        dataSet.clear()
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
             SharingViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_sharing, parent, false))

@@ -4,7 +4,15 @@
     xmlns:app = "http://schemas.android.com/apk/res-auto"
     xmlns:tools = "http://schemas.android.com/tools"
     >
-    
+    <data>
+        <import
+            alias="View"
+            type = "android.view.View"/>
+        <variable
+            name = "postSize"
+            type = "android.databinding.ObservableInt"/>
+    </data>
+
     <android.support.constraint.ConstraintLayout
         android:layout_width = "match_parent"
         android:layout_height = "match_parent"
@@ -25,7 +33,7 @@
             android:layout_height = "wrap_content"
             android:fontFamily = "@font/montserrat_regular"
             android:gravity = "center"
-            android:text = "@{String.format(@string/count_tiptap, 0)}"
+            android:text = "@{postSize == 0 ? String.format(@string/count_tiptap, 0) : String.format(@string/count_tiptap, postSize) }"
             android:textSize = "16sp"
             android:textStyle = "bold"
             app:layout_constraintEnd_toEndOf = "parent"
@@ -93,6 +101,7 @@
             android:fontFamily = "@font/ko_pub_dotum_pl"
             android:textColor = "@color/colorMainGrayIsh"
             android:textSize = "12sp"
+            android:visibility="@{postSize > 0 ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toStartOf = "@+id/gl_scratch_main_side"
             app:layout_constraintStart_toStartOf = "parent"
             app:layout_constraintTop_toBottomOf = "@+id/text_scratch_main_from"
@@ -110,6 +119,7 @@
         <include
             android:id = "@+id/layout_scratch_post"
             layout = "@layout/layout_post"
+            postSize="@{postSize}"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             app:layout_constraintStart_toStartOf = "@+id/gl_scratch_post_start"

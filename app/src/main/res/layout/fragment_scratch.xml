@@ -3,6 +3,11 @@
     xmlns:app = "http://schemas.android.com/apk/res-auto"
     xmlns:tools = "http://schemas.android.com/tools"
     >
+    <data>
+        <variable
+            name = "postSize"
+            type = "android.databinding.ObservableInt"/>
+    </data>
     
     <android.support.constraint.ConstraintLayout
         android:id = "@+id/layout"
@@ -31,6 +36,7 @@
                     
                     <include
                         android:id = "@+id/layout_scratch_main"
+                        postSize="@{postSize}"
                         layout = "@layout/layout_scratch_main"
                         />
                 </android.support.constraint.ConstraintLayout>
@@ -45,7 +51,7 @@
         </ScrollView>
         
         <!--Scratch card-->
-        <me.tiptap.tiptap.scratch.ScratchCard
+        <me.tiptap.tiptap.common.view.ScratchCard
             android:id = "@+id/scratch"
             android:layout_width = "match_parent"
             android:layout_height = "match_parent"
