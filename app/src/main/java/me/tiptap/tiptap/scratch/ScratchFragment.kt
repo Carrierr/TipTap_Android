@@ -118,6 +118,8 @@ class ScratchFragment : Fragment() {
             setHasFixedSize(true)
 
             layoutManager = LinearLayoutManager(this@ScratchFragment.context)
+
+            isNestedScrollingEnabled = false
             adapter = this@ScratchFragment.adapter
         }
     }
