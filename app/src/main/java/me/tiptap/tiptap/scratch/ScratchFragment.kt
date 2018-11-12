@@ -93,7 +93,7 @@ class ScratchFragment : Fragment() {
                         .filter { t -> t.code == "1000" }
                         .subscribeWith(object : DisposableObserver<DiaryResponse>() {
                             override fun onNext(t: DiaryResponse) {
-                                adapter.addItems(t.data.diaries)
+                                adapter.updateItems(t.data.diaries)
                             }
 
                             override fun onComplete() {

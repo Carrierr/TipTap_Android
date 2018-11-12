@@ -13,12 +13,14 @@ class SharingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val dataSet: MutableList<Diary> = mutableListOf()
 
 
-    fun addItems(items: MutableList<Diary>) {
-        val startPosition = itemCount
+    fun updateItems(items: MutableList<Diary>) {
+        if (dataSet.size > 0) {
+            dataSet.clear()
+        }
+
         dataSet.addAll(items)
 
-        notifyItemRangeInserted(startPosition, itemCount)
-
+        notifyDataSetChanged()
     }
 
     fun deleteAllItems() {
