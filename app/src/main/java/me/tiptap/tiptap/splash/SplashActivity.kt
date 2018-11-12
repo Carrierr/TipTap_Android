@@ -12,7 +12,7 @@ import me.tiptap.tiptap.main.MainActivity
 
 class SplashActivity : AppCompatActivity() {
 
-    private val delayMill = 1500L //delay milliseconds
+    private val delayMill = 300L //delay milliseconds
 
     private val callback = object : ISessionCallback {
         override fun onSessionOpened() { //If session is opened, go to main activity.
