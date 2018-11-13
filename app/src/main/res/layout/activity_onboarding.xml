@@ -1,45 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android = "http://schemas.android.com/apk/res/android"
-    xmlns:app = "http://schemas.android.com/apk/res-auto">
+<layout xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+
+        <variable
+            name = "activity"
+            type = "me.tiptap.tiptap.onboarding.OnBoardingActivity"
+            />
+    </data>
 
     <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width = "match_parent"
+        android:layout_height = "match_parent"
+        >
 
         <android.support.v4.view.ViewPager
-            android:id="@+id/onboarding_vp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:id = "@+id/vp_on_boarding"
+            android:layout_width = "match_parent"
+            android:layout_height = "match_parent"
+            />
+
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart = "24dp"
-            android:layout_marginEnd = "24dp"
-            android:layout_marginBottom = "22dp"
-            app:layout_constraintBottom_toBottomOf="parent">
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:background = "@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf = "parent"
+            >
 
-            <ImageView
-                android:id="@+id/skip_onboarding"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:src="@drawable/onboard_skip"
-                app:layout_constraintBottom_toBottomOf="parent" />
+            <TextView
+                android:id = "@+id/text_skip_onboard"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:background = "#FBFBFB"
+                android:fontFamily = "@font/ko_pub_dotum_pb"
+                android:onClick = "@{ () -> activity.onSkipOnBoardingClick()}"
+                android:paddingStart = "24dp"
+                android:paddingTop = "22dp"
+                android:paddingEnd = "20dp"
+                android:paddingBottom = "22dp"
+                android:text = "@string/board_skip"
+                android:textColor = "#99242424"
+                android:textSize = "13dp"
+                app:layout_constraintBottom_toBottomOf = "parent"
+                app:layout_constraintStart_toStartOf = "parent"
+                />
 
-            <ImageView
-                android:id="@+id/next_onboarding"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:src="@drawable/onboard_next"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-
+            <TextView
+                android:id = "@+id/text_next_onboard"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:background = "#FBFBFB"
+                android:fontFamily = "@font/ko_pub_dotum_pb"
+                android:onClick = "@{ () -> activity.onNextOnBoardingClick()}"
+                android:padding = "20dp"
+                android:paddingStart = "20dp"
+                android:paddingTop = "22dp"
+                android:paddingEnd = "24dp"
+                android:paddingBottom = "22dp"
+                android:text = "@string/board_next"
+                android:textColor = "@color/colorSeaFoamBlue"
+                android:textSize = "13dp"
+                app:layout_constraintBottom_toBottomOf = "parent"
+                app:layout_constraintEnd_toEndOf = "parent"
+                />
         </android.support.constraint.ConstraintLayout>
-
     </android.support.constraint.ConstraintLayout>
 </layout>

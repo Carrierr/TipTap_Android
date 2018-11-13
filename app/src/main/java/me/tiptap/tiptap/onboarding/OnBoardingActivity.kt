@@ -1,5 +1,6 @@
 package me.tiptap.tiptap.onboarding
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
@@ -7,63 +8,67 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentStatePagerAdapter
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import me.tiptap.tiptap.R
 import me.tiptap.tiptap.databinding.ActivityOnboardingBinding
 import me.tiptap.tiptap.main.MainActivity
 
 
-
-
 class OnBoardingActivity : AppCompatActivity() {
-    private lateinit var binding:ActivityOnboardingBinding
+
+    private lateinit var binding: ActivityOnboardingBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_onboarding)
+        binding.activity = this
 
-        val adapter = object : FragmentStatePagerAdapter(supportFragmentManager) {
-            override fun getItem(position: Int): Fragment? {
-                val next_drawable: Drawable = resources.getDrawable(R.drawable.onboard_next)
-                binding.nextOnboarding.setImageDrawable(next_drawable)
-                when (position) {
-                    0 -> return OnBoardingFragment1()
-                    1 -> return OnBoardingFragment2()
-                    2 -> {
-                        val start_drawable: Drawable = resources.getDrawable(R.drawable.onboard_start)
-                        binding.nextOnboarding.setImageDrawable(start_drawable)
-                        return OnBoardingFragment3()
-                    }
-                    else -> return null
+
+        initOnBoardingViewPager()
+    }
+
+    private fun initOnBoardingViewPager() {
+        binding.vpOnBoarding.apply{
+            addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+                override fun onPageScrollStateChanged(p0: Int) {
                 }
-            }
+                override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
+                }
 
-            override fun getCount(): Int {
-                return 3
-            }
-        }
+                override fun onPageSelected(position: Int) {
+                    when (position) {
+                        0, 1 -> binding.textNextOnboard.text = getString(R.string.board_next)
+                        2 -> binding.textNextOnboard.text = getString(R.string.board_start)
+                    }
+                }
+            })
 
-        binding.onboardingVp.adapter = adapter
-
-        binding.skipOnboarding.setOnClickListener {
-            finishOnboarding()
-        }
-        binding.nextOnboarding.setOnClickListener {
-            if(binding.onboardingVp.currentItem == 2)
-                finishOnboarding()
-            else
-                binding.onboardingVp.setCurrentItem(binding.onboardingVp.currentItem + 1, true)
+            adapter = OnBoardingAdapter(supportFragmentManager)
         }
     }
 
-    private fun finishOnboarding() {
-        val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+    fun onSkipOnBoardingClick() {
+        finishOnBoarding()
+    }
 
-        preferences.edit().putBoolean("onboarding_complete", true).apply()
+    fun onNextOnBoardingClick() {
+        val curItem = binding.vpOnBoarding.currentItem
 
-        val main = Intent(this, MainActivity::class.java)
-        startActivity(main)
+        if (curItem == 2) finishOnBoarding() else binding.vpOnBoarding.currentItem = curItem + 1
+    }
 
+
+    private fun finishOnBoarding() {
+        getSharedPreferences(getString(R.string.on_boarding), Activity.MODE_PRIVATE).apply {
+            this.edit().run {
+                putBoolean(getString(R.string.skip), true)
+                apply()
+            }
+        }
+
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 }
