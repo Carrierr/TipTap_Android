@@ -1,44 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android = "http://schemas.android.com/apk/res/android"
+
+<android.support.constraint.ConstraintLayout xmlns:android = "http://schemas.android.com/apk/res/android"
     xmlns:app = "http://schemas.android.com/apk/res-auto"
-    xmlns:tools = "http://schemas.android.com/tools"
+    android:layout_width = "match_parent"
+    android:layout_height = "match_parent"
     >
 
-    <android.support.constraint.ConstraintLayout
+    <android.support.constraint.Guideline
+        android:id = "@+id/gl_ob1_img_bot"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:orientation = "horizontal"
+        app:layout_constraintGuide_percent = "0.578"
+        />
+
+    <ImageView
         android:layout_width = "match_parent"
-        android:layout_height = "match_parent"
-        tools:context = ".main.MainActivity"
-        >
+        android:layout_height = "0dp"
+        android:scaleType = "centerCrop"
+        android:src = "@drawable/bg"
+        app:layout_constraintBottom_toBottomOf = "@+id/gl_ob1_img_bot"
+        app:layout_constraintEnd_toEndOf = "parent"
+        app:layout_constraintStart_toStartOf = "parent"
+        app:layout_constraintTop_toTopOf = "parent"
+        />
 
-        <ImageView
-            android:id = "@+id/onboarding_img_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@drawable/onboard_img1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+    <android.support.constraint.Guideline
+        android:id = "@+id/gl_ob_phone_top"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:orientation = "horizontal"
+        app:layout_constraintGuide_percent = "0.12"
+        />
 
-        <ImageView
-            android:id = "@+id/onboarding_text_1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop = "60dp"
-            android:src="@drawable/onboard_text1"
-            app:layout_constraintTop_toBottomOf="@+id/onboarding_img_1"/>
+    <android.support.constraint.Guideline
+        android:id = "@+id/gl_ob_phone_start"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:orientation = "vertical"
+        app:layout_constraintGuide_percent = "0.125"
+        />
+
+    <android.support.constraint.Guideline
+        android:id = "@+id/gl_ob_phone_end"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:orientation = "vertical"
+        app:layout_constraintGuide_percent = "0.875"
+        />
+
+    <ImageView
+        android:layout_width = "0dp"
+        android:layout_height = "0dp"
+        android:src = "@drawable/onboard_img_01"
+        app:layout_constraintBottom_toBottomOf = "@+id/gl_ob1_img_bot"
+        app:layout_constraintEnd_toEndOf = "@+id/gl_ob_phone_end"
+        app:layout_constraintStart_toStartOf = "@+id/gl_ob_phone_start"
+        app:layout_constraintTop_toTopOf = "@+id/gl_ob_phone_top"
+        />
+
+    <android.support.constraint.Guideline
+        android:id = "@+id/gl_ob1_txt_top"
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:orientation = "horizontal"
+        app:layout_constraintGuide_percent = "0.671"
+        />
 
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src = "@drawable/onboard_indicator1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom = "26dp"/>
+    <TextView
+        android:id = "@+id/text_ob1_title"
+        style = "@style/OnBoardTextTitle"
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        android:text = "@string/board1_title"
+        app:layout_constraintEnd_toEndOf = "parent"
+        app:layout_constraintStart_toStartOf = "parent"
+        app:layout_constraintTop_toTopOf = "@+id/gl_ob1_txt_top"
+        />
 
-    </android.support.constraint.ConstraintLayout>
-</layout>
+    <TextView
+        style = "@style/OnBoardTextMsg"
+        android:layout_width = "0dp"
+        android:layout_height = "wrap_content"
+        android:text = "@string/board1_msg"
+        app:layout_constraintEnd_toEndOf = "parent"
+        app:layout_constraintStart_toStartOf = "parent"
+        app:layout_constraintTop_toBottomOf = "@+id/text_ob1_title"
+        />
+
+
+    <ImageView
+        android:layout_width = "wrap_content"
+        android:layout_height = "wrap_content"
+        android:layout_marginBottom = "26dp"
+        android:src = "@drawable/onboard_indicator1"
+        app:layout_constraintBottom_toBottomOf = "parent"
+        app:layout_constraintEnd_toEndOf = "parent"
+        app:layout_constraintStart_toStartOf = "parent"
+        />
+
+</android.support.constraint.ConstraintLayout>
