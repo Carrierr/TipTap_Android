@@ -1,6 +1,18 @@
 <resources>
     <string name = "app_name">TipTap</string>
 
+    <!--onBoarding-->
+    <string name = "on_boarding">onBoarding</string>
+    <string name = "skip">skip</string>
+    <string name = "board_skip">스킵하기</string>
+    <string name = "board_next">다음으로</string>
+    <string name = "board_start">시작하기</string>
+    <string name = "board1_title">오늘 하루 여행 일기를 써보세요!</string>
+    <string name = "board1_msg">단, 24시간이 지나\n일기가 마감되고 나면 수정이 불가합니다.</string>
+    <string name = "board2_title">우표를 모으는 재미</string>
+    <string name = "board2_msg">여행지에서 일기를 한 편 쓸 때마다\n우표를 한 개씩 모을 수 있습니다.\n(하루 최대 10개)</string>
+    <string name = "board3_title">매일 tiptap을 받아보는 재미</string>
+    <string name = "board3_msg">다른 여행지의 하루 일기를\n받아볼 수 있습니다.</string>
     <!--login-->
     <string name = "type_kakao">kakao</string>
     <string name = "code">code</string>
