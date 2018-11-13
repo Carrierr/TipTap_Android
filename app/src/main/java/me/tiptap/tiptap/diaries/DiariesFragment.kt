@@ -166,12 +166,13 @@ class DiariesFragment : Fragment() {
 
 
     private fun getDiaries(page: Int, limit: Int) {
-        curPage++
-
         disposables.add(
-                service.getDiaries(TipTapApplication.getAccessToken(), page, limit) //한번에 하나의 달만 불러올거.
+                service.getDiaries(TipTapApplication.getAccessToken(), page, limit)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
+                        .doOnSubscribe {
+                            curPage++
+                        }
                         .doOnComplete {
                             if (binding.swipeDiaries.isRefreshing) { //refresh is done.
                                 binding.swipeDiaries.isRefreshing = false
