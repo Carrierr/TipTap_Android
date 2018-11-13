@@ -22,18 +22,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        val preferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
-
-        if (!preferences.getBoolean("onboarding_complete", false)) {
-
-            val onboarding = Intent(this, OnBoardingActivity::class.java)
-            startActivity(onboarding)
-
+        if (!isOnBoardingSkipped()) { //If user see onBoarding yet,
+            startActivity(Intent(this, OnBoardingActivity::class.java))
             finish()
             return
         }
+
         initViewPager()
 
+    }
+
+    private fun isOnBoardingSkipped() : Boolean {
+        getSharedPreferences(getString(R.string.on_boarding), Context.MODE_PRIVATE).run {
+            return this.getBoolean(getString(R.string.skip), false)
+        }
     }
 
     private fun initViewPager() {
