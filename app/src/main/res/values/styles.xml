@@ -104,8 +104,8 @@
     </style>
 
     <style name = "SettingContainer">
-        <item name = "android:paddingBottom">15dp</item>
-        <item name = "android:paddingTop">15dp</item>
+        <item name = "android:paddingBottom">19dp</item>
+        <item name = "android:paddingTop">19dp</item>
         <item name = "android:paddingEnd">26dp</item>
         <item name = "android:paddingStart">26dp</item>
         <item name = "android:layout_width">match_parent</item>
