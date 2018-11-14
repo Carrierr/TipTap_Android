@@ -60,7 +60,7 @@
                 android:paddingEnd = "22dp"
                 android:paddingBottom = "7dp"
                 android:src = "@drawable/ic_calendar"
-                android:visibility = "@{fragment.isDateRangeAvailable() ? View.GONE : View.VISIBLE}"
+                android:visibility = "@{fragment.isDateRangeMode() ? View.GONE : View.VISIBLE}"
                 app:layout_constraintBaseline_toBaselineOf = "@+id/gl_tool_diaries_top"
                 app:layout_constraintBottom_toBottomOf = "@+id/text_toolbar_diaries_title"
                 app:layout_constraintEnd_toEndOf = "parent"
@@ -76,7 +76,7 @@
                 android:paddingEnd = "22dp"
                 android:paddingBottom = "5dp"
                 android:src = "@drawable/ic_x"
-                android:visibility = "@{fragment.isDateRangeAvailable ? View.VISIBLE : View.GONE, default = gone}"
+                android:visibility = "@{fragment.isDateRangeMode ? View.VISIBLE : View.GONE, default = gone}"
                 app:layout_constraintEnd_toEndOf = "parent"
                 app:layout_constraintTop_toTopOf = "parent"
                 />

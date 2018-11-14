@@ -38,12 +38,13 @@ class DiariesFragment : Fragment() {
 
     private var totalPage = 1//total page
     private var curPage = 1
+    private val limit = 2
 
-    val isBotDialogVisible = ObservableBoolean(false)
-    val isDateRangeAvailable = ObservableBoolean(false)
-    val isDiaryExist = ObservableBoolean(false)
+    val isDeleteMode = ObservableBoolean(false)
+    val isDateRangeMode = ObservableBoolean(false)
+    val isDiaryExist = ObservableBoolean(true)
+
     private val isPreViewMode = ObservableBoolean(false)
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_diaries, container, false)
@@ -71,20 +72,21 @@ class DiariesFragment : Fragment() {
         }
     }
 
+
     private fun initRecyclerView() {
         binding.recyclerDiaries.apply {
-            val mLayoutManager = LinearLayoutManager(this@DiariesFragment.context)
+            layoutManager = LinearLayoutManager(this@DiariesFragment.context)
+
             adapter = this@DiariesFragment.adapter.apply {
                 setHasStableIds(true)
             }
 
-            layoutManager = mLayoutManager
             setHasFixedSize(true)
 
-            addOnScrollListener(object : EndlessRecyclerViewScrollListener(mLayoutManager, 2) {
+            addOnScrollListener(object : EndlessRecyclerViewScrollListener(this.layoutManager as LinearLayoutManager, limit) {
                 override fun onLoadMore(rv: RecyclerView, page: Int, totalItemCnt: Int) {
-                    if (curPage <= totalPage && !isDateRangeAvailable.get()) {
-                        getDiaries(curPage, 2)
+                    if (curPage <= totalPage && !isDateRangeMode.get()) {
+                        getDiaries(curPage, limit)
                     }
                 }
             })
@@ -97,17 +99,19 @@ class DiariesFragment : Fragment() {
         adapter.apply {
             disposables.addAll(
                     clickSubject.subscribe {
-                        if (!this.isCheckboxAvailable.get()) {   //Go to detail page if delete mode is not running.
+                        if (!isDeleteMode.get()) {   //Go to detail page if delete mode is not running.
                             rxBus.takeBus(it) //send Diary's date to DiaryDetailActivity.
                             isPreViewMode.set(true)
 
                             startActivity(Intent(this@DiariesFragment.activity, DiaryDetailActivity::class.java))
                         }
                     },
+
                     longClickSubject.subscribe {
                         changeDeleteModeState(it)
-                        isBotDialogVisible.set(it) //change bottom dialog visibility
+                        isDeleteMode.set(it) //change bottom dialog visibility
                     },
+
                     checkSubject.subscribe {
                         updateCheckedItems(it) //checkEvent is published.
                     }
@@ -140,9 +144,9 @@ class DiariesFragment : Fragment() {
     private fun getDiariesByDate(startDate: String, endDate: String) {
         disposables.add(
                 service.getDiariesByDate(TipTapApplication.getAccessToken(), startDate, endDate)
+                        .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .doOnSubscribe { adapter.deleteAllItems() }
-                        .observeOn(AndroidSchedulers.mainThread())
                         .doOnError { e -> e.printStackTrace() }
                         .filter { task -> task.code == "1000" } //if successful
                         .subscribe { t ->
@@ -204,6 +208,7 @@ class DiariesFragment : Fragment() {
 
     fun onDateFindButtonClick() {
         adapter.changeDeleteModeState(false)
+        isDeleteMode.set(false)
 
         //Only start CalendarActivity if you have a diary.
         if (!isDiaryExist.get()) return else startActivity(Intent(this@DiariesFragment.activity, CalendarActivity::class.java))
@@ -211,22 +216,22 @@ class DiariesFragment : Fragment() {
 
 
     fun onDateClearButtonClick() {
-        isDateRangeAvailable.set(false) //dateRange mode set false
+        isDateRangeMode.set(false) //dateRange mode set false
+        isDeleteMode.set(false)
 
         adapter.deleteAllItems()
-        getDiaries(curPage, 2)
+
+        curPage = 1
+        getDiaries(curPage, limit)
     }
 
     /**
      * SwipeRefresh
      */
     fun onRefresh() {
-        if (!isDateRangeAvailable.get()) {
-            adapter.deleteAllItems()
+        resetAllMode()
 
-            curPage = 1
-            getDiaries(curPage, 2)
-        }
+        getDiaries(curPage, limit)
     }
 
     /**
@@ -245,12 +250,9 @@ class DiariesFragment : Fragment() {
             }
         }
 
-        adapter.apply {
-            isCheckboxAvailable.set(false) //change checkbox state
-            changeCheckboxState(false)
-        }
+        adapter.changeDeleteModeState(false)
 
-        isBotDialogVisible.set(false) //hide bottom dialog
+        isDeleteMode.set(false) //hide bottom dialog
     }
 
 
@@ -267,6 +269,7 @@ class DiariesFragment : Fragment() {
                         .subscribeOn(Schedulers.io())
                         .doOnComplete { if (adapter.itemCount == 0) isDiaryExist.set(false) }
                         .doOnError { e -> e.printStackTrace() }
+
                         .filter { task -> task.get(getString(R.string.code)).asString != "1000" } //if success,
                         .subscribe { t ->
                             Log.d(getString(R.string.desc), t.getAsJsonObject(getString(R.string.data)).get(getString(R.string.desc)).asString)
@@ -299,13 +302,16 @@ class DiariesFragment : Fragment() {
     private fun resetAllMode() {
         curPage = 1 //set current page 1.
 
-        if (adapter.isCheckboxAvailable.get()) { //if checkBox is shown -> gone.
-            adapter.changeDeleteModeState(false)
-        }
-        adapter.deleteAllItems()
+        adapter.also {
+            if (isDeleteMode.get()) { //if checkBox is shown -> gone.
+                it.changeDeleteModeState(false)
+            }
 
-        isBotDialogVisible.set(false)  //bottom delete dialog
-        isDateRangeAvailable.set(false)  //date range mode
+            it.deleteAllItems()
+        }
+
+        isDeleteMode.set(false)  //bottom delete dialog
+        isDateRangeMode.set(false)  //date range mode
     }
 
 
