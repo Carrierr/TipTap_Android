@@ -31,7 +31,7 @@ class DiariesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun getCheckObservable(item: Diaries): Observable<Diaries> =
             Observable.create { emitter ->
                 binding?.checkDiary?.setOnCheckedChangeListener { _, state ->
-                    item.isSelected = state
+                    item.isSelected.set(state)
                     emitter.onNext(item)
                 }
             }
