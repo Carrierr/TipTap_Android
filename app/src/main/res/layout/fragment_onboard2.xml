@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.constraint.ConstraintLayout xmlns:android = "http://schemas.android.com/apk/res/android"
-    xmlns:app = "http://schemas.android.com/apk/res-auto"
+<layout
+    xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:app = "http://schemas.android.com/apk/res-auto">
+<android.support.constraint.ConstraintLayout
     android:layout_width = "match_parent"
     android:layout_height = "match_parent"
     >
 
     <android.support.constraint.Guideline
-        android:id = "@+id/gl_ob1_img_bot"
+        android:id = "@+id/gl_ob2_img_bot"
         android:layout_width = "wrap_content"
         android:layout_height = "wrap_content"
         android:orientation = "horizontal"
@@ -19,7 +20,7 @@
         android:layout_height = "0dp"
         android:scaleType = "centerCrop"
         android:src = "@drawable/bg"
-        app:layout_constraintBottom_toBottomOf = "@+id/gl_ob1_img_bot"
+        app:layout_constraintBottom_toBottomOf = "@+id/gl_ob2_img_bot"
         app:layout_constraintEnd_toEndOf = "parent"
         app:layout_constraintStart_toStartOf = "parent"
         app:layout_constraintTop_toTopOf = "parent"
@@ -52,15 +53,15 @@
     <ImageView
         android:layout_width = "0dp"
         android:layout_height = "0dp"
-        android:src = "@drawable/onboard_img_01"
-        app:layout_constraintBottom_toBottomOf = "@+id/gl_ob1_img_bot"
+        android:src = "@drawable/onboard_img_02"
+        app:layout_constraintBottom_toBottomOf = "@+id/gl_ob2_img_bot"
         app:layout_constraintEnd_toEndOf = "@+id/gl_ob_phone_end"
         app:layout_constraintStart_toStartOf = "@+id/gl_ob_phone_start"
         app:layout_constraintTop_toTopOf = "@+id/gl_ob_phone_top"
         />
 
     <android.support.constraint.Guideline
-        android:id = "@+id/gl_ob1_txt_top"
+        android:id = "@+id/gl_ob2_txt_top"
         android:layout_width = "wrap_content"
         android:layout_height = "wrap_content"
         android:orientation = "horizontal"
@@ -69,24 +70,24 @@
 
 
     <TextView
-        android:id = "@+id/text_ob1_title"
+        android:id = "@+id/text_ob2_title"
         style = "@style/OnBoardTextTitle"
         android:layout_width = "0dp"
         android:layout_height = "wrap_content"
-        android:text = "@string/board1_title"
+        android:text = "@string/board2_title"
         app:layout_constraintEnd_toEndOf = "parent"
         app:layout_constraintStart_toStartOf = "parent"
-        app:layout_constraintTop_toTopOf = "@+id/gl_ob1_txt_top"
+        app:layout_constraintTop_toTopOf = "@+id/gl_ob2_txt_top"
         />
 
     <TextView
         style = "@style/OnBoardTextMsg"
         android:layout_width = "0dp"
         android:layout_height = "wrap_content"
-        android:text = "@string/board1_msg"
+        android:text = "@string/board2_msg"
         app:layout_constraintEnd_toEndOf = "parent"
         app:layout_constraintStart_toStartOf = "parent"
-        app:layout_constraintTop_toBottomOf = "@+id/text_ob1_title"
+        app:layout_constraintTop_toBottomOf = "@+id/text_ob2_title"
         />
 
 
@@ -94,10 +95,11 @@
         android:layout_width = "wrap_content"
         android:layout_height = "wrap_content"
         android:layout_marginBottom = "26dp"
-        android:src = "@drawable/onboard_indicator1"
+        android:src = "@drawable/onboard_indicator2"
         app:layout_constraintBottom_toBottomOf = "parent"
         app:layout_constraintEnd_toEndOf = "parent"
         app:layout_constraintStart_toStartOf = "parent"
         />
 
 </android.support.constraint.ConstraintLayout>
+</layout>
