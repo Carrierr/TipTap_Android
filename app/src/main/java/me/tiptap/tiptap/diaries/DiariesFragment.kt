@@ -122,17 +122,19 @@ class DiariesFragment : Fragment() {
     private fun checkBus() {
         rxBus.toObservable()
                 .subscribe {
-                    if (it is ArrayList<*>) { //from the CalendarActivity.
-                        val startDate = it[0].toString()
-                        val endDate = it[1].toString()
+                    when (it) {
+                        is ArrayList<*> -> {  //from the CalendarActivity.
+                            val startDate = it[0].toString()
+                            val endDate = it[1].toString()
 
-                        isDateRangeAvailable.set(true)
-                        binding.layoutBotRange.textBotRange.text = getString(R.string.date_range, startDate, endDate)
+                            isDateRangeMode.set(true)
+                            binding.layoutBotRange.textBotRange.text = getString(R.string.date_range, startDate, endDate)
 
-                        getDiariesByDate(startDate, endDate)
-
-                    } else if (it is Boolean) { //from the MainFragment.
-                        getDiaries(curPage, 2)
+                            getDiariesByDate(startDate, endDate)
+                        }
+                        is Date -> { //Detail data is removed.
+                            adapter.deleteItemByDate(it)
+                        }
                     }
                 }
                 .dispose()
@@ -279,22 +281,27 @@ class DiariesFragment : Fragment() {
     /**
      * This method is called when a fragment is visible or not.
      * if ViewPagerAdapter's getItem return this fragment, value is true.
+     * or this fragment's onActivityCreated() is called, value is true.
      */
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
+        when (isVisibleToUser) {
+            true -> {
+                if (!isDateRangeMode.get()) { //if NOT dateRange mode.
+                    if (disposables.size() == 0) {
+                        initRecyclerViewAdapterEvent()
+                    }
+                    getDiaries(curPage, limit)
 
-        if (isVisibleToUser) {
-            if (!isDateRangeAvailable.get()) { //not date range mode,
-                if (disposables.size() == 0) {
-                    initRecyclerViewAdapterEvent()
                 }
-
-                checkBus()
             }
 
-        } else {
-            resetAllMode() //resources will be no longer used.
-            disposables.clear()
+            false -> { //isVisibleToUser = false, clear disposable, resetAllMode.
+                if (disposables.size() > 0) {
+                    disposables.clear()
+
+                    resetAllMode() //resources will be no longer used.
+                }
+            }
         }
     }
 
@@ -318,26 +325,14 @@ class DiariesFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        userVisibleHint = true
+        //캘린더에서 날짜를 받아왔는지 or 디테일에서 삭제된 것이 있는지.
+        checkBus()
 
-        if (isPreViewMode.get()) { //preView dialog was opened.
+        if (isPreViewMode.get()) { //onResume() is called,
             isPreViewMode.set(false)
         }
-
-        if (disposables.size() == 0) { //disposable is cleared.
-            initRecyclerViewAdapterEvent() //re initialize recyclerView's adapter event.
-        }
     }
 
-    override fun onPause() {
-        super.onPause()
-
-        if (!isPreViewMode.get()) { //fragment is paused,
-            resetAllMode()
-
-            disposables.clear()
-        }
-    }
 
     override fun onDestroy() {
         super.onDestroy()

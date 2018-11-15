@@ -74,7 +74,7 @@ class DiaryDetailActivity : AppCompatActivity() {
     private fun requestDetailDiary() {
         disposable.add(
                 service.getDiaryDetail(
-                        TipTapApplication.getAccessToken(), lastDiary?.createdAt.toString())
+                        TipTapApplication.getAccessToken(), lastDiary.createdAt.toString())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .doOnError { e -> e.printStackTrace() }
@@ -112,7 +112,7 @@ class DiaryDetailActivity : AppCompatActivity() {
                             }
 
                             override fun onComplete() {
-                                RxBus.getInstance().takeBus(false)
+                                RxBus.getInstance().takeBus(lastDiary.createdAt) //지워진 것의 아이디 보냄.
                                 finish()
                             }
 
