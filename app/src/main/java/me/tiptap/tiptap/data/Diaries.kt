@@ -1,8 +1,8 @@
 package me.tiptap.tiptap.data
 
+import android.databinding.ObservableBoolean
 import com.google.gson.annotations.SerializedName
 
-//이게 diaries 어댑터에 들어가야함.
 class Diaries {
 
     @SerializedName("day")
@@ -14,6 +14,6 @@ class Diaries {
     @SerializedName("diaryDatas")
     val firstLastDiary : FirstLastDiary? =null
 
-    var isSelected: Boolean = false
+    var isSelected = ObservableBoolean(false)
     var isLastDay : Boolean = false
 }

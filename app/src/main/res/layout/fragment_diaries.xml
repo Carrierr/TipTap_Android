@@ -76,7 +76,7 @@
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:fontFamily = "@font/ko_pub_dotum_pl"
-            android:text = "@{fragment.isDateRangeAvailable() ? @string/hint_no_diary_period : @string/hint_no_diary}"
+            android:text = "@{fragment.isDateRangeMode() ? @string/hint_no_diary_period : @string/hint_no_diary}"
             android:visibility = "@{fragment.isDiaryExist() ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf = "parent"
             app:layout_constraintBottom_toTopOf = "@+id/layout_bot_dialog"
@@ -84,25 +84,25 @@
             app:layout_constraintStart_toStartOf = "parent"
             app:layout_constraintTop_toTopOf = "@+id/gl_diaries_recycler_top"
             />
-
-
+    
+    
         <!--bot date range-->
         <include
             android:id = "@+id/layout_bot_range"
             layout = "@layout/layout_bottom_date_range"
             android:layout_width = "match_parent"
             android:layout_height = "50dp"
-            android:visibility = "@{(fragment.isDateRangeAvailable &amp;&amp; !fragment.isBotDialogVisible) ? View.VISIBLE : View.GONE}"
+            android:visibility = "@{(fragment.isDateRangeMode &amp;&amp; !fragment.isDeleteMode) ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf = "parent"
             />
-
+    
         <!--bot dialog-->
         <include
             android:id = "@+id/layout_bot_dialog"
             layout = "@layout/layout_bottom_dialog"
             android:layout_width = "match_parent"
             android:layout_height = "50dp"
-            android:visibility = "@{fragment.isBotDialogVisible ? View.VISIBLE : View.GONE}"
+            android:visibility = "@{fragment.isDeleteMode ? View.VISIBLE : View.GONE}"
             app:fragment = "@{fragment}"
             app:layout_constraintBottom_toBottomOf = "parent"
             />

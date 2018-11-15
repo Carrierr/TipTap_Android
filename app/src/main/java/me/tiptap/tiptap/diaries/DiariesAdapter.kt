@@ -21,13 +21,13 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
     val longClickSubject = PublishSubject.create<Boolean>()
     val checkSubject = PublishSubject.create<Diaries>()
 
-    var isCheckboxAvailable = ObservableBoolean(false)
+    val isCheckboxAvailable = ObservableBoolean(false)
 
 
     fun addItems(items: MutableList<Diaries>) {
         val startPosition = itemCount
-        dataSet.addAll(items)
 
+        dataSet.addAll(items)
         notifyItemRangeInserted(startPosition, itemCount)
 
         visibleSideHeader(dataSet.size - items.size)
@@ -54,10 +54,10 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
         val createdAt: Date? = item.firstLastDiary?.lastDiary?.createdAt
 
         createdAt?.let {
-            if (!checkedDataSet.contains(it) && item.isSelected) {
+            if (!checkedDataSet.contains(it) && item.isSelected.get()) {
                 checkedDataSet.add(it)
             }
-            if (checkedDataSet.contains(it) && !item.isSelected) {
+            if (checkedDataSet.contains(it) && !item.isSelected.get()) {
                 checkedDataSet.remove(it)
             }
         }
@@ -75,6 +75,7 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
     fun deleteCheckedItems() {
         if (checkedDataSet.isNotEmpty()) {
             dataSet.iterator().run {
+
                 while (this.hasNext()) {
                     val data = this.next()
                     val position = dataSet.indexOf(data)
@@ -83,6 +84,7 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
                         this.remove()
                         notifyItemRemoved(position)
                     }
+
                     if (position == 0) {
                         visibleSideHeader(0)
                     }
@@ -92,14 +94,14 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
     }
 
 
-    fun changeCheckboxState(state: Boolean) {
+    private fun changeCheckboxState(state: Boolean) {
         Observable.fromIterable(dataSet)
-                .filter { data -> data.isSelected != state }
+                .filter { data -> data.isSelected.get() != state }
                 .doOnComplete {
                     checkedDataSet.clear()
                 }
                 .subscribe { data ->
-                    data.isSelected = state
+                    data.isSelected.set(state)
                 }
                 .dispose()
     }
