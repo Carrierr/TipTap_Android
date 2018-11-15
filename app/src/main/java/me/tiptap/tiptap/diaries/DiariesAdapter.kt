@@ -39,6 +39,31 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
         notifyDataSetChanged()
     }
 
+
+    /**
+     * delete by date
+     */
+    fun deleteItemByDate(date: Date) {
+      dataSet.listIterator().run {
+
+            while (this.hasNext()) {
+                val data = this.next()
+                val position = dataSet.indexOf(data)
+
+                if (data.firstLastDiary?.lastDiary?.createdAt == date) {
+                    this.remove()
+                    notifyItemRemoved(position)
+
+                    if (data.isLastDay && position < itemCount) {
+                        visibleSideHeader(position)
+                    }
+
+                    notifyItemRangeChanged(position, itemCount-1)
+                }
+            }
+        }
+    }
+
     /**
      * set visible side header
      */
@@ -82,11 +107,12 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
 
                     if (checkedDataSet.contains(data.firstLastDiary?.lastDiary?.createdAt)) {
                         this.remove()
-                        notifyItemRemoved(position)
-                    }
 
-                    if (position == 0) {
-                        visibleSideHeader(0)
+
+                        if (data.isLastDay && position < itemCount) {
+                            visibleSideHeader(position)
+                        }
+                        
                     }
                 }
             }

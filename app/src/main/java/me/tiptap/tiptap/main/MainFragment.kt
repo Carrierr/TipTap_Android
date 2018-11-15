@@ -77,7 +77,7 @@ class MainFragment : Fragment(), PreviewDialogNavigator {
                             }
 
                             override fun onComplete() {
-                                rxBus.takeBus(true) //some data is added
+                                rxBus.takeBus(false)
                             }
 
                             override fun onError(e: Throwable) {
