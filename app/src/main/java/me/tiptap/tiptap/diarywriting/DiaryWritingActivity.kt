@@ -109,6 +109,8 @@ class DiaryWritingActivity : AppCompatActivity() {
             activity = this@DiaryWritingActivity
             date = Date()
 
+            textWriteKeyboard.text = getString(R.string.text_length, this@DiaryWritingActivity.diary.content.length.toString())
+
             btnBack.setOnClickListener { finish() }
 
             textWriteLocation.setOnClickListener { _ ->
@@ -152,14 +154,19 @@ class DiaryWritingActivity : AppCompatActivity() {
                 .toObservable()
                 .subscribe {
                     if (it is Pair<*, *>) { //수정
-                        diary = it.second as Diary
-                        binding.diary = diary
-
-                        if (diary.imageUrl != null) {
-                            isPhotoAvailable.set(true)
+                        diary = (it.second as Diary).apply {
+                            if (this.imageUrl != null) {
+                                isPhotoAvailable.set(true)
+                            }
                         }
 
-                        binding.toolbarWriteTitle.text = getString(R.string.post_count, it.first.toString())
+                        binding.apply {
+                            diary = this@DiaryWritingActivity.diary
+
+                            textWriteKeyboard.text = getString(R.string.text_length, this@DiaryWritingActivity.diary.content.length.toString())
+                            toolbarWriteTitle.text = getString(R.string.post_count, it.first.toString())
+                        }
+
                     } else if (it is Int) { //등록
                         binding.toolbarWriteTitle.text = getString(R.string.post_count, (it + 1).toString())
 
@@ -228,7 +235,6 @@ class DiaryWritingActivity : AppCompatActivity() {
         if (results.isNotEmpty() && results[0] == PackageManager.PERMISSION_GRANTED) {
             when (reqCode) {
                 storageCode -> openImagePicker()
-
                 locationCode -> findCurrentLocation()
             }
         }
