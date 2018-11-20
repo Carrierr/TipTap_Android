@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.airbnb.lottie.LottieAnimationView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -170,6 +171,20 @@ class DiariesFragment : Fragment() {
         )
     }
 
+    private fun changeLoadingDialogState(state: Boolean, lottieView: LottieAnimationView) {
+        lottieView.apply {
+            if (state) {
+                repeatCount = 1
+                progress = 0.2f
+                visibility = View.VISIBLE
+                
+                playAnimation()
+            } else {
+                cancelAnimation()
+                visibility = View.GONE
+            }
+        }
+    }
 
     private fun getDiaries(page: Int, limit: Int) {
         disposables.add(
@@ -177,9 +192,15 @@ class DiariesFragment : Fragment() {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .doOnSubscribe {
+                            if (curPage == 1) {
+                                binding.textDiariesMsg.visibility = View.GONE
+                                changeLoadingDialogState(true, binding.laDiariesLoad)
+                            }
                             curPage++
                         }
                         .doOnComplete {
+                            changeLoadingDialogState(false, binding.laDiariesLoad)
+
                             if (binding.swipeDiaries.isRefreshing) { //refresh is done.
                                 binding.swipeDiaries.isRefreshing = false
                             }
