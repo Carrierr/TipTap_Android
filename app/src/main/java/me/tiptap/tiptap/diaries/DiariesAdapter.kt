@@ -107,7 +107,7 @@ class DiariesAdapter : RecyclerView.Adapter<DiariesViewHolder>() {
 
                     if (checkedDataSet.contains(data.firstLastDiary?.lastDiary?.createdAt)) {
                         this.remove()
-
+                        notifyItemRemoved(position)
 
                         if (data.isLastDay && position < itemCount) {
                             visibleSideHeader(position)
