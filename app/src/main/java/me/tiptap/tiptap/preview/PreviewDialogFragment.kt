@@ -63,11 +63,12 @@ class PreviewDialogFragment : DialogFragment() {
             layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         }
 
-        return Dialog(activity, R.style.PreviewDialogAnimation).apply {
+        return Dialog(activity).apply {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
             setContentView(root)
 
             window?.run {
+                attributes.windowAnimations = R.style.PreviewDialogAnimation
                 setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
                 setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             }
