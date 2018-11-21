@@ -93,15 +93,19 @@ class ScratchFragment : Fragment() {
                         .filter { t -> t.code == "1000" }
                         .subscribeWith(object : DisposableObserver<DiaryResponse>() {
                             override fun onNext(t: DiaryResponse) {
-                                adapter.updateItems(t.data.diaries)
+                                if (t.data.diaries.size > 0) {
+                                    adapter.updateItems(t.data.diaries)
+                                }
                             }
 
                             override fun onComplete() {
-                                postSize.set(adapter.itemCount)
+                                if (adapter.itemCount > 0) {
+                                    postSize.set(adapter.itemCount)
 
-                                binding.layoutScratchMain.apply {
-                                    textScratchMainNum?.text = getString(R.string.count_tiptap, adapter.itemCount)
-                                    textScratchMainLocation?.text = adapter.getItem(0).location
+                                    binding.layoutScratchMain.apply {
+                                        textScratchMainNum?.text = getString(R.string.count_tiptap, adapter.itemCount)
+                                        textScratchMainLocation?.text = adapter.getItem(0).location
+                                    }
                                 }
                             }
 
@@ -126,11 +130,12 @@ class ScratchFragment : Fragment() {
 
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        if (!isVisibleToUser && postSize.get() > 0) { //if share diary already loaded. and there's more to load
+        if (!isVisibleToUser && this::binding.isInitialized) { //if share diary already loaded. and there's more to load
+            binding.scratch.redrawCover()
+
             adapter.deleteAllItems()
             postSize.set(0)
 
-            binding.scratch.redrawCover()
         }
     }
 
