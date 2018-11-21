@@ -17,6 +17,7 @@
 
     <style name = "AppTheme.Launcher">
         <item name = "android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowAnimationStyle">@null</item>
     </style>
     
     <style name = "BaseDatePickerTheme" parent = "Theme.AppCompat.Light.Dialog">
