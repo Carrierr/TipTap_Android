@@ -26,6 +26,7 @@
                             Hello Tiptap！\n</string>
     <string name = "from">from.</string>
     <string name = "count_tiptap">%d \nTIPTAP</string>
+    <string name="hint_no_share">아직 도착한 tiptap이 없어요.</string>
     
     <!--diary writing-->
     <string name = "ok">확인</string>
