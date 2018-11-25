@@ -78,6 +78,7 @@ class PreviewDialogFragment : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_dialog_preview, container, false)
+        binding.fragment = this
 
         initToolbar()
         checkBus()
@@ -149,6 +150,11 @@ class PreviewDialogFragment : DialogFragment() {
                             }
                         })
         )
+    }
+
+
+    fun onDialogOutsideClick() {
+        dismiss()
     }
 
 
