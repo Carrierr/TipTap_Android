@@ -70,10 +70,15 @@ class MainFragment : Fragment(), PreviewDialogNavigator {
                         .subscribeOn(Schedulers.io())
                         .subscribeWith(object : DisposableObserver<DiaryResponse>() {
                             override fun onNext(t: DiaryResponse) {
-                                todayDiaries = t.data.diaries
-                                postSize.set(todayDiaries.size)
+                                when (t.code) {
+                                    "1000" -> {
+                                        todayDiaries = t.data.diaries
+                                        postSize.set(todayDiaries.size)
 
-                                applyStamps(t.data.stamp)
+                                        applyStamps(t.data.stamp)
+                                    }
+                                    "4000" -> showBlockUserDialog()
+                                }
                             }
 
                             override fun onComplete() {
@@ -153,6 +158,19 @@ class MainFragment : Fragment(), PreviewDialogNavigator {
             }.show()
         }
     }
+
+
+    private fun showBlockUserDialog() {
+        activity?.let {
+            android.app.AlertDialog.Builder(it).apply {
+                setMessage(R.string.msg_login_denied)
+                setPositiveButton(R.string.ok) { _, _ -> it.finish() }
+                create()
+            }.show()
+        }
+
+    }
+
 
     /**
      * Setting button is clicked

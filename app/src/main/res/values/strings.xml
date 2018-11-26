@@ -1,5 +1,5 @@
 <resources>
-    <string name = "app_name">TipTap</string>
+    <string name = "app_name">tiptap</string>
 
     <!--onBoarding-->
     <string name = "on_boarding">onBoarding</string>
@@ -13,6 +13,7 @@
     <string name = "board2_msg">여행지에서 일기를 한 편 쓸 때마다\n우표를 한 개씩 모을 수 있습니다.\n(하루 최대 10개)</string>
     <string name = "board3_title">매일 tiptap을 받아보는 재미</string>
     <string name = "board3_msg">다른 여행지의 하루 일기를\n받아볼 수 있습니다.</string>
+
     <!--login-->
     <string name = "type_kakao">kakao</string>
     <string name = "code">code</string>
@@ -20,6 +21,7 @@
     <string name = "desc">desc</string>
     <string name = "auth">auth</string>
     <string name = "token">token</string>
+    <string name="msg_login_denied">다수의 신고로 인해 이용이 정지된 상태입니다.</string>
     
     <!--scratch-->
     <string name = "scratch_text">Hello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\n

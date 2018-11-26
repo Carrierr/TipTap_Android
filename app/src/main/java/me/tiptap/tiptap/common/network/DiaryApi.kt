@@ -11,7 +11,7 @@ interface DiaryApi {
 
     //Login, return token.
     @POST("auth/login")
-    fun login(@Body user: User): Observable<JsonObject>
+    fun login(@Body user: User): Observable<LoginResponse>
 
 
     //Get DiaryList
