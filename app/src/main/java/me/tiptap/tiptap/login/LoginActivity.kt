@@ -1,11 +1,12 @@
 package me.tiptap.tiptap.login
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.google.gson.JsonObject
 import com.kakao.auth.Session
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -16,6 +17,7 @@ import me.tiptap.tiptap.common.network.DiaryApi
 import me.tiptap.tiptap.common.network.ServerGenerator
 import me.tiptap.tiptap.common.util.login.KaKaoSessionCallback
 import me.tiptap.tiptap.common.util.login.LoginNavigator
+import me.tiptap.tiptap.data.LoginResponse
 import me.tiptap.tiptap.data.User
 import me.tiptap.tiptap.databinding.ActivityLoginBinding
 import me.tiptap.tiptap.main.MainActivity
@@ -56,7 +58,6 @@ class LoginActivity : AppCompatActivity(), LoginNavigator {
         }
     }
 
-
     /**
      * Get token
      */
@@ -64,13 +65,15 @@ class LoginActivity : AppCompatActivity(), LoginNavigator {
         disposables.add(service.login(user)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribeWith(object : DisposableObserver<JsonObject>() {
-                    override fun onComplete() {
-                        this@LoginActivity.startActivity()
+                .subscribeWith(object : DisposableObserver<LoginResponse>() {
+                    override fun onNext(t: LoginResponse) {
+                        if (!t.data.isUserExisted) {
+                            saveToken(t.data.token)
+                        }
                     }
 
-                    override fun onNext(task: JsonObject) {
-                        saveToken(task.getAsJsonObject(getString(R.string.data)).get(getString(R.string.token)).asString)
+                    override fun onComplete() {
+                        this@LoginActivity.startActivity()
                     }
 
                     override fun onError(e: Throwable) {
