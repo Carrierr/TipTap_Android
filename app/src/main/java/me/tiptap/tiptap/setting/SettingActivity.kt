@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import com.kakao.network.ErrorResult
 import com.kakao.usermgmt.UserManagement
+import com.kakao.usermgmt.callback.LogoutResponseCallback
 import com.kakao.usermgmt.callback.UnLinkResponseCallback
 import com.kakao.util.helper.log.Logger
 import me.tiptap.tiptap.R
@@ -34,24 +35,10 @@ class SettingActivity : AppCompatActivity() {
 
     //logout.
     fun onLogoutButtonClick() {
-//        UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
-//            override fun onCompleteLogout() {
-//                redirectLoginActivity()
-//            }
-//        })
-        UserManagement.getInstance().requestUnlink(object : UnLinkResponseCallback() {
-            override fun onSuccess(result: Long?) {
-                Logger.d("Unlink is successfully completed.")
-            }
-
-            override fun onSessionClosed(errorResult: ErrorResult?) {
+        UserManagement.getInstance().requestLogout(object : LogoutResponseCallback() {
+            override fun onCompleteLogout() {
                 redirectLoginActivity()
             }
-
-            override fun onNotSignedUp() {
-                redirectLoginActivity()
-            }
-
         })
     }
 
