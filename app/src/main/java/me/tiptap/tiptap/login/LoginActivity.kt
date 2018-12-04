@@ -67,9 +67,7 @@ class LoginActivity : AppCompatActivity(), LoginNavigator {
                 .subscribeOn(Schedulers.io())
                 .subscribeWith(object : DisposableObserver<LoginResponse>() {
                     override fun onNext(t: LoginResponse) {
-                        if (!t.data.isUserExisted) {
-                            saveToken(t.data.token)
-                        }
+                        saveToken(t.data.token)
                     }
 
                     override fun onComplete() {
