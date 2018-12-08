@@ -80,7 +80,12 @@ class DiaryDetailActivity : AppCompatActivity() {
                         .doOnError { e -> e.printStackTrace() }
                         .doOnComplete { adapter.notifyDataSetChanged() }
                         .filter { task -> task.code == "1000" }
-                        .subscribe { task -> adapter.addItems(task.data.diaries) }
+                        .subscribe { task ->
+                            task.data.diaries.run {
+                                sortBy { it.createdAt }
+                                adapter.addItems(this)
+                            }
+                        }
         )
     }
 
