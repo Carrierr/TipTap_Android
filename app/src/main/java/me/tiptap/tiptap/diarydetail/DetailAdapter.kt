@@ -23,7 +23,7 @@ class DetailAdapter : RecyclerView.Adapter<DetailViewHolder>() {
     override fun onBindViewHolder(holder: DetailViewHolder, position: Int) {
         holder.binding?.also {
             it.diary = dataSet[position]
-            it.idx = (dataSet.size-position) % (dataSet.size+1) //diary 의 인덱스를 역순으로 구함.
+            it.idx = position+1//diary 의 인덱스
         }
     }
 
