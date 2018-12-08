@@ -1,10 +1,12 @@
 package me.tiptap.tiptap.data
 
+import com.google.gson.annotations.SerializedName
 import java.text.SimpleDateFormat
 import java.util.*
 
 class InvalidDiaries {
 
+    @SerializedName("date")
     val date = mutableListOf<String>()
 
     //convert date to body's format.
