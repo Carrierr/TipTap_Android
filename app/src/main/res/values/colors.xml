@@ -16,4 +16,6 @@
     <color name = "colorGrayishBrown">#4A4A4A</color>
     <color name = "colorStampNumber">#505050</color>
     <color name = "colorSeaFoamBlue">#7ac8bc</color>
+
+    <color name="colorCheckboxDefault">#8a979797</color>
 </resources>
