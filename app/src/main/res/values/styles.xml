@@ -25,7 +25,6 @@
         <item name = "colorAccent">@color/colorSeaFoamBlue</item>
     </style>
 
-
     <style name = "ActionOverflowButtonStyle" parent = "Widget.AppCompat.ActionButton.Overflow">
         <item name = "android:tint">@android:color/white</item>
     </style>
@@ -43,6 +42,12 @@
         <item name = "android:checked">true</item>
         <item name = "layout_constraintEnd_toEndOf">parent</item>
         <item name = "android:theme">@style/SwitchCompat</item>
+    </style>
+
+
+    <style name="DiaryCheckbox" >
+        <item name="colorControlNormal">@color/colorCheckboxDefault</item>   <!-- normal border color change as you wish -->
+        <item name="colorControlActivated">@color/colorSeaFoamBlue</item> <!-- activated color change as you wish -->
     </style>
 
     <style name = "PreviewDialogAnimation">
