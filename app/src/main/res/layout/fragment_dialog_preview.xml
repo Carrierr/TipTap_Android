@@ -76,8 +76,10 @@
 
         <!--Container-->
         <android.support.constraint.ConstraintLayout
+            android:id="@+id/container_preview"
             android:layout_width = "0dp"
             android:layout_height = "0dp"
+            app:onTouchListener="@{fragment.onPreviewContainerTouch}"
             android:background = "@android:color/white"
             app:layout_constraintBottom_toBottomOf = "@+id/gl_preview_bot"
             app:layout_constraintEnd_toEndOf = "@+id/gl_preview_end"

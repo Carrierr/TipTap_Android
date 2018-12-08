@@ -152,6 +152,7 @@ class PreviewDialogFragment : DialogFragment() {
         )
     }
 
+    fun onPreviewContainerTouch(view : View, event : MotionEvent) : Boolean = true
 
     fun onDialogOutsideClick() {
         dismiss()
