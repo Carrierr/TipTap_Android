@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ScrollView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
@@ -65,6 +66,14 @@ class ScratchFragment : Fragment() {
                 getShareDiary() //get Share diary if scratch is revealed.
             }
         })
+
+        binding.scrollScratch.viewTreeObserver.addOnScrollChangedListener {
+            val y = binding.scrollScratch.scrollY
+
+            if (y >0 && binding.scrollScratch.verticalFadingEdgeLength == 0) {
+                binding.scrollScratch.setFadingEdgeLength(180)
+            }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

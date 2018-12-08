@@ -18,7 +18,7 @@
         <ScrollView
             android:id="@+id/scroll_scratch"
             android:requiresFadingEdge="vertical"
-            android:fadingEdgeLength="180dp"
+            android:fadingEdgeLength="0dp"
             android:layout_width = "match_parent"
             android:layout_height = "match_parent"
             android:fillViewport = "true"
