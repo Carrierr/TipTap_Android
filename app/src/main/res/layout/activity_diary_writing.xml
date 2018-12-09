@@ -27,15 +27,9 @@
             />
     </data>
 
-    <ScrollView
-        android:layout_width = "match_parent"
-        android:layout_height = "match_parent"
-        android:fillViewport = "true"
-        >
-
         <android.support.constraint.ConstraintLayout
             android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
+            android:layout_height = "match_parent"
             android:background = "@color/colorDefaultBackground"
             >
 
@@ -56,7 +50,6 @@
                         android:layout_height = "wrap_content"
                         android:background = "@android:color/transparent"
                         android:src = "@drawable/ic_back"
-                        app:layout_constraintBottom_toBottomOf = "parent"
                         app:layout_constraintStart_toStartOf = "parent"
                         app:layout_constraintTop_toTopOf = "parent"
                         />
@@ -70,7 +63,6 @@
                         android:textColor = "@color/colorMainBlack"
                         android:textSize = "14sp"
                         android:textStyle = "bold"
-                        app:layout_constraintBottom_toBottomOf = "parent"
                         app:layout_constraintEnd_toEndOf = "parent"
                         app:layout_constraintStart_toStartOf = "parent"
                         app:layout_constraintTop_toTopOf = "parent"
@@ -91,7 +83,6 @@
                         android:paddingBottom = "5dp"
                         android:text = "@string/complete"
                         android:textSize = "14sp"
-                        app:layout_constraintBottom_toBottomOf = "parent"
                         app:layout_constraintEnd_toEndOf = "parent"
                         app:layout_constraintTop_toTopOf = "parent"
                         />
@@ -104,7 +95,6 @@
                 android:layout_width = "0dp"
                 android:layout_height = "wrap_content"
                 android:layout_marginStart = "@dimen/dimen_write_side"
-                android:layout_marginTop = "15dp"
                 android:layout_marginEnd = "@dimen/dimen_write_side"
                 android:fontFamily = "@font/montserrat_regular"
                 android:gravity = "center"
@@ -160,20 +150,20 @@
                 />
 
             <ImageView
-                android:id="@+id/img_write_myPicture"
-                imgUrl="@{diary!=null ? diary.imageUrl : null}"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginTop="@dimen/dimen_write_top"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:visibility="@{activity.isPhotoAvailable ? View.VISIBLE : View.GONE}"
-                app:layout_constraintDimensionRatio="4:3"
-                app:layout_constraintEnd_toEndOf="@+id/guide_write"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="@+id/text_write_date"
-                app:layout_constraintTop_toBottomOf="@+id/view_write_line"
-                tools:background="@color/colorMainBlack"
+                android:id = "@+id/img_write_myPicture"
+                imgUrl = "@{diary!=null ? diary.imageUrl : null}"
+                android:layout_width = "0dp"
+                android:layout_height = "0dp"
+                android:layout_marginTop = "@dimen/dimen_write_top"
+                android:adjustViewBounds = "true"
+                android:scaleType = "centerCrop"
+                android:visibility = "@{activity.isPhotoAvailable ? View.VISIBLE : View.GONE}"
+                app:layout_constraintDimensionRatio = "4:3"
+                app:layout_constraintEnd_toEndOf = "@+id/guide_write"
+                app:layout_constraintHorizontal_bias = "0"
+                app:layout_constraintStart_toStartOf = "@+id/text_write_date"
+                app:layout_constraintTop_toBottomOf = "@+id/view_write_line"
+                tools:background = "@color/colorMainBlack"
                 />
 
             <ImageView
@@ -211,7 +201,7 @@
                 app:layout_constraintStart_toStartOf = "parent"
                 app:layout_constraintTop_toBottomOf = "@+id/img_write_myPicture"
                 />
-
+    
             <!--bottom-->
             <View
                 android:id = "@+id/view_line_bottom"
@@ -249,6 +239,5 @@
                 />
 
         </android.support.constraint.ConstraintLayout>
-    </ScrollView>
-
+    
 </layout>
