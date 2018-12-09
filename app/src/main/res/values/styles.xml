@@ -1,213 +1,218 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name = "AppTheme" parent = "Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name = "windowActionModeOverlay">true</item>
-        <item name = "android:textViewStyle">@style/TextViewStyle</item>
-        <item name = "colorPrimary">@color/colorPrimary</item>
-        <item name = "colorPrimaryDark">@color/colorSeaFoamBlue</item>
-        <item name = "colorAccent">@color/colorAccent</item>
-        <item name = "android:homeAsUpIndicator">@drawable/ic_back</item>
-        <item name = "android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>
-        <item name = "android:itemTextAppearance">@style/ItemTextStyle</item>
-        <item name = "android:windowFullscreen">true</item>
-        <item name = "android:datePickerDialogTheme">@style/BaseDatePickerTheme</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorSeaFoamBlue</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
+        <item name="android:actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item>
+        <item name="android:itemTextAppearance">@style/ItemTextStyle</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:datePickerDialogTheme">@style/BaseDatePickerTheme</item>
     </style>
 
-    <style name = "AppTheme.Launcher">
-        <item name = "android:windowBackground">@drawable/splash_background</item>
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/splash_background</item>
         <item name="android:windowAnimationStyle">@null</item>
     </style>
-    
-    <style name = "BaseDatePickerTheme" parent = "Theme.AppCompat.Light.Dialog">
-        <item name = "android:fontFamily">@font/roboto_mid</item>
-        <item name = "colorAccent">@color/colorSeaFoamBlue</item>
+
+    <style name="DiaryWritingTheme" parent="Theme.AppCompat.Light.NoActionBar">
+       <item name="android:statusBarColor">@color/colorDefaultBackground</item>
     </style>
 
-    <style name = "ActionOverflowButtonStyle" parent = "Widget.AppCompat.ActionButton.Overflow">
-        <item name = "android:tint">@android:color/white</item>
+    <style name="BaseDatePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:fontFamily">@font/roboto_mid</item>
+        <item name="colorAccent">@color/colorSeaFoamBlue</item>
     </style>
 
-    <style name = "SwitchCompat" parent = "Theme.AppCompat.Light">
-        <item name = "colorControlActivated">@color/colorSeaFoamBlue</item>
-        <item name = "colorSwitchThumbNormal">@color/colorDefaultBackground</item>
-        <item name = "android:colorForeground">@color/colorMainGray</item>
+    <style name="ActionOverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">@android:color/white</item>
     </style>
 
-    <style name = "SettingSwitch">
-        <item name = "android:layout_height">wrap_content</item>
-        <item name = "android:layout_width">wrap_content</item>
-        <item name = "switchMinWidth">52dp</item>
-        <item name = "android:checked">true</item>
-        <item name = "layout_constraintEnd_toEndOf">parent</item>
-        <item name = "android:theme">@style/SwitchCompat</item>
+    <style name="SwitchCompat" parent="Theme.AppCompat.Light">
+        <item name="colorControlActivated">@color/colorSeaFoamBlue</item>
+        <item name="colorSwitchThumbNormal">@color/colorDefaultBackground</item>
+        <item name="android:colorForeground">@color/colorMainGray</item>
+    </style>
+
+    <style name="SettingSwitch">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="switchMinWidth">52dp</item>
+        <item name="android:checked">true</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+        <item name="android:theme">@style/SwitchCompat</item>
     </style>
 
 
-    <style name="DiaryCheckbox" >
-        <item name="colorControlNormal">@color/colorCheckboxDefault</item>   <!-- normal border color change as you wish -->
+    <style name="DiaryCheckbox">
+        <item name="colorControlNormal">@color/colorCheckboxDefault
+        </item>   <!-- normal border color change as you wish -->
         <item name="colorControlActivated">@color/colorSeaFoamBlue</item> <!-- activated color change as you wish -->
     </style>
 
-    <style name = "PreviewDialogAnimation">
-        <item name = "android:windowEnterAnimation">@anim/fade_in</item>
-        <item name = "android:windowExitAnimation">@anim/fade_out</item>
+    <style name="PreviewDialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
     </style>
 
-    <style name = "ItemTextStyle">
-        <item name = "android:textSize">12sp</item>
-        <item name = "android:textColor">@color/colorMainBlack</item>
-        <item name = "android:fontFamily">@font/ko_pub_dotum_pl</item>
+    <style name="ItemTextStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/colorMainBlack</item>
+        <item name="android:fontFamily">@font/ko_pub_dotum_pl</item>
     </style>
 
-    <style name = "TextViewStyle" parent = "android:Widget.TextView">
-        <item name = "android:textColor">@color/colorMainBlack</item>
-        <item name = "android:textSize">12sp</item>
+    <style name="TextViewStyle" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorMainBlack</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
-    <style name = "SplashTheme" parent = "Theme.AppCompat.NoActionBar">
-        <item name = "android:windowBackground">@drawable/splash_background</item>
-        <item name = "android:windowFullscreen">true</item>
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
-    <style name = "LoginTheme" parent = "Theme.AppCompat.NoActionBar">
-        <item name = "android:windowBackground">@drawable/login_background</item>
-        <item name = "android:windowFullscreen">true</item>
+    <style name="LoginTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/login_background</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
-    <style name = "MainDateText">
-        <item name = "android:layout_height">wrap_content</item>
-        <item name = "android:layout_width">wrap_content</item>
-        <item name = "android:textSize">13sp</item>
-        <item name = "android:fontFamily">@font/montserrat_light</item>
-        <item name = "android:textColor">#6d6d6d</item>
-    </style>
-    
-    <style name = "PreviewDateText">
-        <item name = "android:layout_height">wrap_content</item>
-        <item name = "android:layout_width">wrap_content</item>
-        <item name = "android:gravity">left</item>
-        <item name = "android:textColor">#66242424</item>
+    <style name="MainDateText">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/montserrat_light</item>
+        <item name="android:textColor">#6d6d6d</item>
     </style>
 
-    <style name = "DetailDateText">
-        <item name = "android:textSize">13sp</item>
-        <item name = "android:textColor">#66242424</item>
-        <item name = "android:lineSpacingExtra">1sp</item>
+    <style name="PreviewDateText">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textColor">#66242424</item>
     </style>
 
-    <style name = "DefaultLine">
-        <item name = "android:layout_width">0.5dp</item>
-        <item name = "android:layout_height">0dp</item>
-        <item name = "android:background">#664F4F4F</item>
+    <style name="DetailDateText">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">#66242424</item>
+        <item name="android:lineSpacingExtra">1sp</item>
     </style>
 
-    <style name = "SettingCardView">
-        <item name = "android:layout_height">wrap_content</item>
-        <item name = "cardElevation">0dp</item>
-        <item name = "android:layout_width">match_parent</item>
+    <style name="DefaultLine">
+        <item name="android:layout_width">0.5dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:background">#664F4F4F</item>
     </style>
 
-    <style name = "SettingContainer">
-        <item name = "android:paddingBottom">19dp</item>
-        <item name = "android:paddingTop">19dp</item>
-        <item name = "android:paddingEnd">26dp</item>
-        <item name = "android:paddingStart">26dp</item>
-        <item name = "android:layout_width">match_parent</item>
-    </style>
-    
-    <style name = "SettingTextView">
-        <item name = "layout_constraintBottom_toBottomOf">parent</item>
-        <item name = "layout_constraintStart_toStartOf">parent</item>
-        <item name = "android:fontFamily">@font/ko_pub_dotum_pl</item>
-        <item name = "layout_constraintTop_toTopOf">parent</item>
-        <item name = "android:layout_height">wrap_content</item>
-        <item name = "android:layout_width">wrap_content</item>
-        <item name = "android:textColor">#242424</item>
-        <item name = "android:textSize">14sp</item>
+    <style name="SettingCardView">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardElevation">0dp</item>
+        <item name="android:layout_width">match_parent</item>
     </style>
 
-    <style name = "DiaryItemTextStyle">
-        <item name = "android:fontFamily">@font/ko_pub_dotum_pm</item>
-        <item name = "android:ellipsize">end</item>
-        <item name = "android:maxLines">1</item>
-        <item name = "android:gravity">left</item>
-        <item name = "android:paddingBottom">4dp</item>
-        <item name = "android:paddingTop">4dp</item>
-        <item name = "android:textSize">12sp</item>
+    <style name="SettingContainer">
+        <item name="android:paddingBottom">19dp</item>
+        <item name="android:paddingTop">19dp</item>
+        <item name="android:paddingEnd">26dp</item>
+        <item name="android:paddingStart">26dp</item>
+        <item name="android:layout_width">match_parent</item>
     </style>
 
-    <style name = "DiaryBottomTextStyle">
-        <item name = "android:fontFamily">@font/ko_pub_dotum_pm</item>
-        <item name = "android:padding">@dimen/dimen_fifteen</item>
-        <item name = "android:textSize">14sp</item>
-        <item name = "android:gravity">center</item>
+    <style name="SettingTextView">
+        <item name="layout_constraintBottom_toBottomOf">parent</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="android:fontFamily">@font/ko_pub_dotum_pl</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">#242424</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
-    <style name = "PostNumberTextStyle">
-        <item name = "android:textSize">10sp</item>
-        <item name = "android:textColor">@color/colorStampNumber</item>
-        <item name = "android:fontFamily">@font/montserrat_bold</item>
-        <item name = "android:layout_width">wrap_content</item>
-        <item name = "android:layout_height">wrap_content</item>
+    <style name="DiaryItemTextStyle">
+        <item name="android:fontFamily">@font/ko_pub_dotum_pm</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:gravity">left</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
-    <style name = "CalendarMenuTextStyle">
-        <item name = "layout_constraintTop_toBottomOf">@+id/gl_cal_menu_top</item>
-        <item name = "android:paddingBottom">13dp</item>
-        <item name = "android:paddingTop">5dp</item>
-        <item name = "android:paddingEnd">22dp</item>
-        <item name = "android:paddingStart">22dp</item>
-        <item name = "android:fontFamily">@font/ko_pub_dotum_pm</item>
-        <item name = "android:textSize">14sp</item>
+    <style name="DiaryBottomTextStyle">
+        <item name="android:fontFamily">@font/ko_pub_dotum_pm</item>
+        <item name="android:padding">@dimen/dimen_fifteen</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
     </style>
 
-    <style name = "CalendarTitleText">
-        <item name = "android:layout_width">wrap_content</item>
-        <item name = "android:layout_height">wrap_content</item>
-        <item name = "android:fontFamily">@font/ko_pub_dotum_pm</item>
-        <item name = "android:paddingBottom">16dp</item>
-        <item name = "android:textSize">14sp</item>
-        <item name = "android:paddingEnd">28dp</item>
-        <item name = "android:paddingStart">28dp</item>
-        <item name = "android:paddingTop">16dp</item>
-        <item name = "android:gravity">center</item>
-        <item name = "layout_constraintBottom_toBottomOf">parent</item>
-        <item name = "layout_constraintTop_toTopOf">parent</item>
-        <item name = "layout_constraintStart_toStartOf">parent</item>
-    </style>
-    
-    <style name = "CalendarContentText">
-        <item name = "android:layout_width">wrap_content</item>
-        <item name = "android:layout_height">wrap_content</item>
-        <item name = "android:fontFamily">@font/montserrat_mid</item>
-        <item name = "android:textSize">14sp</item>
-        <item name = "android:paddingStart">28dp</item>
-        <item name = "android:gravity">center</item>
-        <item name = "android:paddingTop">16dp</item>
-        <item name = "android:paddingEnd">28dp</item>
-        <item name = "android:paddingBottom">16dp</item>
-        <item name = "android:textColor">@color/colorMainGray</item>
-        <item name = "layout_constraintTop_toTopOf">parent</item>
-        <item name = "layout_constraintBottom_toBottomOf">parent</item>
-        <item name = "layout_constraintEnd_toEndOf">parent</item>
+    <style name="PostNumberTextStyle">
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/colorStampNumber</item>
+        <item name="android:fontFamily">@font/montserrat_bold</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name = "OnBoardTextTitle">
-        <item name = "android:gravity">center</item>
-        <item name = "android:textColor">@color/colorMainBlack</item>
-        <item name = "android:fontFamily">@font/ko_pub_dotum_pb</item>
-        <item name = "android:textSize">14sp</item>
+    <style name="CalendarMenuTextStyle">
+        <item name="layout_constraintTop_toBottomOf">@+id/gl_cal_menu_top</item>
+        <item name="android:paddingBottom">13dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingEnd">22dp</item>
+        <item name="android:paddingStart">22dp</item>
+        <item name="android:fontFamily">@font/ko_pub_dotum_pm</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
-    <style name = "OnBoardTextMsg">
-        <item name = "android:gravity">center</item>
-        <item name = "android:textColor">@color/colorMainBlack</item>
-        <item name = "android:fontFamily">@font/ko_pub_dotum_pl</item>
-        <item name = "android:textSize">13sp</item>
-        <item name = "android:lineSpacingExtra">9sp</item>
-        <item name = "android:layout_marginTop">20dp</item>
+    <style name="CalendarTitleText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/ko_pub_dotum_pm</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:paddingEnd">28dp</item>
+        <item name="android:paddingStart">28dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:gravity">center</item>
+        <item name="layout_constraintBottom_toBottomOf">parent</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+    </style>
+
+    <style name="CalendarContentText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/montserrat_mid</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:paddingStart">28dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingEnd">28dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:textColor">@color/colorMainGray</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
+        <item name="layout_constraintBottom_toBottomOf">parent</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+    </style>
+
+    <style name="OnBoardTextTitle">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorMainBlack</item>
+        <item name="android:fontFamily">@font/ko_pub_dotum_pb</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="OnBoardTextMsg">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorMainBlack</item>
+        <item name="android:fontFamily">@font/ko_pub_dotum_pl</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:lineSpacingExtra">9sp</item>
+        <item name="android:layout_marginTop">20dp</item>
     </style>
 
 </resources>

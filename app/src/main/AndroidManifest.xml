@@ -73,6 +73,8 @@
         <activity android:name = ".diarydetail.DiaryDetailActivity" />
         <activity
             android:name = ".diarywriting.DiaryWritingActivity"
+            android:theme="@style/DiaryWritingTheme"
+            android:windowSoftInputMode="adjustResize"
             />
         <activity android:name = ".setting.SettingActivity" />
         <activity android:name = ".diaries.CalendarActivity">
