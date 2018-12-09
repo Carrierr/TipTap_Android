@@ -132,7 +132,6 @@
                 <android.support.constraint.ConstraintLayout
                     android:layout_width = "match_parent"
                     android:layout_height = "wrap_content"
-                    android:orientation = "vertical"
                     >
 
                     <ImageView
@@ -152,7 +151,7 @@
                     <TextView
                         android:id = "@+id/text_preview"
                         android:layout_width = "0dp"
-                        android:layout_height = "0dp"
+                        android:layout_height = "match_parent"
                         android:fontFamily = "@font/ko_pub_dotum_pl"
                         android:gravity = "center"
                         android:lineSpacingExtra = "10sp"
@@ -161,7 +160,6 @@
                         android:paddingEnd = "5dp"
                         android:text = "@{diary.content}"
                         android:textSize = "12sp"
-                        app:layout_constraintDimensionRatio = "4:3"
                         app:layout_constraintEnd_toEndOf = "parent"
                         app:layout_constraintStart_toStartOf = "parent"
                         app:layout_constraintTop_toBottomOf = "@+id/img_preview"
