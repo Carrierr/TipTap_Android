@@ -46,6 +46,7 @@
 
                 <android.support.v7.widget.SwitchCompat
                     android:id = "@+id/switch_setting_share"
+                    app:setOnCheckedChangeListener="@{activity.onShareChecked}"
                     style = "@style/SettingSwitch"
                     />
             </android.support.constraint.ConstraintLayout>

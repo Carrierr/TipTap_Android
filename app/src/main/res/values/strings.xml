@@ -19,8 +19,8 @@
     <string name = "code">code</string>
     <string name = "data">data</string>
     <string name = "desc">desc</string>
-    <string name = "auth">auth</string>
-    <string name = "token">token</string>
+    <string name = "auth_key">auth</string>
+    <string name = "token_key">token</string>
     <string name="msg_login_denied">다수의 신고로 인해 이용이 정지된 상태입니다.</string>
     
     <!--scratch-->
@@ -67,6 +67,8 @@
     <string name = "setting_share">일기 공유하기</string>
     <string name = "setting_push">푸시알림</string>
     <string name = "logout">로그아웃</string>
+    <string name = "account_key">account</string>
+    <string name= "shared_key">shared</string>
 
     <!--calender-->
     <string name = "select_date">날짜 선택</string>
