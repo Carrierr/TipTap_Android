@@ -50,9 +50,9 @@ class LoginActivity : AppCompatActivity(), LoginNavigator {
      * Save token
      */
     private fun saveToken(token: String) {
-        getSharedPreferences(getString(R.string.auth), Activity.MODE_PRIVATE).apply {
+        getSharedPreferences(getString(R.string.auth_key), Activity.MODE_PRIVATE).apply {
             this.edit().run {
-                putString(getString(R.string.token), token)
+                putString(getString(R.string.token_key), token)
                 apply()
             }
         }
