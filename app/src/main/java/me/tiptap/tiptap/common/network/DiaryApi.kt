@@ -93,4 +93,17 @@ interface DiaryApi {
     fun shareDiaries(
             @Header("tiptap-token") token: String
     ): Observable<DiaryResponse>
+
+    //Share on
+    @POST("account/share/on")
+    fun setShareOnDiary(
+            @Header("tiptap-token") token: String
+    ) : Observable<JsonObject>
+
+    //Share off
+    @POST("account/share/off")
+    fun setShareOffDiary(
+            @Header("tiptap-token") token: String
+    ) : Observable<JsonObject>
+
 }
