@@ -30,7 +30,7 @@
     </style>
 
     <style name="ActionOverflowButtonStyle" parent="Widget.AppCompat.ActionButton.Overflow">
-        <item name="android:tint">@android:color/white</item>
+        <item name = "android:src">@drawable/ic_overflow</item>
     </style>
 
     <style name="SwitchCompat" parent="Theme.AppCompat.Light">
