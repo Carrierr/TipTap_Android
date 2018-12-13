@@ -82,7 +82,7 @@
                 android:maxLength = "800"
                 android:paddingBottom = "2dp"
                 android:text = "@{diary.content}"
-                android:textSize = "12sp"
+                android:textSize = "13sp"
                 app:layout_constraintBottom_toBottomOf = "parent"
                 app:layout_constraintEnd_toStartOf = "@+id/gl_detail_text_end"
                 app:layout_constraintStart_toStartOf = "@+id/gl_detail_text_con_start"
