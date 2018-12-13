@@ -140,12 +140,15 @@ class ScratchFragment : Fragment() {
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         if (!isVisibleToUser && this::binding.isInitialized) { //if share diary already loaded. and there's more to load
-            binding.scratch.redrawCover()
 
-            adapter.deleteAllItems()
-            postSize.set(0)
+            with(binding) {
+                scratch.redrawCover()
+                scrollScratch.setFadingEdgeLength(0)
+            }
 
-        }
+                adapter.deleteAllItems()
+                postSize.set(0)
+            }
     }
 
     override fun onStop() {
