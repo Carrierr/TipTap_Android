@@ -1,6 +1,7 @@
 package me.tiptap.tiptap.common.binding
 
 import android.databinding.BindingAdapter
+import android.databinding.BindingConversion
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
@@ -13,6 +14,9 @@ import me.tiptap.tiptap.common.util.GlideApp
 import java.text.SimpleDateFormat
 import java.util.*
 
+@BindingConversion
+fun convertDateToString(date : Date) : String =
+        SimpleDateFormat("yyyy.MM.dd", Locale.US).format(date)
 
 @BindingAdapter("year")
 fun extractYearFromDate(view: TextView, date: Date) {
