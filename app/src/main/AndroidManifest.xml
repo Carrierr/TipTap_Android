@@ -36,6 +36,13 @@
             android:value = "@string/google_maps_key"
             />
 
+        <meta-data
+        android:name="com.google.firebase.messaging.default_notification_icon"
+        android:resource="@drawable/ic_launcher_app" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorSeaFoamBlue" />
+
         <provider
             android:name = "android.support.v4.content.FileProvider"
             android:authorities = "${applicationId}.provider"
@@ -47,6 +54,12 @@
                 android:resource = "@xml/provider_paths"
                 />
         </provider>
+
+        <service android:name=".common.util.TipTapMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <activity
             android:name = ".splash.SplashActivity"
