@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ScrollView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableObserver
@@ -67,13 +66,6 @@ class ScratchFragment : Fragment() {
             }
         })
 
-        binding.scrollScratch.viewTreeObserver.addOnScrollChangedListener {
-            val y = binding.scrollScratch.scrollY
-
-            if (y >0 && binding.scrollScratch.verticalFadingEdgeLength == 0) {
-                binding.scrollScratch.setFadingEdgeLength(180)
-            }
-        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -86,11 +78,14 @@ class ScratchFragment : Fragment() {
      * Change Share main layout container's height to screen size.
      */
     private fun setShareMainLayoutSize() {
-        val point = Point()
+        with(Point()) {
+           activity?.windowManager?.defaultDisplay?.getSize(this)
 
-        activity?.windowManager?.defaultDisplay?.getSize(point)
-
-        binding.containerScratchMain.layoutParams.height = point.y //change height
+            binding.also {
+                it.containerScratch.layoutParams.height = this.y
+                it.beginMargin= this.y/2 //calculate containerScratch's height * 0.54
+            }
+        }
     }
 
 
@@ -111,10 +106,7 @@ class ScratchFragment : Fragment() {
                                 if (adapter.itemCount > 0) {
                                     postSize.set(adapter.itemCount)
 
-                                    binding.layoutScratchMain.apply {
-                                        textScratchMainNum?.text = getString(R.string.count_tiptap, adapter.itemCount)
-                                        textScratchMainLocation?.text = adapter.getItem(0).location
-                                    }
+                                    binding.textScratchAddress.text = adapter.getItem(0).location
                                 }
                             }
 
@@ -130,9 +122,9 @@ class ScratchFragment : Fragment() {
         binding.recyclerSharing.apply {
             setHasFixedSize(true)
 
-            layoutManager = LinearLayoutManager(this@ScratchFragment.context)
+            isNestedScrollingEnabled = true
 
-            isNestedScrollingEnabled = false
+            layoutManager = LinearLayoutManager(this@ScratchFragment.context)
             adapter = this@ScratchFragment.adapter
         }
     }
@@ -140,15 +132,12 @@ class ScratchFragment : Fragment() {
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         if (!isVisibleToUser && this::binding.isInitialized) { //if share diary already loaded. and there's more to load
+            binding.scratch.redrawCover()
 
-            with(binding) {
-                scratch.redrawCover()
-                scrollScratch.setFadingEdgeLength(0)
-            }
+            adapter.deleteAllItems()
 
-                adapter.deleteAllItems()
-                postSize.set(0)
-            }
+            postSize.set(0)
+        }
     }
 
     override fun onStop() {
