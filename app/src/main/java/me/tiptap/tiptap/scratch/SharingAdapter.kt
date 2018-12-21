@@ -8,7 +8,7 @@ import me.tiptap.tiptap.R
 import me.tiptap.tiptap.data.Diary
 
 
-class SharingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SharingAdapter : RecyclerView.Adapter<SharingViewHolder>() {
 
     private val dataSet: MutableList<Diary> = mutableListOf()
 
@@ -28,20 +28,13 @@ class SharingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SharingViewHolder =
             SharingViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_sharing, parent, false))
 
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val item = getItem(position)
-
-        if (holder is SharingViewHolder) {
-            holder.apply {
-                binding?.also {
-                    it.diary = item
-                    it.idx = (position + 1).toString()
-                }
-            }
+    override fun onBindViewHolder(holder: SharingViewHolder, position: Int) {
+        holder.binding?.let {
+            it.diary = dataSet[position]
         }
     }
 
@@ -49,6 +42,5 @@ class SharingAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     //get item by position
     fun getItem(position: Int) = dataSet[position]
-
 
 }
