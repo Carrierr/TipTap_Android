@@ -189,7 +189,7 @@
                 android:hint = "@string/hint_write"
                 android:inputType = "textNoSuggestions|textMultiLine"
                 android:lineSpacingExtra = "8sp"
-                android:maxLength = "800"
+                android:maxLength = "500"
                 android:paddingTop = "@{activity.isPhotoAvailable ? @dimen/dimen_fifteen : @dimen/dimen_write_top}"
                 android:paddingBottom = "@dimen/dimen_write_side"
                 android:text = "@{diary !=null ? diary.content : ``}"
@@ -235,7 +235,7 @@
                 app:layout_constraintBottom_toBottomOf = "parent"
                 app:layout_constraintEnd_toEndOf = "@+id/text_write_date"
                 app:layout_constraintTop_toBottomOf = "@+id/view_line_bottom"
-                tools:text = "24 / 800"
+                tools:text = "24 / 500"
                 />
 
         </android.support.constraint.ConstraintLayout>
