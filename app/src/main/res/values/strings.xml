@@ -24,11 +24,9 @@
     <string name="msg_login_denied">다수의 신고로 인해 이용이 정지된 상태입니다.</string>
     
     <!--scratch-->
-    <string name = "scratch_text">Hello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\nHello Tiptap！\n
-                            Hello Tiptap！\n</string>
     <string name = "from">from.</string>
-    <string name = "count_tiptap">%d \nTIPTAP</string>
     <string name="hint_no_share">아직 도착한 tiptap이 없어요.</string>
+    <string name = "postbox">POSTBOX</string>
     
     <!--diary writing-->
     <string name = "ok">확인</string>
