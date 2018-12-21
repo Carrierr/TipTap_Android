@@ -3,71 +3,174 @@
     xmlns:app = "http://schemas.android.com/apk/res-auto"
     xmlns:tools = "http://schemas.android.com/tools"
     >
+
     <data>
+
+        <import
+            alias = "View"
+            type = "android.view.View"
+            />
+        <variable
+            name="beginMargin"
+            type="Integer"/>
+
         <variable
             name = "postSize"
-            type = "android.databinding.ObservableInt"/>
+            type = "android.databinding.ObservableInt"
+            />
     </data>
-    
+
+
     <android.support.constraint.ConstraintLayout
-        android:id = "@+id/layout"
         android:layout_width = "match_parent"
         android:layout_height = "match_parent"
+        android:background = "@color/colorDefaultBackground"
         >
-        
-        <ScrollView
-            android:id="@+id/scroll_scratch"
-            android:requiresFadingEdge="vertical"
-            android:fadingEdgeLength="0dp"
+
+        <android.support.v4.widget.NestedScrollView
             android:layout_width = "match_parent"
             android:layout_height = "match_parent"
-            android:fillViewport = "true"
             >
-            
-            <LinearLayout
+
+            <android.support.constraint.ConstraintLayout
                 android:layout_width = "match_parent"
-                android:layout_height = "wrap_content"
-                android:orientation = "vertical"
+                android:id="@+id/const_scratch"
+                android:layout_height = "match_parent"
+                android:background = "@color/colorDefaultBackground"
                 >
-                
-                <!--scratch main container. -->
+
                 <android.support.constraint.ConstraintLayout
-                    android:id = "@+id/container_scratch_main"
+                    android:id = "@+id/container_scratch"
                     android:layout_width = "match_parent"
-                    android:layout_height = "wrap_content"
+                    android:layout_height = "match_parent"
                     >
-                    
-                    <include
-                        android:id = "@+id/layout_scratch_main"
-                        postSize="@{postSize}"
-                        layout = "@layout/layout_scratch_main"
+
+                    <android.support.constraint.Guideline
+                        android:id = "@+id/gl_scratch_top"
+                        android:layout_width = "wrap_content"
+                        android:layout_height = "wrap_content"
+                        android:orientation = "horizontal"
+                        app:layout_constraintGuide_percent = "0.053"
                         />
+
+                    <TextView
+                        android:id = "@+id/text_scratch_num"
+                        android:layout_width = "wrap_content"
+                        android:layout_height = "wrap_content"
+                        android:fontFamily = "@font/montserrat_regular"
+                        android:gravity = "center"
+                        android:text = "@string/postbox"
+                        android:textSize = "16sp"
+                        android:textStyle = "bold"
+                        app:layout_constraintEnd_toEndOf = "parent"
+                        app:layout_constraintStart_toStartOf = "parent"
+                        app:layout_constraintTop_toBottomOf = "@+id/gl_scratch_top"
+                        />
+
+                    <android.support.constraint.Guideline
+                        android:id = "@+id/gl_scratch_side"
+                        android:layout_width = "wrap_content"
+                        android:layout_height = "wrap_content"
+                        android:orientation = "vertical"
+                        app:layout_constraintGuide_percent = "0.18"
+                        app:layout_constraintTop_toTopOf = "parent"
+                        />
+
+                    <android.support.constraint.Guideline
+                        android:id = "@+id/gl_scratch_from_top"
+                        android:layout_width = "wrap_content"
+                        android:layout_height = "wrap_content"
+                        android:orientation = "horizontal"
+                        app:layout_constraintGuide_percent = "0.248"
+                        app:layout_constraintTop_toTopOf = "parent"
+                        />
+
+                    <TextView
+                        android:id = "@+id/text_scratch_from"
+                        android:layout_width = "wrap_content"
+                        android:layout_height = "wrap_content"
+                        android:fontFamily = "@font/montserrat_light"
+                        android:paddingStart = "3dp"
+                        android:paddingEnd = "2dp"
+                        android:text = "@string/from"
+                        android:textColor = "@color/colorMainGrayIsh"
+                        android:textSize = "13sp"
+                        android:visibility = "@{postSize > 0 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintStart_toStartOf = "@+id/gl_scratch_side"
+                        app:layout_constraintTop_toBottomOf = "@+id/gl_scratch_from_top"
+                        />
+
+                    <TextView
+                        android:id = "@+id/text_scratch_address"
+                        android:layout_width = "wrap_content"
+                        android:layout_height = "wrap_content"
+                        android:fontFamily = "@font/ko_pub_dotum_pl"
+                        android:textColor = "@color/colorMainGrayIsh"
+                        android:textSize = "13sp"
+                        android:visibility = "@{postSize > 0 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf = "@+id/text_scratch_from"
+                        app:layout_constraintStart_toEndOf = "@+id/text_scratch_from"
+                        tools:text = "서울시 마포구 망원동"
+                        />
+
+                    <android.support.constraint.Guideline
+                        android:id = "@+id/gl_scratch_img_top"
+                        android:layout_width = "wrap_content"
+                        android:layout_height = "wrap_content"
+                        android:orientation = "horizontal"
+                        app:layout_constraintGuide_percent = "0.301"
+                        app:layout_constraintTop_toTopOf = "parent"
+                        />
+
+                    <ImageView
+                        android:id = "@+id/img_scratch_tiptap"
+                        android:layout_width = "wrap_content"
+                        android:layout_height = "wrap_content"
+                        android:src = "@drawable/tiptap"
+                        android:visibility = "@{postSize > 0 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintStart_toStartOf = "@+id/gl_scratch_side"
+                        app:layout_constraintTop_toBottomOf = "@+id/gl_scratch_img_top"
+                        />
+
+                    <TextView
+                        android:id = "@+id/text_scratch_no"
+                        android:layout_width = "wrap_content"
+                        android:layout_height = "wrap_content"
+                        android:fontFamily = "@font/ko_pub_dotum_pl"
+                        android:text = "@string/hint_no_share"
+                        android:textColor = "@color/colorMainBlack"
+                        android:textSize = "14sp"
+                        android:visibility = "@{postSize == 0 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf = "parent"
+                        app:layout_constraintEnd_toEndOf = "parent"
+                        app:layout_constraintStart_toStartOf = "parent"
+                        app:layout_constraintTop_toTopOf = "parent"
+                        />
+
                 </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/gl_scratch_rv_top"
+                    android:layout_width = "wrap_content"
+                    android:layout_height = "wrap_content"
+                    android:orientation="horizontal"
+                    guideBegin="@{beginMargin}"
+                    />
 
                 <android.support.v7.widget.RecyclerView
                     android:id = "@+id/recycler_sharing"
                     android:layout_width = "match_parent"
                     android:layout_height = "wrap_content"
+                   constraintTopToBottomOf = "@{postSize == 0 ? containerScratch : glScratchRvTop}"
                     />
-            
-            </LinearLayout>
-        </ScrollView>
-        
-        <!--Scratch card-->
+            </android.support.constraint.ConstraintLayout>
+        </android.support.v4.widget.NestedScrollView>
+
         <me.tiptap.tiptap.common.view.ScratchCard
             android:id = "@+id/scratch"
             android:layout_width = "match_parent"
             android:layout_height = "match_parent"
-            android:background = "#00000000"
-            android:gravity = "center"
-            android:paddingBottom = "50dp"
-            android:paddingLeft = "20dp"
-            android:paddingRight = "20dp"
-            android:paddingTop = "50dp"
-            android:text = "@string/scratch_text"
-            android:textColor = "@android:color/transparent"
-            android:textSize = "20sp"
             />
-    
+
     </android.support.constraint.ConstraintLayout>
 </layout>
