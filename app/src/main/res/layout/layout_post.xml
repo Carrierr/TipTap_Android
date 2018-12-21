@@ -45,20 +45,21 @@
             android:visibility = "@{postSize >=1 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintStart_toStartOf = "@+id/gl_post_1"
             />
-        
+
         <ImageView
             android:id = "@+id/img_post_1"
+            setOnTouchListener = "@{false}"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:onClick = "@{fragment::onPostClick}"
+            android:src = "@drawable/stamp7"
             android:tag = "@string/post_one"
             android:visibility = "@{postSize >=1 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintEnd_toStartOf = "@+id/img_post_2"
             app:layout_constraintStart_toEndOf = "@+id/text_post_1"
-            android:src = "@drawable/stamp7"
             />
-        
-        
+
+
         <!--post2-->
         <android.support.constraint.Guideline
             android:id = "@+id/gl_post_2_start"
@@ -84,20 +85,21 @@
             app:layout_constraintStart_toStartOf = "@+id/gl_post_2_start"
             app:layout_constraintTop_toTopOf = "@+id/gl_post_2_top"
             />
-        
+
         <ImageView
             android:id = "@+id/img_post_2"
+            setOnTouchListener = "@{false}"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:onClick = "@{fragment::onPostClick}"
+            android:src = "@drawable/stamp6"
             android:tag = "@string/post_two"
             android:visibility = "@{postSize >=2 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintEnd_toEndOf = "@+id/text_post_4"
             app:layout_constraintStart_toStartOf = "@+id/text_post_2"
             app:layout_constraintTop_toBottomOf = "@+id/text_post_2"
-            android:src = "@drawable/stamp6"
             />
-        
+
         <!--post3-->
         <android.support.constraint.Guideline
             android:id = "@+id/gl_post_3_start"
@@ -115,9 +117,10 @@
             app:layout_constraintStart_toStartOf = "@+id/gl_post_3_start"
             app:layout_constraintTop_toTopOf = "@+id/img_post_4"
             />
-        
+
         <ImageView
             android:id = "@+id/img_post_3"
+            setOnTouchListener = "@{false}"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:layout_marginStart = "5dp"
@@ -150,9 +153,10 @@
             app:layout_constraintStart_toEndOf = "@+id/img_post_4"
             app:layout_constraintTop_toTopOf = "@+id/img_post_4"
             />
-        
+
         <ImageView
             android:id = "@+id/img_post_4"
+            setOnTouchListener = "@{false}"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:layout_marginTop = "5dp"
@@ -183,19 +187,20 @@
             app:layout_constraintEnd_toStartOf = "@+id/img_post_5"
             app:layout_constraintTop_toTopOf = "@+id/gl_post_5_top"
             />
-        
+
         <ImageView
             android:id = "@+id/img_post_5"
+            setOnTouchListener = "@{false}"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:onClick = "@{fragment::onPostClick}"
+            android:src = "@drawable/stamp1"
             android:tag = "@string/post_five"
             android:visibility = "@{postSize >=5 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintEnd_toStartOf = "@+id/img_post_4"
             app:layout_constraintTop_toTopOf = "@+id/gl_post_5_top"
-            android:src = "@drawable/stamp1"
             />
-        
+
         <!--post6-->
         <me.tiptap.tiptap.common.view.VerticalTextView
             style = "@style/PostNumberTextStyle"
@@ -206,9 +211,10 @@
             app:layout_constraintStart_toEndOf = "@+id/img_post_6"
             app:layout_constraintTop_toTopOf = "@+id/gl_post_5_top"
             />
-        
+
         <ImageView
             android:id = "@+id/img_post_6"
+            setOnTouchListener = "@{false}"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:onClick = "@{fragment::onPostClick}"
@@ -239,9 +245,10 @@
             app:layout_constraintStart_toStartOf = "@+id/gl_post_7_start"
             app:layout_constraintTop_toBottomOf = "@+id/img_post_4"
             />
-        
+
         <ImageView
             android:id = "@+id/img_post_7"
+            setOnTouchListener = "@{false}"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:onClick = "@{fragment::onPostClick}"
@@ -278,22 +285,23 @@
             app:layout_constraintStart_toStartOf = "@+id/gl_post_8_text_start"
             app:layout_constraintTop_toTopOf = "@+id/text_post_9"
             />
-        
+
         <ImageView
             android:id = "@+id/img_post_8"
+            setOnTouchListener = "@{false}"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:layout_marginEnd = "12dp"
             android:onClick = "@{fragment::onPostClick}"
             android:rotation = "270"
+            android:src = "@drawable/stamp8"
             android:tag = "@string/post_eight"
             android:visibility = "@{postSize >=8 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintEnd_toStartOf = "@+id/img_post_7"
             app:layout_constraintTop_toTopOf = "@+id/gl_post_8_top"
-            android:src = "@drawable/stamp8"
             />
-        
-        
+
+
         <!--post9-->
         <android.support.constraint.Guideline
             android:id = "@+id/gl_post_9_start"
@@ -313,19 +321,20 @@
             app:layout_constraintStart_toStartOf = "@+id/gl_post_9_start"
             app:layout_constraintTop_toBottomOf = "@+id/img_post_9"
             />
-        
+
         <ImageView
             android:id = "@+id/img_post_9"
+            setOnTouchListener = "@{false}"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:onClick = "@{fragment::onPostClick}"
+            android:src = "@drawable/stamp12"
             android:tag = "@string/post_nine"
             android:visibility = "@{postSize >=9 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintStart_toStartOf = "@+id/gl_post_9_start"
             app:layout_constraintTop_toBottomOf = "@+id/img_post_6"
-            android:src = "@drawable/stamp12"
             />
-        
+
         <!--post10-->
         <me.tiptap.tiptap.common.view.VerticalTextView
             style = "@style/PostNumberTextStyle"
@@ -336,17 +345,18 @@
             app:layout_constraintBottom_toBottomOf = "@+id/img_post_10"
             app:layout_constraintEnd_toStartOf = "@+id/img_post_10"
             />
-        
+
         <ImageView
             android:id = "@+id/img_post_10"
+            setOnTouchListener = "@{false}"
             android:layout_width = "wrap_content"
             android:layout_height = "wrap_content"
             android:onClick = "@{fragment::onPostClick}"
+            android:src = "@drawable/stamp5"
             android:tag = "@string/post_ten"
             android:visibility = "@{postSize ==10 ? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintStart_toStartOf = "@+id/img_post_7"
             app:layout_constraintTop_toBottomOf = "@+id/img_post_7"
-            android:src = "@drawable/stamp5"
             />
     </android.support.constraint.ConstraintLayout>
 
