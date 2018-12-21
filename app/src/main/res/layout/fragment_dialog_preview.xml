@@ -155,7 +155,7 @@
                         android:fontFamily = "@font/ko_pub_dotum_pl"
                         android:gravity = "center"
                         android:lineSpacingExtra = "10sp"
-                        android:maxLength = "800"
+                        android:maxLength = "500"
                         android:paddingStart = "5dp"
                         android:paddingEnd = "5dp"
                         android:text = "@{diary.content}"
