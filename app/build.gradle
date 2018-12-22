@@ -15,11 +15,14 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        multiDexEnabled true
     }
     buildTypes {
-        release {
+        debug {
             minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -46,6 +49,8 @@ dependencies {
     def gson_version = "2.4.0"
     def stetho_version = "1.5.0"
     def lottie_version="2.7.0"
+    def fcm_version="17.3.4"
+    def fire_core_version="16.0.6"
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
@@ -98,7 +103,14 @@ dependencies {
     //stetho
     implementation "com.facebook.stetho:stetho:$stetho_version"
     implementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
+
+    //fcm
+    implementation "com.google.firebase:firebase-core:$fire_core_version"
+    implementation "com.google.firebase:firebase-messaging:$fcm_version"
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 }
+
+apply plugin: 'com.google.gms.google-services'
