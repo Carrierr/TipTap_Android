@@ -307,11 +307,11 @@ class DiaryWritingActivity : AppCompatActivity() {
      * When user click Complete button.
      */
     fun onCompleteButtonClick() {
-        if (binding.textComplete.isClickable) {
+        if (binding.textComplete.isClickable && binding.editWriteDiary.text.isNotBlank()) {
+            binding.textComplete.isClickable = false //한번만 클릭 되도록 함.
+
             if (diary.id > 0) updateDiary() else writeDiary()
         }
-
-        binding.textComplete.isClickable = false //한번만 클릭 되도록 함.
     }
 
 
