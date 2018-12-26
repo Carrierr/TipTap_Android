@@ -285,6 +285,10 @@ class DiaryWritingActivity : AppCompatActivity() {
                             .into(imageView)
                 }
                 .setPreviewMaxCount(7)
+                .setCameraTileBackgroundResId(R.color.colorMainBlack)
+                .setCameraTile(R.drawable.picker_photo)
+                .setGalleryTile(R.drawable.picker_gallery)
+                .setGalleryTileBackgroundResId(R.color.colorMainBlack)
                 .create()
                 .show(supportFragmentManager)
     }
