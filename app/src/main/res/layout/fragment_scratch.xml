@@ -11,8 +11,9 @@
             type = "android.view.View"
             />
         <variable
-            name="beginMargin"
-            type="Integer"/>
+            name = "beginMargin"
+            type = "Integer"
+            />
 
         <variable
             name = "postSize"
@@ -24,19 +25,18 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width = "match_parent"
         android:layout_height = "match_parent"
-        android:background = "@color/colorDefaultBackground"
         >
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width = "match_parent"
             android:layout_height = "match_parent"
+            android:background = "@drawable/bg_share"
             >
 
             <android.support.constraint.ConstraintLayout
+                android:id = "@+id/const_scratch"
                 android:layout_width = "match_parent"
-                android:id="@+id/const_scratch"
                 android:layout_height = "match_parent"
-                android:background = "@color/colorDefaultBackground"
                 >
 
                 <android.support.constraint.ConstraintLayout
@@ -150,18 +150,19 @@
                 </android.support.constraint.ConstraintLayout>
 
                 <android.support.constraint.Guideline
-                    android:id="@+id/gl_scratch_rv_top"
+                    android:id = "@+id/gl_scratch_rv_top"
+                    guideBegin = "@{beginMargin}"
                     android:layout_width = "wrap_content"
                     android:layout_height = "wrap_content"
-                    android:orientation="horizontal"
-                    guideBegin="@{beginMargin}"
+                    android:orientation = "horizontal"
                     />
 
                 <android.support.v7.widget.RecyclerView
                     android:id = "@+id/recycler_sharing"
+                    constraintTopToBottomOf = "@{postSize == 0 ? containerScratch : glScratchRvTop}"
                     android:layout_width = "match_parent"
                     android:layout_height = "wrap_content"
-                   constraintTopToBottomOf = "@{postSize == 0 ? containerScratch : glScratchRvTop}"
+                    android:background = "@null"
                     />
             </android.support.constraint.ConstraintLayout>
         </android.support.v4.widget.NestedScrollView>
