@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package me.tiptap.tiptap.common.view
+package me.tiptap.tiptap.common.view.scratch
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
+import android.graphics.Shader.TileMode
 import android.graphics.drawable.BitmapDrawable
 import android.os.AsyncTask
 import android.support.v4.content.ContextCompat
@@ -29,14 +30,8 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.ImageView
-import com.cooltechworks.utils.BitmapUtils
 import me.tiptap.tiptap.R
 import java.util.*
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
-import android.graphics.Bitmap
-import android.graphics.Shader.TileMode
-import android.graphics.LinearGradient
 
 
 class ScratchCard : ImageView {
