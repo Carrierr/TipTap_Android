@@ -12,8 +12,6 @@
     <uses-permission android:name = "android.permission.READ_EXTERNAL_STORAGE" />
 
 
-
-
     <application
         android:name = ".TipTapApplication"
         android:allowBackup = "true"
@@ -37,11 +35,13 @@
             />
 
         <meta-data
-        android:name="com.google.firebase.messaging.default_notification_icon"
-        android:resource="@drawable/tiptap_noti" />
+            android:name = "com.google.firebase.messaging.default_notification_icon"
+            android:resource = "@drawable/tiptap_noti"
+            />
         <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/colorSeaFoamBlue" />
+            android:name = "com.google.firebase.messaging.default_notification_color"
+            android:resource = "@color/colorSeaFoamBlue"
+            />
 
         <provider
             android:name = "android.support.v4.content.FileProvider"
@@ -55,9 +55,9 @@
                 />
         </provider>
 
-        <service android:name=".common.util.TipTapMessagingService">
+        <service android:name = ".common.util.TipTapMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name = "com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
@@ -81,17 +81,16 @@
             android:name = ".main.MainActivity"
             android:theme = "@style/AppTheme.Launcher"
             >
-            
+
         </activity>
         <activity android:name = ".diarydetail.DiaryDetailActivity" />
         <activity
             android:name = ".diarywriting.DiaryWritingActivity"
-            android:theme="@style/DiaryWritingTheme"
-            android:windowSoftInputMode="adjustResize"
+            android:theme = "@style/DiaryWritingTheme"
+            android:windowSoftInputMode = "adjustResize"
             />
         <activity android:name = ".setting.SettingActivity" />
-        <activity android:name = ".diaries.CalendarActivity">
-        </activity>
+        <activity android:name = ".diaries.CalendarActivity"></activity>
         <activity android:name = ".onboarding.OnBoardingActivity" />
     </application>
 
