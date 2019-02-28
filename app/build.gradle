@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 
+apply plugin: 'io.fabric'
+
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
@@ -51,6 +53,7 @@ dependencies {
     def lottie_version="2.7.0"
     def fcm_version="17.4.0"
     def fire_core_version="16.0.7"
+    def crashlytics_version="2.9.9"
     def ted_bottom_picker_version="1.1.0"
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
@@ -105,9 +108,10 @@ dependencies {
     implementation "com.facebook.stetho:stetho:$stetho_version"
     implementation "com.facebook.stetho:stetho-okhttp3:$stetho_version"
 
-    //fcm
+    //firebase
     implementation "com.google.firebase:firebase-core:$fire_core_version"
     implementation "com.google.firebase:firebase-messaging:$fcm_version"
+    implementation "com.crashlytics.sdk.android:crashlytics:$crashlytics_version"
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
