@@ -167,7 +167,7 @@
             </android.support.constraint.ConstraintLayout>
         </android.support.v4.widget.NestedScrollView>
 
-        <me.tiptap.tiptap.common.view.ScratchCard
+        <me.tiptap.tiptap.common.view.scratch.ScratchCard
             android:id = "@+id/scratch"
             android:layout_width = "match_parent"
             android:layout_height = "match_parent"

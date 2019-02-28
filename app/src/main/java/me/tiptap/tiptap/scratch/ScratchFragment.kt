@@ -18,7 +18,7 @@ import me.tiptap.tiptap.R
 import me.tiptap.tiptap.TipTapApplication
 import me.tiptap.tiptap.common.network.DiaryApi
 import me.tiptap.tiptap.common.network.ServerGenerator
-import me.tiptap.tiptap.common.view.ScratchCard
+import me.tiptap.tiptap.common.view.scratch.ScratchCard
 import me.tiptap.tiptap.data.DiaryResponse
 import me.tiptap.tiptap.databinding.FragmentScratchBinding
 
