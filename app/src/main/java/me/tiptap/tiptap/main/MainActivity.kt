@@ -5,9 +5,7 @@ import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import me.tiptap.tiptap.R
-import me.tiptap.tiptap.adapter.MainViewPagerAdapter
 import me.tiptap.tiptap.databinding.ActivityMainBinding
 import me.tiptap.tiptap.onboarding.OnBoardingActivity
 
